@@ -16,15 +16,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @EventBusSubscriber(
         modid = "guest_settlements",
         value = Dist.CLIENT
 )
 public final class VillageDebugRenderer {
-    private static final Logger LOGGER = LoggerFactory.getLogger("VillageDebugRenderer");
 
     private static final double MAX_DISTANCE_SQR = 512.0 * 512.0;
 
@@ -53,12 +50,6 @@ public final class VillageDebugRenderer {
         VillageDebugSnapshot snapshot =
                 VillageWorldManager.get(serverLevel).snapshot();
 
-        LOGGER.info(
-                "render() snapshot villages={} roads={}",
-                snapshot.villages().size(),
-                snapshot.roads().size()
-        );
-
         PoseStack poseStack = event.getPoseStack();
 
         MultiBufferSource.BufferSource buffers =
@@ -66,11 +57,6 @@ public final class VillageDebugRenderer {
 
         Vec3 camera =
                 minecraft.gameRenderer.getMainCamera().position();
-
-        LOGGER.info(
-                "render() camera pos=({}, {}, {})",
-                camera.x, camera.y, camera.z
-        );
 
         VertexConsumer lines = buffers.getBuffer(RenderTypes.LINES);
         renderVillageLines(snapshot, poseStack, lines, camera);
@@ -149,11 +135,6 @@ public final class VillageDebugRenderer {
                 labelCount++;
             }
         }
-
-        LOGGER.info(
-                "renderVillageLabels() villageCount={} farmCount={} labelCount={}",
-                villageCount, farmCount, labelCount
-        );
     }
 
     private static void renderRoads(
