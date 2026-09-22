@@ -16,6 +16,7 @@ sourceSets.main.resources {
 }
 
 repositories {
+    mavenCentral()
     maven {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
@@ -40,12 +41,19 @@ neoForge {
 
 configurations {
     runtimeClasspath.extendsFrom localRuntime
+
+    testCompileClasspath.extendsFrom compileClasspath
+    testRuntimeClasspath.extendsFrom runtimeClasspath
 }
 
 dependencies {
     compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
     localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -81,6 +89,10 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
 }
 
 idea {
