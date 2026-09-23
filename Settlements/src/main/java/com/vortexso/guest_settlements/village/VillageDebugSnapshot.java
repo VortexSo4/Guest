@@ -1,38 +1,22 @@
 package com.vortexso.guest_settlements.village;
 
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
-import java.util.List;
+public record VillageDebugSnapshot(List<VillageSnapshot> villages, List<RoadSnapshot> roads) {
+  public record VillageSnapshot(
+      long id,
+      BlockPos center,
+      boolean loaded,
+      BoundingBox structureBox,
+      int farmlandAmount,
+      VillagePopulation population,
+      List<FarmSnapshot> farms) {}
 
-public record VillageDebugSnapshot(
-        List<VillageSnapshot> villages,
-        List<RoadSnapshot> roads
-) {
-    public record VillageSnapshot(
-            long id,
-            BlockPos center,
-            boolean loaded,
-            BoundingBox structureBox,
-            int farmlandAmount,
-            VillagePopulation population,
-            List<FarmSnapshot> farms
-    ) {
-    }
+  public record FarmSnapshot(
+      BoundingBox pieceBox, BoundingBox farmBox, int farmlandAmount, boolean complete) {}
 
-    public record FarmSnapshot(
-            BoundingBox pieceBox,
-            BoundingBox farmBox,
-            int farmlandAmount,
-            boolean complete
-    ) {
-    }
-
-    public record RoadSnapshot(
-            long firstVillageId,
-            long secondVillageId,
-            BlockPos firstCenter,
-            BlockPos secondCenter
-    ) {
-    }
+  public record RoadSnapshot(
+      long firstVillageId, long secondVillageId, BlockPos firstCenter, BlockPos secondCenter) {}
 }

@@ -23,6 +23,20 @@ allprojects {
 subprojects {
     plugins.withId('java') {
         apply plugin: 'me.champeau.jmh'
+        apply plugin: 'com.diffplug.spotless'
+
+        spotless {
+            java {
+                target 'src/**/*.java'
+                targetExclude '**/build/**', '**/generated/**'
+
+                googleJavaFormat('1.28.0')
+
+                removeUnusedImports()
+                trimTrailingWhitespace()
+                endWithNewline()
+            }
+        }
 
         jmh {
             warmupIterations = 3

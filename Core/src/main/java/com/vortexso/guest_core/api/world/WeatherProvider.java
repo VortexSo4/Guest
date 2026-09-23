@@ -5,5 +5,5 @@ import net.minecraft.world.level.Level;
 
 @FunctionalInterface
 public interface WeatherProvider {
-    WeatherState get(Level level, BlockPos pos, long day);
+  WeatherState get(Level level, BlockPos pos, long day);
 }
