@@ -1,18 +1,25 @@
 package com.vortexso.guest_settlements.village;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class VillageNode {
     private final long id;
     private BlockPos center;
     private BoundingBox structureBox;
-    private boolean loaded;
 
-    private final List<VillageFarmRegion> farmRegions = new ArrayList<>();
+    private final Set<Long> loadedChunks = new HashSet<>();
+
+    private VillageState state;
+
+    private final List<VillageFarmRegion> farmRegions =
+            new ArrayList<>();
 
     public VillageNode(long id, BlockPos center) {
         this.id = id;
@@ -32,24 +39,44 @@ public final class VillageNode {
     }
 
     public boolean loaded() {
-        return loaded;
+        return !loadedChunks.isEmpty();
+    }
+
+    public VillageState state() {
+        return state;
     }
 
     public List<VillageFarmRegion> farmRegions() {
         return farmRegions;
     }
 
-    public void markLoaded(BlockPos center, BoundingBox structureBox) {
+    public void markLoaded(
+            BlockPos center,
+            BoundingBox structureBox
+    ) {
         this.center = center;
         this.structureBox = structureBox;
-        this.loaded = true;
     }
 
-    public void markUnloaded() {
-        loaded = false;
+    public void markChunkLoaded(ChunkPos chunkPos) {
+        loadedChunks.add(chunkPos.pack());
     }
 
-    public void replaceFarmRegions(List<VillageFarmRegion> regions) {
+    public void markChunkUnloaded(ChunkPos chunkPos) {
+        loadedChunks.remove(chunkPos.pack());
+    }
+
+    public void clearLoadedChunks() {
+        loadedChunks.clear();
+    }
+
+    public void updateState(VillageState state) {
+        this.state = state;
+    }
+
+    public void replaceFarmRegions(
+            List<VillageFarmRegion> regions
+    ) {
         farmRegions.clear();
         farmRegions.addAll(regions);
     }

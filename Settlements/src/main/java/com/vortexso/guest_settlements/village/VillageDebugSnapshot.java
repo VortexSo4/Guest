@@ -14,6 +14,8 @@ public record VillageDebugSnapshot(
             BlockPos center,
             boolean loaded,
             BoundingBox structureBox,
+            int farmlandAmount,
+            VillagePopulation population,
             List<FarmSnapshot> farms
     ) {
     }

@@ -6,35 +6,50 @@ public record VillageState(
         long id,
         BlockPos center,
         long day,
-        int population,
-        int children,
+        VillagePopulation villagePopulation,
         int housingCapacity,
         double foodReserve
 ) {
     public VillageState {
-        if (population < 0) {
-            throw new IllegalArgumentException("population must be >= 0");
-        }
-        if (children < 0 || children > population) {
-            throw new IllegalArgumentException("children must be in [0, population]");
-        }
         if (housingCapacity < 0) {
-            throw new IllegalArgumentException("housingCapacity must be >= 0");
+            throw new IllegalArgumentException(
+                    "housingCapacity must be >= 0"
+            );
         }
+
         if (!Double.isFinite(foodReserve) || foodReserve < 0.0) {
-            throw new IllegalArgumentException("foodReserve must be finite and >= 0");
+            throw new IllegalArgumentException(
+                    "foodReserve must be finite and >= 0"
+            );
+        }
+
+        if (villagePopulation == null) {
+            throw new IllegalArgumentException(
+                    "population must not be null"
+            );
         }
     }
 
     public int adults() {
-        return population - children;
+        return villagePopulation.adults();
+    }
+
+    public int children() {
+        return villagePopulation.children();
+    }
+
+    public int population() {
+        return villagePopulation.population();
     }
 
     public int freeHousing() {
-        return Math.max(0, housingCapacity - population);
+        return Math.max(
+                0,
+                housingCapacity - population()
+        );
     }
 
     public boolean isAbandoned() {
-        return population == 0;
+        return population() == 0;
     }
 }

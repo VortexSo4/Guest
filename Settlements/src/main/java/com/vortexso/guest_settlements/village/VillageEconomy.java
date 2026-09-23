@@ -6,20 +6,21 @@ public final class VillageEconomy {
     }
 
     public static double foodProduction(
-            VillageDayInput input,
+            int farmers,
+            double fieldCapacity,
+            double fertility,
             VillageSimulationParameters parameters
     ) {
         double potentialProduction =
-                input.farmers()
-                        * parameters.foodYieldPerFarmer();
+                farmers * parameters.foodYieldPerFarmer();
 
         double fieldLimitedProduction =
                 Math.min(
                         potentialProduction,
-                        input.fieldCapacity()
+                        fieldCapacity
                 );
 
-        return fieldLimitedProduction * input.fertility();
+        return fieldLimitedProduction * fertility;
     }
 
     /**

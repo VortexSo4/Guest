@@ -2,14 +2,29 @@ package com.vortexso.guest_settlements.village;
 
 import com.vortexso.guest_core.api.GuestHash;
 
+import net.minecraft.resources.Identifier;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Pure aggregate village simulation.
  * Does not access Minecraft world state.
  */
 public final class VillageSimulator {
+    private static final Identifier FARMER =
+            Identifier.fromNamespaceAndPath("minecraft", "farmer");
+
+    private static final Identifier NONE =
+            Identifier.fromNamespaceAndPath("minecraft", "none");
+
     private static final long EVENT_BIRTH = 0x42A11L;
     private static final long EVENT_MATURATION = 0x6D47L;
     private static final long EVENT_DEATH = 0xD34DL;
+    private static final long EVENT_MIGRATION = 0xA91CL;
 
     private VillageSimulator() {
     }
@@ -20,7 +35,6 @@ public final class VillageSimulator {
                 record.origin(),
                 record.initializedDay(),
                 record.initialPopulation(),
-                record.initialChildren(),
                 record.initialHousingCapacity(),
                 record.initialFoodReserve()
         );
@@ -34,16 +48,39 @@ public final class VillageSimulator {
     ) {
         long nextDay = state.day() + 1;
 
+        Map<Identifier, Integer> professions =
+                new LinkedHashMap<>(state.population());
+
+        int adultsBefore = state.adults();
+
         /*
          * Migration currently concerns adults only.
+         * Outgoing villagers are removed proportionally from professions.
+         * Incoming villagers arrive unemployed.
          */
-        int adultsBefore = state.adults();
-        int outgoing = Math.min(input.outgoingVillagers(), adultsBefore);
+        int outgoing =
+                Math.min(input.outgoingVillagers(), adultsBefore);
+
+        professions =
+                removeAdultsProportionally(
+                        professions,
+                        outgoing,
+                        GuestHash.hash(
+                                worldSeed,
+                                state.id(),
+                                nextDay,
+                                EVENT_MIGRATION
+                        )
+                );
+
+        addProfession(
+                professions,
+                NONE,
+                input.incomingVillagers()
+        );
 
         int adultsAfterMigration =
-                adultsBefore
-                        - outgoing
-                        + input.incomingVillagers();
+                adultCount(professions);
 
         int populationAfterMigration =
                 state.children() + adultsAfterMigration;
@@ -51,9 +88,14 @@ public final class VillageSimulator {
         /*
          * Food is produced before the village consumes it.
          */
+        int farmers =
+                professions.getOrDefault(FARMER, 0);
+
         double production =
                 VillageEconomy.foodProduction(
-                        input,
+                        farmers,
+                        input.fieldCapacity(),
+                        input.fertility(),
                         parameters
                 );
 
@@ -71,7 +113,6 @@ public final class VillageSimulator {
 
         /*
          * Zombies may kill both adults and children.
-         * Deaths are distributed proportionally between them.
          */
         double deathRate = effectiveRate(
                 parameters.baseZombieDeathRatePerDay()
@@ -93,7 +134,10 @@ public final class VillageSimulator {
                 )
         );
 
-        deaths = Math.min(deaths, populationAfterMigration);
+        deaths = Math.min(
+                deaths,
+                populationAfterMigration
+        );
 
         int childrenAfterDeaths =
                 removeChildrenProportionally(
@@ -108,11 +152,26 @@ public final class VillageSimulator {
                         )
                 );
 
-        int populationAfterDeaths =
-                populationAfterMigration - deaths;
+        int childDeaths =
+                state.children() - childrenAfterDeaths;
+
+        int adultDeaths =
+                deaths - childDeaths;
+
+        professions =
+                removeAdultsProportionally(
+                        professions,
+                        adultDeaths,
+                        GuestHash.hash(
+                                worldSeed,
+                                state.id(),
+                                nextDay,
+                                EVENT_DEATH ^ 0xCAFEFL
+                        )
+                );
 
         int adultsAfterDeaths =
-                populationAfterDeaths - childrenAfterDeaths;
+                adultCount(professions);
 
         /*
          * A child has a probability of maturing each day based
@@ -140,10 +199,23 @@ public final class VillageSimulator {
                 )
         );
 
-        matured = Math.min(matured, childrenAfterDeaths);
+        matured =
+                Math.min(
+                        matured,
+                        childrenAfterDeaths
+                );
 
         int childrenAfterMaturation =
                 childrenAfterDeaths - matured;
+
+        /*
+         * A matured villager enters the adult population as unemployed.
+         */
+        addProfession(
+                professions,
+                NONE,
+                matured
+        );
 
         int adultsAfterMaturation =
                 adultsAfterDeaths + matured;
@@ -152,10 +224,15 @@ public final class VillageSimulator {
          * Breeding requires both available housing and enough food
          * for one eligible pair.
          */
+        int populationAfterDeaths =
+                childrenAfterDeaths
+                        + adultsAfterDeaths;
+
         int freeHousing =
                 Math.max(
                         0,
-                        state.housingCapacity() - populationAfterDeaths
+                        state.housingCapacity()
+                                - populationAfterDeaths
                 );
 
         int eligiblePairs =
@@ -190,7 +267,11 @@ public final class VillageSimulator {
                     )
             );
 
-            births = Math.min(births, freeHousing);
+            births =
+                    Math.min(
+                            births,
+                            freeHousing
+                    );
 
             foodReserve = Math.max(
                     0.0,
@@ -201,32 +282,188 @@ public final class VillageSimulator {
             );
         }
 
+        /*
+         * Newborns are not assigned a profession.
+         */
         return new VillageState(
                 state.id(),
                 state.center(),
                 nextDay,
-                populationAfterDeaths + births,
-                childrenAfterMaturation + births,
+                new VillagePopulation(
+                        childrenAfterMaturation + births,
+                        professions
+                ),
                 state.housingCapacity(),
                 foodReserve
         );
     }
 
-    public static double foodProduction(
+    // TODO replace with formula instead of
+    public static VillageState simulateDays(
+            VillageState state,
             VillageDayInput input,
-            VillageSimulationParameters parameters
+            long worldSeed,
+            VillageSimulationParameters parameters,
+            long days
     ) {
-        double potentialProduction =
-                input.farmers()
-                        * parameters.foodYieldPerFarmer();
+        if (days <= 0) {
+            return state;
+        }
 
-        double fieldLimitedProduction =
-                Math.min(
-                        potentialProduction,
-                        input.fieldCapacity()
+        VillageState result = state;
+
+        for (long i = 0; i < days; i++) {
+            result =
+                    simulateDay(
+                            result,
+                            input,
+                            worldSeed,
+                            parameters
+                    );
+        }
+
+        return result;
+    }
+
+    private static int adultCount(
+            Map<Identifier, Integer> professions
+    ) {
+        long total = 0;
+
+        for (int amount : professions.values()) {
+            total += amount;
+        }
+
+        if (total > Integer.MAX_VALUE) {
+            throw new IllegalStateException(
+                    "adult population exceeds Integer.MAX_VALUE"
+            );
+        }
+
+        return (int) total;
+    }
+
+    private static void addProfession(
+            Map<Identifier, Integer> professions,
+            Identifier profession,
+            int amount
+    ) {
+        if (amount <= 0) {
+            return;
+        }
+
+        professions.merge(
+                profession,
+                amount,
+                Math::addExact
+        );
+    }
+
+    private static Map<Identifier, Integer>
+    removeAdultsProportionally(
+            Map<Identifier, Integer> source,
+            int amount,
+            long randomSeed
+    ) {
+        if (amount <= 0 || source.isEmpty()) {
+            return Map.copyOf(source);
+        }
+
+        int adults = adultCount(source);
+        int target = Math.min(amount, adults);
+
+        if (target == 0) {
+            return Map.copyOf(source);
+        }
+
+        List<Allocation> allocations =
+                new ArrayList<>();
+
+        int assigned = 0;
+
+        List<Map.Entry<Identifier, Integer>> entries =
+                source.entrySet()
+                        .stream()
+                        .sorted(
+                                Map.Entry.comparingByKey(
+                                        Comparator.comparing(
+                                                Identifier::toString
+                                        )
+                                )
+                        )
+                        .toList();
+
+        for (Map.Entry<Identifier, Integer> entry : entries) {
+            double expected =
+                    (double) entry.getValue()
+                            * target
+                            / adults;
+
+            int base =
+                    (int) Math.floor(expected);
+
+            allocations.add(
+                    new Allocation(
+                            entry.getKey(),
+                            entry.getValue(),
+                            base,
+                            expected - base
+                    )
+            );
+
+            assigned += base;
+        }
+
+        int remaining =
+                target - assigned;
+
+        allocations.sort(
+                Comparator
+                        .comparingDouble(
+                                Allocation::fraction
+                        )
+                        .reversed()
+                        .thenComparing(
+                                allocation ->
+                                        allocation.profession()
+                                                .toString()
+                        )
+        );
+
+        for (int i = 0;
+             i < remaining;
+             i++) {
+            Allocation allocation =
+                    allocations.get(i);
+
+            allocation.removed++;
+        }
+
+        Map<Identifier, Integer> result =
+                new LinkedHashMap<>();
+
+        allocations.sort(
+                Comparator.comparing(
+                        allocation ->
+                                allocation.profession()
+                                        .toString()
+                )
+        );
+
+        for (Allocation allocation : allocations) {
+            int remainingAmount =
+                    allocation.amount()
+                            - allocation.removed;
+
+            if (remainingAmount > 0) {
+                result.put(
+                        allocation.profession(),
+                        remainingAmount
                 );
+            }
+        }
 
-        return fieldLimitedProduction * input.fertility();
+        return Map.copyOf(result);
     }
 
     private static double effectiveRate(
@@ -238,7 +475,10 @@ public final class VillageSimulator {
             double variation
     ) {
         if (variation == 0.0) {
-            return Math.min(1.0, Math.max(0.0, baseRate));
+            return Math.min(
+                    1.0,
+                    Math.max(0.0, baseRate)
+            );
         }
 
         double centered =
@@ -255,7 +495,9 @@ public final class VillageSimulator {
                 1.0,
                 Math.max(
                         0.0,
-                        baseRate * (1.0 + centered * variation)
+                        baseRate
+                                * (1.0
+                                + centered * variation)
                 )
         );
     }
@@ -268,11 +510,15 @@ public final class VillageSimulator {
             return 0;
         }
 
-        long whole = (long) Math.floor(expected);
-        double fractional = expected - whole;
+        long whole =
+                (long) Math.floor(expected);
+
+        double fractional =
+                expected - whole;
 
         if (fractional > 0.0
-                && GuestHash.unit(randomSeed) < fractional) {
+                && GuestHash.unit(randomSeed)
+                < fractional) {
             whole++;
         }
 
@@ -285,20 +531,28 @@ public final class VillageSimulator {
             int deaths,
             long randomSeed
     ) {
-        if (children == 0 || deaths == 0 || population == 0) {
+        if (children == 0
+                || deaths == 0
+                || population == 0) {
             return children;
         }
 
         double expected =
-                (double) children * deaths / population;
+                (double) children
+                        * deaths
+                        / population;
 
-        int childDeaths = deterministicCount(
-                expected,
-                randomSeed
-        );
+        int childDeaths =
+                deterministicCount(
+                        expected,
+                        randomSeed
+                );
 
         childDeaths =
-                Math.min(childDeaths, children);
+                Math.min(
+                        childDeaths,
+                        children
+                );
 
         return children - childDeaths;
     }
@@ -308,5 +562,36 @@ public final class VillageSimulator {
                 Integer.MAX_VALUE,
                 Math.max(0L, value)
         );
+    }
+
+    private static final class Allocation {
+        private final Identifier profession;
+        private final int amount;
+        private final double fraction;
+        private int removed;
+
+        private Allocation(
+                Identifier profession,
+                int amount,
+                int removed,
+                double fraction
+        ) {
+            this.profession = profession;
+            this.amount = amount;
+            this.removed = removed;
+            this.fraction = fraction;
+        }
+
+        public Identifier profession() {
+            return profession;
+        }
+
+        public int amount() {
+            return amount;
+        }
+
+        public double fraction() {
+            return fraction;
+        }
     }
 }

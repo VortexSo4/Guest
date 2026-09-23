@@ -3,11 +3,8 @@ package com.vortexso.guest_settlements.village;
 /**
  * External inputs for one simulated day.
  * Contains no Minecraft world access.
- *
- * Incoming and outgoing villagers currently represent adults.
  */
 public record VillageDayInput(
-        int farmers,
         double fieldCapacity,
         double fertility,
         double zombiePressure,
@@ -15,23 +12,38 @@ public record VillageDayInput(
         int outgoingVillagers
 ) {
     public VillageDayInput {
-        if (farmers < 0) {
-            throw new IllegalArgumentException("farmers must be >= 0");
+        if (!Double.isFinite(fieldCapacity)
+                || fieldCapacity < 0.0) {
+            throw new IllegalArgumentException(
+                    "fieldCapacity must be finite and >= 0"
+            );
         }
-        if (!Double.isFinite(fieldCapacity) || fieldCapacity < 0.0) {
-            throw new IllegalArgumentException("fieldCapacity must be finite and >= 0");
+
+        if (!Double.isFinite(fertility)
+                || fertility < 0.0
+                || fertility > 1.0) {
+            throw new IllegalArgumentException(
+                    "fertility must be in [0, 1]"
+            );
         }
-        if (!Double.isFinite(fertility) || fertility < 0.0 || fertility > 1.0) {
-            throw new IllegalArgumentException("fertility must be in [0, 1]");
+
+        if (!Double.isFinite(zombiePressure)
+                || zombiePressure < 0.0) {
+            throw new IllegalArgumentException(
+                    "zombiePressure must be finite and >= 0"
+            );
         }
-        if (!Double.isFinite(zombiePressure) || zombiePressure < 0.0) {
-            throw new IllegalArgumentException("zombiePressure must be finite and >= 0");
-        }
+
         if (incomingVillagers < 0) {
-            throw new IllegalArgumentException("incomingVillagers must be >= 0");
+            throw new IllegalArgumentException(
+                    "incomingVillagers must be >= 0"
+            );
         }
+
         if (outgoingVillagers < 0) {
-            throw new IllegalArgumentException("outgoingVillagers must be >= 0");
+            throw new IllegalArgumentException(
+                    "outgoingVillagers must be >= 0"
+            );
         }
     }
 }

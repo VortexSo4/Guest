@@ -1,12 +1,13 @@
 package com.vortexso.guest_settlements.benchmark;
 
 import com.vortexso.guest_settlements.village.VillageDayInput;
-import com.vortexso.guest_settlements.village.VillageEconomy;
+import com.vortexso.guest_settlements.village.VillagePopulation;
 import com.vortexso.guest_settlements.village.VillageSimulationParameters;
 import com.vortexso.guest_settlements.village.VillageSimulator;
 import com.vortexso.guest_settlements.village.VillageState;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
@@ -18,10 +19,18 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 
+import java.util.Map;
+
 @BenchmarkMode(Mode.AverageTime)
 @Fork(1)
 @State(Scope.Benchmark)
 public class VillageSimulatorBenchmark {
+
+    private static final Identifier FARMER =
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "farmer"
+            );
 
     @Param({
             "10",
@@ -49,26 +58,30 @@ public class VillageSimulatorBenchmark {
         parameters =
                 VillageSimulationParameters.defaults();
 
+        int children =
+                population / 5;
+
+        int adults =
+                population - children;
+
         state =
                 new VillageState(
                         1L,
                         BlockPos.ZERO,
                         0L,
-                        population,
-                        population / 5,
+                        new VillagePopulation(
+                                children,
+                                Map.of(
+                                        FARMER,
+                                        adults
+                                )
+                        ),
                         population + 20,
                         population * 10.0
                 );
 
-        int farmers =
-                VillageEconomy.effectiveFarmerCapacity(
-                        fieldCapacity,
-                        parameters
-                );
-
         input =
                 new VillageDayInput(
-                        farmers,
                         fieldCapacity,
                         1.0,
                         1.0,

@@ -1,5 +1,7 @@
 package com.vortexso.guest_settlements.village;
 
+import com.vortexso.guest_core.api.GuestTime;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.core.registries.Registries;
@@ -16,61 +18,78 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
-import java.util.List;
 
 public final class VillageWorldManager {
     private static final int NEIGHBOR_SEARCH_RADIUS = 4096;
     private static final int VILLAGE_MATCH_RADIUS = 256;
 
-    private static final int VIRTUAL_NEIGHBOR_HOPS = 1;
+    private static final double DEFAULT_FERTILITY = 1.0;
+    private static final double DEFAULT_ZOMBIE_PRESSURE = 1.0;
 
-    private static final int[][] NEIGHBOR_DIRECTIONS = {
-            { 1,  0},
-            {-1,  0},
-            { 0,  1},
-            { 0, -1},
-            { 1,  1},
-            { 1, -1},
-            {-1,  1},
-            {-1, -1}
-    };
+    private static final VillageSimulationParameters PARAMETERS =
+            VillageSimulationParameters.defaults();
 
-    private static final int[] NEIGHBOR_PROBE_RADII = {
-            256,
-            512,
-            1024
+    private static final BlockPos[] NEIGHBOR_PROBES = {
+            new BlockPos(160, 0, 0),
+            new BlockPos(-160, 0, 0),
+            new BlockPos(0, 0, 160),
+            new BlockPos(0, 0, -160),
+            new BlockPos(113, 0, 113),
+            new BlockPos(113, 0, -113),
+            new BlockPos(-113, 0, 113),
+            new BlockPos(-113, 0, -113)
     };
 
     private static final Set<Identifier> VANILLA_VILLAGES = Set.of(
-            Identifier.fromNamespaceAndPath("minecraft", "village_plains"),
-            Identifier.fromNamespaceAndPath("minecraft", "village_desert"),
-            Identifier.fromNamespaceAndPath("minecraft", "village_savanna"),
-            Identifier.fromNamespaceAndPath("minecraft", "village_snowy"),
-            Identifier.fromNamespaceAndPath("minecraft", "village_taiga")
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "village_plains"
+            ),
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "village_desert"
+            ),
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "village_savanna"
+            ),
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "village_snowy"
+            ),
+            Identifier.fromNamespaceAndPath(
+                    "minecraft",
+                    "village_taiga"
+            )
     );
 
     private static final Map<ServerLevel, VillageWorldManager> INSTANCES =
             new WeakHashMap<>();
 
     private final ServerLevel level;
+    private final Map<Long, VillageNode> nodes =
+            new HashMap<>();
 
-    private final Map<Long, VillageNode> nodes = new HashMap<>();
-
-    private final Set<RoadEdge> roads = new HashSet<>();
+    private final Set<RoadEdge> roads =
+            new HashSet<>();
 
     private final Map<Long, List<VillageFarmRegion>> regionsByChunk =
             new HashMap<>();
 
-    private final Set<Long> queuedChunks = new HashSet<>();
+    private final Set<Long> queuedChunks =
+            new HashSet<>();
 
     private VillageWorldManager(ServerLevel level) {
         this.level = level;
     }
 
-    public static synchronized VillageWorldManager get(ServerLevel level) {
+    public static synchronized VillageWorldManager get(
+            ServerLevel level
+    ) {
         return INSTANCES.computeIfAbsent(
                 level,
                 VillageWorldManager::new
@@ -84,7 +103,8 @@ public final class VillageWorldManager {
             return;
         }
 
-        MinecraftServer server = level.getServer();
+        MinecraftServer server =
+                level.getServer();
 
         server.execute(() -> {
             queuedChunks.remove(key);
@@ -92,7 +112,54 @@ public final class VillageWorldManager {
         });
     }
 
-    private void processChunk(ChunkPos chunkPos) {
+    public void handleChunkLoad(ChunkPos chunkPos) {
+        for (VillageNode node : nodes.values()) {
+            BoundingBox box =
+                    node.structureBox();
+
+            if (box == null) {
+                continue;
+            }
+
+            if (box.intersectingChunks()
+                    .anyMatch(chunk ->
+                            chunk.equals(chunkPos))) {
+
+                node.markChunkLoaded(chunkPos);
+            }
+        }
+    }
+
+    public void handleChunkUnload(ChunkPos chunkPos) {
+        for (VillageNode node : nodes.values()) {
+            BoundingBox box =
+                    node.structureBox();
+
+            if (box == null) {
+                continue;
+            }
+
+            if (!box.intersectingChunks()
+                    .anyMatch(chunk ->
+                            chunk.equals(chunkPos))) {
+
+                continue;
+            }
+
+            boolean wasLoaded =
+                    node.loaded();
+
+            node.markChunkUnloaded(chunkPos);
+
+            if (wasLoaded && !node.loaded()) {
+                captureUnloadedState(node);
+            }
+        }
+    }
+
+    private void processChunk(
+            ChunkPos chunkPos
+    ) {
         StructureManager structures =
                 level.structureManager();
 
@@ -110,7 +177,9 @@ public final class VillageWorldManager {
         refreshDirtyRegions();
     }
 
-    private void registerVillage(StructureStart start) {
+    private void registerVillage(
+            StructureStart start
+    ) {
         if (start == null) {
             return;
         }
@@ -125,10 +194,11 @@ public final class VillageWorldManager {
                 findMatchingNode(center);
 
         if (node == null) {
-            node = new VillageNode(
-                    center.asLong(),
-                    center
-            );
+            node =
+                    new VillageNode(
+                            center.asLong(),
+                            center
+                    );
 
             nodes.put(
                     node.id(),
@@ -136,20 +206,207 @@ public final class VillageWorldManager {
             );
         }
 
-        boolean newlyLoaded = !node.loaded();
+        boolean wasLoaded =
+                node.loaded();
 
         node.markLoaded(
                 center,
                 structureBox
         );
 
+        refreshLoadedChunks(node);
+
         rebuildFarmRegions(
                 node,
                 start
         );
 
-        if (newlyLoaded) {
-            connectNearestNeighbor(node);
+        if (!wasLoaded && node.loaded()) {
+            activateVillage(node);
+        }
+
+        connectNearestNeighbor(node);
+    }
+
+    private void activateVillage(
+            VillageNode node
+    ) {
+        VillagePopulation observed =
+                VillagePopulationScanner.scan(
+                        level,
+                        node.structureBox()
+                );
+
+        long currentDay =
+                currentDay();
+
+        VillageState oldState =
+                node.state();
+
+        if (oldState == null) {
+            /*
+             * First observation. There is no past to simulate.
+             * Housing is temporarily equal to the observed population.
+             * This will later be replaced by actual bed capacity.
+             */
+            node.updateState(
+                    new VillageState(
+                            node.id(),
+                            node.center(),
+                            currentDay,
+                            observed,
+                            observed.population(),
+                            0.0
+                    )
+            );
+
+            return;
+        }
+
+        long elapsedDays =
+                currentDay - oldState.day();
+
+        if (elapsedDays <= 0) {
+            return;
+        }
+
+        VillageDayInput input =
+                buildDayInput(node);
+
+        VillageState newState =
+                VillageSimulator.simulateDays(
+                        oldState,
+                        input,
+                        level.getSeed(),
+                        PARAMETERS,
+                        elapsedDays
+                );
+
+        node.updateState(newState);
+
+        VillageStateRestorer.restore(
+                level,
+                node.structureBox(),
+                newState
+        );
+    }
+
+    private void captureUnloadedState(
+            VillageNode node
+    ) {
+        if (node.structureBox() == null) {
+            return;
+        }
+
+        refreshDirtyRegions(node);
+
+        VillagePopulation population =
+                VillagePopulationScanner.scan(
+                        level,
+                        node.structureBox()
+                );
+
+        long day =
+                currentDay();
+
+        VillageState oldState =
+                node.state();
+
+        if (oldState == null) {
+            node.updateState(
+                    new VillageState(
+                            node.id(),
+                            node.center(),
+                            day,
+                            population,
+                            population.population(),
+                            0.0
+                    )
+            );
+
+            return;
+        }
+
+        node.updateState(
+                new VillageState(
+                        oldState.id(),
+                        oldState.center(),
+                        day,
+                        population,
+                        oldState.housingCapacity(),
+                        oldState.foodReserve()
+                )
+        );
+    }
+
+    private VillageDayInput buildDayInput(
+            VillageNode node
+    ) {
+        double fieldCapacity = 0.0;
+
+        for (VillageFarmRegion region :
+                node.farmRegions()) {
+
+            fieldCapacity +=
+                    region.farmlandAmount();
+        }
+
+        return new VillageDayInput(
+                fieldCapacity,
+                DEFAULT_FERTILITY,
+                DEFAULT_ZOMBIE_PRESSURE,
+                0,
+                0
+        );
+    }
+
+    private long currentDay() {
+        return GuestTime.day(
+                GuestTime.gameTime(level)
+        );
+    }
+
+    private void refreshLoadedChunks(
+            VillageNode node
+    ) {
+        BoundingBox box =
+                node.structureBox();
+
+        node.clearLoadedChunks();
+
+        if (box == null) {
+            return;
+        }
+
+        box.intersectingChunks()
+                .forEach(chunk -> {
+                    if (level.getChunkSource()
+                            .getChunkNow(
+                                    chunk.x(),
+                                    chunk.z()
+                            ) != null) {
+
+                        node.markChunkLoaded(chunk);
+                    }
+                });
+    }
+
+    private void refreshDirtyRegions(
+            VillageNode node
+    ) {
+        for (VillageFarmRegion region :
+                node.farmRegions()) {
+
+            if (!region.dirty()) {
+                continue;
+            }
+
+            region.update(
+                    VillageFarmScanner.scan(
+                            level,
+                            region.pieceBox()
+                    )
+            );
         }
     }
 
@@ -199,43 +456,37 @@ public final class VillageWorldManager {
     private void connectNearestNeighbor(
             VillageNode node
     ) {
-        connectNearestNeighbor(
-                node,
-                null,
-                VIRTUAL_NEIGHBOR_HOPS
-        );
-    }
-
-    private void connectNearestNeighbor(
-            VillageNode node,
-            VillageNode excluded,
-            int remainingVirtualHops
-    ) {
         BlockPos nearest =
                 findNearestOtherVillage(
-                        node.center(),
-                        node,
-                        excluded
+                        node.center()
                 );
 
         if (nearest == null) {
             return;
         }
 
-        /*
-         * findNearestMapStructure() gives us the generated structure's
-         * locate position. We only trust its X/Z here.
-         *
-         * The Y coordinate of a virtual village is only for visualization,
-         * so keep it aligned with the village from which we discovered it.
-         */
-        BlockPos virtualCenter =
-                nearest.atY(
-                        node.center().getY()
-                );
-
         VillageNode neighbor =
-                getOrCreateNode(virtualCenter);
+                findMatchingNode(nearest);
+
+        if (neighbor == null) {
+            long id = nearest.asLong();
+
+            neighbor =
+                    nodes.get(id);
+
+            if (neighbor == null) {
+                neighbor =
+                        new VillageNode(
+                                id,
+                                nearest
+                        );
+
+                nodes.put(
+                        id,
+                        neighbor
+                );
+            }
+        }
 
         roads.add(
                 RoadEdge.of(
@@ -243,113 +494,52 @@ public final class VillageWorldManager {
                         neighbor.id()
                 )
         );
-
-        /*
-         * One bounded extra step allows:
-         *
-         *     loaded A ---- virtual B ---- virtual C
-         *
-         * but does not continue into D, E, F...
-         */
-        if (!neighbor.loaded()
-                && remainingVirtualHops > 0) {
-
-            connectNearestNeighbor(
-                    neighbor,
-                    node,
-                    remainingVirtualHops - 1
-            );
-        }
-    }
-
-    private VillageNode getOrCreateNode(
-            BlockPos center
-    ) {
-        VillageNode existing =
-                findMatchingNode(center);
-
-        if (existing != null) {
-            return existing;
-        }
-
-        VillageNode node =
-                new VillageNode(
-                        center.asLong(),
-                        center
-                );
-
-        nodes.put(
-                node.id(),
-                node
-        );
-
-        return node;
     }
 
     private BlockPos findNearestOtherVillage(
-            BlockPos center,
-            VillageNode node,
-            VillageNode excluded
+            BlockPos center
     ) {
         BlockPos best = null;
-        double bestDistance = Double.MAX_VALUE;
+        double bestDistance =
+                Double.MAX_VALUE;
 
-        for (int radius : NEIGHBOR_PROBE_RADII) {
-            for (int[] direction :
-                    NEIGHBOR_DIRECTIONS) {
+        for (BlockPos offset :
+                NEIGHBOR_PROBES) {
 
-                BlockPos query =
-                        new BlockPos(
-                                center.getX()
-                                        + direction[0] * radius,
-                                center.getY(),
-                                center.getZ()
-                                        + direction[1] * radius
-                        );
+            BlockPos query =
+                    center.offset(offset);
 
-                BlockPos candidate =
-                        level.findNearestMapStructure(
-                                net.minecraft.tags.StructureTags.VILLAGE,
-                                query,
-                                NEIGHBOR_SEARCH_RADIUS,
-                                false
-                        );
+            BlockPos candidate =
+                    level.findNearestMapStructure(
+                            net.minecraft.tags.StructureTags.VILLAGE,
+                            query,
+                            NEIGHBOR_SEARCH_RADIUS,
+                            false
+                    );
 
-                if (candidate == null) {
-                    continue;
-                }
+            if (candidate == null) {
+                continue;
+            }
 
-                /*
-                 * The search is allowed to return the village we started
-                 * from. Reject known copies of that village explicitly
-                 * rather than relying on an arbitrary distance threshold.
-                 */
-                VillageNode matched =
-                        findMatchingNode(candidate);
+            double distance =
+                    candidate.distSqr(center);
 
-                if (matched == node
-                        || matched == excluded) {
+            if (distance <= 128.0 * 128.0) {
+                continue;
+            }
 
-                    continue;
-                }
-
-                double distance =
-                        horizontalDistanceSqr(
-                                candidate,
-                                center
-                        );
-
-                if (distance < bestDistance) {
-                    bestDistance = distance;
-                    best = candidate;
-                }
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = candidate;
             }
         }
 
         return best;
     }
 
-    public void handleBlockChange(BlockPos pos) {
+    public void handleBlockChange(
+            BlockPos pos
+    ) {
         List<VillageFarmRegion> regions =
                 regionsByChunk.get(
                         ChunkPos.pack(
@@ -362,15 +552,18 @@ public final class VillageWorldManager {
             return;
         }
 
-        for (VillageFarmRegion region : regions) {
+        for (VillageFarmRegion region :
+                regions) {
+
             if (region.pieceBox().isInside(pos)) {
                 region.markDirty();
             }
         }
 
-        level.getServer().execute(
-                this::refreshDirtyRegions
-        );
+        level.getServer()
+                .execute(
+                        this::refreshDirtyRegions
+                );
     }
 
     private void markRegionsInChunkDirty(
@@ -385,7 +578,8 @@ public final class VillageWorldManager {
             return;
         }
 
-        for (VillageFarmRegion region : regions) {
+        for (VillageFarmRegion region :
+                regions) {
             region.markDirty();
         }
     }
@@ -398,20 +592,7 @@ public final class VillageWorldManager {
                 continue;
             }
 
-            for (VillageFarmRegion region :
-                    node.farmRegions()) {
-
-                if (!region.dirty()) {
-                    continue;
-                }
-
-                region.update(
-                        VillageFarmScanner.scan(
-                                level,
-                                region.pieceBox()
-                        )
-                );
-            }
+            refreshDirtyRegions(node);
         }
     }
 
@@ -424,7 +605,8 @@ public final class VillageWorldManager {
                         regionsByChunk
                                 .computeIfAbsent(
                                         chunk.pack(),
-                                        ignored -> new ArrayList<>()
+                                        ignored ->
+                                                new ArrayList<>()
                                 )
                                 .add(region)
                 );
@@ -462,38 +644,21 @@ public final class VillageWorldManager {
                 (double) VILLAGE_MATCH_RADIUS
                         * VILLAGE_MATCH_RADIUS;
 
-        return nodes.values().stream()
+        return nodes.values()
+                .stream()
                 .filter(node ->
-                        horizontalDistanceSqr(
-                                node.center(),
-                                center
-                        ) <= radius
+                        node.center()
+                                .distSqr(center)
+                                <= radius
                 )
                 .min(
                         Comparator.comparingDouble(
                                 node ->
-                                        horizontalDistanceSqr(
-                                                node.center(),
-                                                center
-                                        )
+                                        node.center()
+                                                .distSqr(center)
                         )
                 )
                 .orElse(null);
-    }
-
-    private static double horizontalDistanceSqr(
-            BlockPos first,
-            BlockPos second
-    ) {
-        double dx =
-                first.getX()
-                        - second.getX();
-
-        double dz =
-                first.getZ()
-                        - second.getZ();
-
-        return dx * dx + dz * dz;
     }
 
     private boolean isVanillaVillageStructure(
@@ -512,16 +677,23 @@ public final class VillageWorldManager {
 
     public synchronized VillageDebugSnapshot snapshot() {
         List<VillageDebugSnapshot.VillageSnapshot>
-                villages = new ArrayList<>();
+                villages =
+                new ArrayList<>();
 
         for (VillageNode node :
                 nodes.values()) {
 
             List<VillageDebugSnapshot.FarmSnapshot>
-                    farms = new ArrayList<>();
+                    farms =
+                    new ArrayList<>();
+
+            int farmlandAmount = 0;
 
             for (VillageFarmRegion region :
                     node.farmRegions()) {
+
+                farmlandAmount +=
+                        region.farmlandAmount();
 
                 farms.add(
                         new VillageDebugSnapshot.FarmSnapshot(
@@ -539,13 +711,19 @@ public final class VillageWorldManager {
                             node.center(),
                             node.loaded(),
                             node.structureBox(),
+                            farmlandAmount,
+                            node.state() == null
+                                    ? null
+                                    : node.state()
+                                    .villagePopulation(),
                             List.copyOf(farms)
                     )
             );
         }
 
         List<VillageDebugSnapshot.RoadSnapshot>
-                roadSnapshots = new ArrayList<>();
+                roadSnapshots =
+                new ArrayList<>();
 
         for (RoadEdge road : roads) {
             VillageNode first =
@@ -558,9 +736,7 @@ public final class VillageWorldManager {
                             road.secondVillageId()
                     );
 
-            if (first == null
-                    || second == null) {
-
+            if (first == null || second == null) {
                 continue;
             }
 

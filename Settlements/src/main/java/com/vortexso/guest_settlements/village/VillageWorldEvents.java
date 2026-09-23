@@ -13,47 +13,97 @@ public final class VillageWorldEvents {
     }
 
     @SubscribeEvent
-    public static void onChunkLoad(ChunkEvent.Load event) {
+    public static void onChunkLoad(
+            ChunkEvent.Load event
+    ) {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        VillageWorldManager.get(level).queueChunk(event.getChunk().getPos());
+        VillageWorldManager manager =
+                VillageWorldManager.get(level);
+
+        manager.handleChunkLoad(
+                event.getChunk().getPos()
+        );
+
+        manager.queueChunk(
+                event.getChunk().getPos()
+        );
     }
 
     @SubscribeEvent
-    public static void onBlockBreak(BreakBlockEvent event) {
+    public static void onChunkUnload(
+            ChunkEvent.Unload event
+    ) {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        VillageWorldManager.get(level).handleBlockChange(event.getPos());
+        VillageWorldManager
+                .get(level)
+                .handleChunkUnload(
+                        event.getChunk().getPos()
+                );
     }
 
     @SubscribeEvent
-    public static void onEntityPlace(BlockEvent.EntityPlaceEvent event) {
+    public static void onBlockBreak(
+            BreakBlockEvent event
+    ) {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        VillageWorldManager.get(level).handleBlockChange(event.getPos());
+        VillageWorldManager
+                .get(level)
+                .handleBlockChange(
+                        event.getPos()
+                );
     }
 
     @SubscribeEvent
-    public static void onFarmlandTrample(BlockEvent.FarmlandTrampleEvent event) {
+    public static void onEntityPlace(
+            BlockEvent.EntityPlaceEvent event
+    ) {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        VillageWorldManager.get(level).handleBlockChange(event.getPos());
+        VillageWorldManager
+                .get(level)
+                .handleBlockChange(
+                        event.getPos()
+                );
     }
 
     @SubscribeEvent
-    public static void onToolModification(BlockEvent.BlockToolModificationEvent event) {
+    public static void onFarmlandTrample(
+            BlockEvent.FarmlandTrampleEvent event
+    ) {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        VillageWorldManager.get(level).handleBlockChange(event.getPos());
+        VillageWorldManager
+                .get(level)
+                .handleBlockChange(
+                        event.getPos()
+                );
+    }
+
+    @SubscribeEvent
+    public static void onToolModification(
+            BlockEvent.BlockToolModificationEvent event
+    ) {
+        if (!(event.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+
+        VillageWorldManager
+                .get(level)
+                .handleBlockChange(
+                        event.getPos()
+                );
     }
 }
