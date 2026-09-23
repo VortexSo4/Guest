@@ -1,6 +1,9 @@
+import java.util.regex.Pattern
+
 plugins {
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.147'
+    id 'me.champeau.jmh' version '0.7.3' apply false
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -12,6 +15,36 @@ allprojects {
         module {
             downloadSources = true
             downloadJavadoc = true
+        }
+    }
+}
+
+subprojects {
+    plugins.withId('java') {
+        apply plugin: 'me.champeau.jmh'
+
+        jmh {
+            warmupIterations = 3
+            warmup = '1s'
+
+            iterations = 5
+            timeOnIteration = '1s'
+
+            fork = 1
+            threads = 1
+
+            timeUnit = 'ns'
+
+            zip64 = true
+
+            if (rootProject.hasProperty('benchmark')) {
+                String requested =
+                        rootProject.property('benchmark').toString()
+
+                includes = [
+                        '^' + Pattern.quote(requested) + '(\\..*)?$'
+                ]
+            }
         }
     }
 }
@@ -46,8 +79,31 @@ neoForge {
         guest_core {
             sourceSet project(':Core').sourceSets.main
         }
+
         guest_settlements {
             sourceSet project(':Settlements').sourceSets.main
         }
     }
+}
+
+tasks.register('benchmark') {
+    group = 'verification'
+    description = 'Run JMH benchmarks.'
+
+    dependsOn(
+            subprojects.collectMany { project ->
+                if (!project.plugins.hasPlugin('me.champeau.jmh')) {
+                    return []
+                }
+
+                File benchmarkSource =
+                        project.file('src/jmh/java')
+
+                if (!benchmarkSource.exists()) {
+                    return []
+                }
+
+                return [project.tasks.named('jmh')]
+            }
+    )
 }

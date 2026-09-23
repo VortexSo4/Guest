@@ -25,15 +25,23 @@ public final class VillageWorldManager {
     private static final int NEIGHBOR_SEARCH_RADIUS = 4096;
     private static final int VILLAGE_MATCH_RADIUS = 256;
 
-    private static final BlockPos[] NEIGHBOR_PROBES = {
-            new BlockPos(160, 0, 0),
-            new BlockPos(-160, 0, 0),
-            new BlockPos(0, 0, 160),
-            new BlockPos(0, 0, -160),
-            new BlockPos(113, 0, 113),
-            new BlockPos(113, 0, -113),
-            new BlockPos(-113, 0, 113),
-            new BlockPos(-113, 0, -113)
+    private static final int VIRTUAL_NEIGHBOR_HOPS = 1;
+
+    private static final int[][] NEIGHBOR_DIRECTIONS = {
+            { 1,  0},
+            {-1,  0},
+            { 0,  1},
+            { 0, -1},
+            { 1,  1},
+            { 1, -1},
+            {-1,  1},
+            {-1, -1}
+    };
+
+    private static final int[] NEIGHBOR_PROBE_RADII = {
+            256,
+            512,
+            1024
     };
 
     private static final Set<Identifier> VANILLA_VILLAGES = Set.of(
@@ -48,9 +56,14 @@ public final class VillageWorldManager {
             new WeakHashMap<>();
 
     private final ServerLevel level;
+
     private final Map<Long, VillageNode> nodes = new HashMap<>();
+
     private final Set<RoadEdge> roads = new HashSet<>();
-    private final Map<Long, List<VillageFarmRegion>> regionsByChunk = new HashMap<>();
+
+    private final Map<Long, List<VillageFarmRegion>> regionsByChunk =
+            new HashMap<>();
+
     private final Set<Long> queuedChunks = new HashSet<>();
 
     private VillageWorldManager(ServerLevel level) {
@@ -58,16 +71,21 @@ public final class VillageWorldManager {
     }
 
     public static synchronized VillageWorldManager get(ServerLevel level) {
-        return INSTANCES.computeIfAbsent(level, VillageWorldManager::new);
+        return INSTANCES.computeIfAbsent(
+                level,
+                VillageWorldManager::new
+        );
     }
 
     public void queueChunk(ChunkPos pos) {
         long key = pos.pack();
+
         if (!queuedChunks.add(key)) {
             return;
         }
 
         MinecraftServer server = level.getServer();
+
         server.execute(() -> {
             queuedChunks.remove(key);
             processChunk(pos);
@@ -75,11 +93,14 @@ public final class VillageWorldManager {
     }
 
     private void processChunk(ChunkPos chunkPos) {
-        StructureManager structures = level.structureManager();
-        List<StructureStart> starts = structures.startsForStructure(
-                chunkPos,
-                this::isVanillaVillageStructure
-        );
+        StructureManager structures =
+                level.structureManager();
+
+        List<StructureStart> starts =
+                structures.startsForStructure(
+                        chunkPos,
+                        this::isVanillaVillageStructure
+                );
 
         for (StructureStart start : starts) {
             registerVillage(start);
@@ -94,41 +115,79 @@ public final class VillageWorldManager {
             return;
         }
 
-        BoundingBox structureBox = start.getBoundingBox();
-        BlockPos center = structureBox.getCenter();
+        BoundingBox structureBox =
+                start.getBoundingBox();
 
-        VillageNode node = findMatchingNode(center);
+        BlockPos center =
+                structureBox.getCenter();
+
+        VillageNode node =
+                findMatchingNode(center);
+
         if (node == null) {
-            node = new VillageNode(center.asLong(), center);
-            nodes.put(node.id(), node);
+            node = new VillageNode(
+                    center.asLong(),
+                    center
+            );
+
+            nodes.put(
+                    node.id(),
+                    node
+            );
         }
 
-        node.markLoaded(center, structureBox);
+        boolean newlyLoaded = !node.loaded();
 
-        rebuildFarmRegions(node, start);
-        connectNearestNeighbor(node);
+        node.markLoaded(
+                center,
+                structureBox
+        );
+
+        rebuildFarmRegions(
+                node,
+                start
+        );
+
+        if (newlyLoaded) {
+            connectNearestNeighbor(node);
+        }
     }
 
-    private void rebuildFarmRegions(VillageNode node, StructureStart start) {
-        for (VillageFarmRegion oldRegion : node.farmRegions()) {
+    private void rebuildFarmRegions(
+            VillageNode node,
+            StructureStart start
+    ) {
+        for (VillageFarmRegion oldRegion :
+                node.farmRegions()) {
+
             unindexRegion(oldRegion);
         }
 
-        List<VillageFarmRegion> regions = new ArrayList<>();
+        List<VillageFarmRegion> regions =
+                new ArrayList<>();
 
-        for (StructurePiece piece : start.getPieces()) {
-            BoundingBox pieceBox = piece.getBoundingBox();
+        for (StructurePiece piece :
+                start.getPieces()) {
 
-            VillageFarmRegion region = new VillageFarmRegion(
-                    node.id(),
-                    pieceBox
-            );
+            BoundingBox pieceBox =
+                    piece.getBoundingBox();
+
+            VillageFarmRegion region =
+                    new VillageFarmRegion(
+                            node.id(),
+                            pieceBox
+                    );
 
             region.update(
-                    VillageFarmScanner.scan(level, pieceBox)
+                    VillageFarmScanner.scan(
+                            level,
+                            pieceBox
+                    )
             );
 
-            if (region.farmlandAmount() > 0 || !region.complete()) {
+            if (region.farmlandAmount() > 0
+                    || !region.complete()) {
+
                 regions.add(region);
                 indexRegion(region);
             }
@@ -137,50 +196,153 @@ public final class VillageWorldManager {
         node.replaceFarmRegions(regions);
     }
 
-    private void connectNearestNeighbor(VillageNode node) {
-        BlockPos nearest = findNearestOtherVillage(node.center());
+    private void connectNearestNeighbor(
+            VillageNode node
+    ) {
+        connectNearestNeighbor(
+                node,
+                null,
+                VIRTUAL_NEIGHBOR_HOPS
+        );
+    }
+
+    private void connectNearestNeighbor(
+            VillageNode node,
+            VillageNode excluded,
+            int remainingVirtualHops
+    ) {
+        BlockPos nearest =
+                findNearestOtherVillage(
+                        node.center(),
+                        node,
+                        excluded
+                );
+
         if (nearest == null) {
             return;
         }
 
-        VillageNode neighbor = findMatchingNode(nearest);
-        if (neighbor == null) {
-            long id = nearest.asLong();
-            neighbor = nodes.get(id);
-            if (neighbor == null) {
-                neighbor = new VillageNode(id, nearest);
-                nodes.put(id, neighbor);
-            }
-        }
+        /*
+         * findNearestMapStructure() gives us the generated structure's
+         * locate position. We only trust its X/Z here.
+         *
+         * The Y coordinate of a virtual village is only for visualization,
+         * so keep it aligned with the village from which we discovered it.
+         */
+        BlockPos virtualCenter =
+                nearest.atY(
+                        node.center().getY()
+                );
 
-        roads.add(RoadEdge.of(node.id(), neighbor.id()));
+        VillageNode neighbor =
+                getOrCreateNode(virtualCenter);
+
+        roads.add(
+                RoadEdge.of(
+                        node.id(),
+                        neighbor.id()
+                )
+        );
+
+        /*
+         * One bounded extra step allows:
+         *
+         *     loaded A ---- virtual B ---- virtual C
+         *
+         * but does not continue into D, E, F...
+         */
+        if (!neighbor.loaded()
+                && remainingVirtualHops > 0) {
+
+            connectNearestNeighbor(
+                    neighbor,
+                    node,
+                    remainingVirtualHops - 1
+            );
+        }
     }
 
-    private BlockPos findNearestOtherVillage(BlockPos center) {
+    private VillageNode getOrCreateNode(
+            BlockPos center
+    ) {
+        VillageNode existing =
+                findMatchingNode(center);
+
+        if (existing != null) {
+            return existing;
+        }
+
+        VillageNode node =
+                new VillageNode(
+                        center.asLong(),
+                        center
+                );
+
+        nodes.put(
+                node.id(),
+                node
+        );
+
+        return node;
+    }
+
+    private BlockPos findNearestOtherVillage(
+            BlockPos center,
+            VillageNode node,
+            VillageNode excluded
+    ) {
         BlockPos best = null;
         double bestDistance = Double.MAX_VALUE;
 
-        for (BlockPos offset : NEIGHBOR_PROBES) {
-            BlockPos query = center.offset(offset);
-            BlockPos candidate = level.findNearestMapStructure(
-                    net.minecraft.tags.StructureTags.VILLAGE,
-                    query,
-                    NEIGHBOR_SEARCH_RADIUS,
-                    false
-            );
+        for (int radius : NEIGHBOR_PROBE_RADII) {
+            for (int[] direction :
+                    NEIGHBOR_DIRECTIONS) {
 
-            if (candidate == null) {
-                continue;
-            }
+                BlockPos query =
+                        new BlockPos(
+                                center.getX()
+                                        + direction[0] * radius,
+                                center.getY(),
+                                center.getZ()
+                                        + direction[1] * radius
+                        );
 
-            double distance = candidate.distSqr(center);
-            if (distance <= 128.0 * 128.0) {
-                continue;
-            }
+                BlockPos candidate =
+                        level.findNearestMapStructure(
+                                net.minecraft.tags.StructureTags.VILLAGE,
+                                query,
+                                NEIGHBOR_SEARCH_RADIUS,
+                                false
+                        );
 
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                best = candidate;
+                if (candidate == null) {
+                    continue;
+                }
+
+                /*
+                 * The search is allowed to return the village we started
+                 * from. Reject known copies of that village explicitly
+                 * rather than relying on an arbitrary distance threshold.
+                 */
+                VillageNode matched =
+                        findMatchingNode(candidate);
+
+                if (matched == node
+                        || matched == excluded) {
+
+                    continue;
+                }
+
+                double distance =
+                        horizontalDistanceSqr(
+                                candidate,
+                                center
+                        );
+
+                if (distance < bestDistance) {
+                    bestDistance = distance;
+                    best = candidate;
+                }
             }
         }
 
@@ -189,7 +351,12 @@ public final class VillageWorldManager {
 
     public void handleBlockChange(BlockPos pos) {
         List<VillageFarmRegion> regions =
-                regionsByChunk.get(ChunkPos.pack(pos.getX() >> 4, pos.getZ() >> 4));
+                regionsByChunk.get(
+                        ChunkPos.pack(
+                                pos.getX() >> 4,
+                                pos.getZ() >> 4
+                        )
+                );
 
         if (regions == null) {
             return;
@@ -201,11 +368,19 @@ public final class VillageWorldManager {
             }
         }
 
-        level.getServer().execute(this::refreshDirtyRegions);
+        level.getServer().execute(
+                this::refreshDirtyRegions
+        );
     }
 
-    private void markRegionsInChunkDirty(ChunkPos chunkPos) {
-        List<VillageFarmRegion> regions = regionsByChunk.get(chunkPos.pack());
+    private void markRegionsInChunkDirty(
+            ChunkPos chunkPos
+    ) {
+        List<VillageFarmRegion> regions =
+                regionsByChunk.get(
+                        chunkPos.pack()
+                );
+
         if (regions == null) {
             return;
         }
@@ -216,12 +391,16 @@ public final class VillageWorldManager {
     }
 
     private void refreshDirtyRegions() {
-        for (VillageNode node : nodes.values()) {
+        for (VillageNode node :
+                nodes.values()) {
+
             if (!node.loaded()) {
                 continue;
             }
 
-            for (VillageFarmRegion region : node.farmRegions()) {
+            for (VillageFarmRegion region :
+                    node.farmRegions()) {
+
                 if (!region.dirty()) {
                     continue;
                 }
@@ -236,88 +415,163 @@ public final class VillageWorldManager {
         }
     }
 
-    private void indexRegion(VillageFarmRegion region) {
+    private void indexRegion(
+            VillageFarmRegion region
+    ) {
         region.pieceBox()
                 .intersectingChunks()
                 .forEach(chunk ->
                         regionsByChunk
-                                .computeIfAbsent(chunk.pack(), ignored -> new ArrayList<>())
+                                .computeIfAbsent(
+                                        chunk.pack(),
+                                        ignored -> new ArrayList<>()
+                                )
                                 .add(region)
                 );
     }
 
-    private void unindexRegion(VillageFarmRegion region) {
+    private void unindexRegion(
+            VillageFarmRegion region
+    ) {
         region.pieceBox()
                 .intersectingChunks()
                 .forEach(chunk -> {
-                    List<VillageFarmRegion> regions = regionsByChunk.get(chunk.pack());
+                    List<VillageFarmRegion> regions =
+                            regionsByChunk.get(
+                                    chunk.pack()
+                            );
+
                     if (regions == null) {
                         return;
                     }
 
                     regions.remove(region);
+
                     if (regions.isEmpty()) {
-                        regionsByChunk.remove(chunk.pack());
+                        regionsByChunk.remove(
+                                chunk.pack()
+                        );
                     }
                 });
     }
 
-    private VillageNode findMatchingNode(BlockPos center) {
-        double radius = (double) VILLAGE_MATCH_RADIUS * VILLAGE_MATCH_RADIUS;
+    private VillageNode findMatchingNode(
+            BlockPos center
+    ) {
+        double radius =
+                (double) VILLAGE_MATCH_RADIUS
+                        * VILLAGE_MATCH_RADIUS;
 
         return nodes.values().stream()
-                .filter(node -> node.center().distSqr(center) <= radius)
-                .min(Comparator.comparingDouble(node -> node.center().distSqr(center)))
+                .filter(node ->
+                        horizontalDistanceSqr(
+                                node.center(),
+                                center
+                        ) <= radius
+                )
+                .min(
+                        Comparator.comparingDouble(
+                                node ->
+                                        horizontalDistanceSqr(
+                                                node.center(),
+                                                center
+                                        )
+                        )
+                )
                 .orElse(null);
     }
 
-    private boolean isVanillaVillageStructure(Structure structure) {
+    private static double horizontalDistanceSqr(
+            BlockPos first,
+            BlockPos second
+    ) {
+        double dx =
+                first.getX()
+                        - second.getX();
+
+        double dz =
+                first.getZ()
+                        - second.getZ();
+
+        return dx * dx + dz * dz;
+    }
+
+    private boolean isVanillaVillageStructure(
+            Structure structure
+    ) {
         Identifier key =
                 level.registryAccess()
-                        .lookupOrThrow(Registries.STRUCTURE)
+                        .lookupOrThrow(
+                                Registries.STRUCTURE
+                        )
                         .getKey(structure);
 
-        return key != null && VANILLA_VILLAGES.contains(key);
+        return key != null
+                && VANILLA_VILLAGES.contains(key);
     }
 
     public synchronized VillageDebugSnapshot snapshot() {
-        List<VillageDebugSnapshot.VillageSnapshot> villages = new ArrayList<>();
+        List<VillageDebugSnapshot.VillageSnapshot>
+                villages = new ArrayList<>();
 
-        for (VillageNode node : nodes.values()) {
-            List<VillageDebugSnapshot.FarmSnapshot> farms = new ArrayList<>();
+        for (VillageNode node :
+                nodes.values()) {
 
-            for (VillageFarmRegion region : node.farmRegions()) {
-                farms.add(new VillageDebugSnapshot.FarmSnapshot(
-                        region.pieceBox(),
-                        region.farmBox(),
-                        region.farmlandAmount(),
-                        region.complete()
-                ));
+            List<VillageDebugSnapshot.FarmSnapshot>
+                    farms = new ArrayList<>();
+
+            for (VillageFarmRegion region :
+                    node.farmRegions()) {
+
+                farms.add(
+                        new VillageDebugSnapshot.FarmSnapshot(
+                                region.pieceBox(),
+                                region.farmBox(),
+                                region.farmlandAmount(),
+                                region.complete()
+                        )
+                );
             }
 
-            villages.add(new VillageDebugSnapshot.VillageSnapshot(
-                    node.id(),
-                    node.center(),
-                    node.loaded(),
-                    node.structureBox(),
-                    List.copyOf(farms)
-            ));
+            villages.add(
+                    new VillageDebugSnapshot.VillageSnapshot(
+                            node.id(),
+                            node.center(),
+                            node.loaded(),
+                            node.structureBox(),
+                            List.copyOf(farms)
+                    )
+            );
         }
 
-        List<VillageDebugSnapshot.RoadSnapshot> roadSnapshots = new ArrayList<>();
+        List<VillageDebugSnapshot.RoadSnapshot>
+                roadSnapshots = new ArrayList<>();
+
         for (RoadEdge road : roads) {
-            VillageNode first = nodes.get(road.firstVillageId());
-            VillageNode second = nodes.get(road.secondVillageId());
-            if (first == null || second == null) {
+            VillageNode first =
+                    nodes.get(
+                            road.firstVillageId()
+                    );
+
+            VillageNode second =
+                    nodes.get(
+                            road.secondVillageId()
+                    );
+
+            if (first == null
+                    || second == null) {
+
                 continue;
             }
 
-            roadSnapshots.add(new VillageDebugSnapshot.RoadSnapshot(
-                    road.firstVillageId(),
-                    road.secondVillageId(),
-                    first.center(),
-                    second.center()
-            ));
+            roadSnapshots.add(
+                    new VillageDebugSnapshot.RoadSnapshot(
+                            road.firstVillageId(),
+                            road.secondVillageId(),
+                            first.center(),
+                            second.center()
+                    )
+            );
         }
 
         return new VillageDebugSnapshot(
