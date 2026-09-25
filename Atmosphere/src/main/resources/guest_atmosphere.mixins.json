@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.vortexso.guest_atmosphere.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["LevelMixin"],
+  "client": ["client.WeatherEffectRendererMixin"],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

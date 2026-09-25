@@ -4,6 +4,7 @@ import net.minecraft.gizmos.GizmoProperties;
 import net.minecraft.gizmos.GizmoStyle;
 import net.minecraft.gizmos.Gizmos;
 import net.minecraft.gizmos.TextGizmo;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -90,6 +91,11 @@ public final class GuestGizmos {
   public static GizmoProperties text(String text, Vec3 position, int color, float scale) {
     return Gizmos.billboardText(
         text, position, TextGizmo.Style.forColorAndCentered(color).withScale(scale));
+  }
+
+  /** Resolves the component with the client language, so debug labels stay localizable. */
+  public static GizmoProperties text(Component text, Vec3 position, int color) {
+    return text(text.getString(), position, color);
   }
 
   public static GizmoProperties text(

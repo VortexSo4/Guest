@@ -3,20 +3,30 @@ package com.vortexso.guest_settlements.village;
 import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.Vec3;
+import org.jspecify.annotations.Nullable;
 
-public record VillageDebugSnapshot(List<VillageSnapshot> villages, List<RoadSnapshot> roads) {
+/** Read-only copy of the live simulation for the debug renderer; never simulated on its own. */
+public record VillageDebugSnapshot(
+    long day,
+    List<VillageSnapshot> villages,
+    List<RoadSnapshot> roads,
+    List<CaravanSnapshot> caravans) {
   public record VillageSnapshot(
       long id,
       BlockPos center,
-      boolean loaded,
-      BoundingBox structureBox,
-      int farmlandAmount,
-      VillagePopulation population,
+      boolean active,
+      @Nullable BoundingBox structureBox,
+      @Nullable BlockPos bell,
+      @Nullable VillageState state,
+      VillageSimulator.@Nullable Rates rates,
+      double pressure,
       List<FarmSnapshot> farms) {}
 
   public record FarmSnapshot(
-      BoundingBox pieceBox, BoundingBox farmBox, int farmlandAmount, boolean complete) {}
+      BoundingBox pieceBox, @Nullable BoundingBox farmBox, int farmlandAmount, boolean complete) {}
 
-  public record RoadSnapshot(
-      long firstVillageId, long secondVillageId, BlockPos firstCenter, BlockPos secondCenter) {}
+  public record RoadSnapshot(BlockPos firstCenter, BlockPos secondCenter) {}
+
+  public record CaravanSnapshot(Vec3 position, double progress, boolean lost) {}
 }

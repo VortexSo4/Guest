@@ -5,5 +5,8 @@ import net.minecraft.world.level.Level;
 
 @FunctionalInterface
 public interface WeatherProvider {
-  WeatherState get(Level level, BlockPos pos, long day);
+  /**
+   * Must be deterministic for (world, region of pos, gameTime) and cheap for any past/future time.
+   */
+  WeatherState get(Level level, BlockPos pos, long gameTime);
 }

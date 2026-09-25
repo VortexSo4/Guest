@@ -66,6 +66,10 @@ subprojects {
 
 evaluationDependsOn(':Core')
 evaluationDependsOn(':Settlements')
+evaluationDependsOn(':Architects')
+evaluationDependsOn(':Wilds')
+evaluationDependsOn(':Hands')
+evaluationDependsOn(':Atmosphere')
 
 neoForge {
     version = project.neo_version
@@ -73,13 +77,13 @@ neoForge {
     runs {
         client {
             client()
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
         }
 
         server {
             server()
             programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
         }
 
         configureEach {
@@ -97,6 +101,22 @@ neoForge {
 
         guest_settlements {
             sourceSet project(':Settlements').sourceSets.main
+        }
+
+        guest_architects {
+            sourceSet project(':Architects').sourceSets.main
+        }
+
+        guest_wilds {
+            sourceSet project(':Wilds').sourceSets.main
+        }
+
+        guest_hands {
+            sourceSet project(':Hands').sourceSets.main
+        }
+
+        guest_atmosphere {
+            sourceSet project(':Atmosphere').sourceSets.main
         }
     }
 }

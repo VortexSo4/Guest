@@ -46,16 +46,17 @@ public final class VillagePopulationScanner {
   }
 
   public static List<Villager> findVillagers(ServerLevel level, BoundingBox structureBox) {
-    AABB area =
-        new AABB(
-                structureBox.minX(),
-                structureBox.minY(),
-                structureBox.minZ(),
-                structureBox.maxX() + 1.0,
-                structureBox.maxY() + 1.0,
-                structureBox.maxZ() + 1.0)
-            .inflate(VILLAGER_SEARCH_MARGIN);
+    return level.getEntitiesOfClass(Villager.class, searchArea(structureBox));
+  }
 
-    return level.getEntitiesOfClass(Villager.class, area);
+  public static AABB searchArea(BoundingBox structureBox) {
+    return new AABB(
+            structureBox.minX(),
+            structureBox.minY(),
+            structureBox.minZ(),
+            structureBox.maxX() + 1.0,
+            structureBox.maxY() + 1.0,
+            structureBox.maxZ() + 1.0)
+        .inflate(VILLAGER_SEARCH_MARGIN);
   }
 }

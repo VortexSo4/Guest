@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -13,11 +15,13 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerData;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.phys.Vec3;
 
 public final class VillageStateRestorer {
   private static final Identifier NONE = Identifier.fromNamespaceAndPath("minecraft", "none");
@@ -32,9 +36,23 @@ public final class VillageStateRestorer {
           .thenComparing(villager -> villager.getVillagerXp() > 0)
           .thenComparing(villager -> villager.getUUID().toString());
 
+  /** Marks zombie villagers of a fallen village; they get shelter-seeking goals on join. */
+  public static final String INFECTED_TAG = "guest_settlements.infected";
+
   private VillageStateRestorer() {}
 
-  public static void restore(ServerLevel level, BoundingBox structureBox, VillageState state) {
+  /**
+   * Makes the loaded villagers match the aggregate state.
+   *
+   * @param homes spawn points for missing villagers (beds), so newcomers appear indoors
+   * @param onSpawn applied to every newly materialized villager (e.g. inherited memories)
+   */
+  public static void restore(
+      ServerLevel level,
+      BoundingBox structureBox,
+      VillageState state,
+      List<BlockPos> homes,
+      Consumer<Villager> onSpawn) {
     VillagePopulation target = state.villagePopulation();
 
     Registry<VillagerProfession> professionRegistry =
@@ -78,9 +96,10 @@ public final class VillageStateRestorer {
     int missingChildren = Math.max(0, targetChildren - children.size());
 
     for (int i = 0; i < missingChildren; i++) {
-      Villager villager = spawnVillager(level, structureBox, true, children.size());
+      Villager villager = spawnVillager(level, structureBox, homes, true, children.size());
 
       if (villager != null) {
+        onSpawn.accept(villager);
         children.add(villager);
       }
     }
@@ -88,9 +107,10 @@ public final class VillageStateRestorer {
     int missingAdults = Math.max(0, targetAdults - adults.size());
 
     for (int i = 0; i < missingAdults; i++) {
-      Villager villager = spawnVillager(level, structureBox, false, adults.size());
+      Villager villager = spawnVillager(level, structureBox, homes, false, adults.size());
 
       if (villager != null) {
+        onSpawn.accept(villager);
         adults.add(villager);
       }
     }
@@ -171,28 +191,60 @@ public final class VillageStateRestorer {
   }
 
   private static Villager spawnVillager(
-      ServerLevel level, BoundingBox structureBox, boolean baby, int index) {
+      ServerLevel level, BoundingBox structureBox, List<BlockPos> homes, boolean baby, int index) {
     Villager villager = EntityType.VILLAGER.create(level, EntitySpawnReason.COMMAND);
 
     if (villager == null) {
       return null;
     }
 
-    int x = structureBox.getCenter().getX();
-
-    int z = structureBox.getCenter().getZ();
-
-    int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
-
-    int offsetX = (index % 5) - 2;
-
-    int offsetZ = (index / 5) % 5 - 2;
-
-    villager.setPos(x + offsetX + 0.5, y, z + offsetZ + 0.5);
+    Vec3 pos = spawnPoint(level, structureBox, homes, index);
+    villager.setPos(pos.x, pos.y, pos.z);
 
     villager.setBaby(baby);
 
     return level.addFreshEntity(villager) ? villager : null;
+  }
+
+  /**
+   * A fallen village is left to the infected: zombie villagers appear in the empty homes, up to the
+   * number the aggregate recorded. Already present ones (killed or not) are counted first.
+   */
+  public static void restoreInfected(
+      ServerLevel level, BoundingBox structureBox, int infected, List<BlockPos> homes) {
+    int present =
+        level
+            .getEntitiesOfClass(
+                ZombieVillager.class, VillagePopulationScanner.searchArea(structureBox))
+            .size();
+    for (int i = present; i < infected; i++) {
+      ZombieVillager zombie = EntityType.ZOMBIE_VILLAGER.create(level, EntitySpawnReason.EVENT);
+      if (zombie == null) {
+        return;
+      }
+      Vec3 pos = spawnPoint(level, structureBox, homes, i);
+      zombie.setPos(pos.x, pos.y, pos.z);
+      zombie.finalizeSpawn(
+          level,
+          level.getCurrentDifficultyAt(zombie.blockPosition()),
+          EntitySpawnReason.EVENT,
+          null);
+      zombie.setPersistenceRequired();
+      zombie.addTag(INFECTED_TAG);
+      level.addFreshEntity(zombie);
+    }
+  }
+
+  /** Beside a bed if the village has any, otherwise around the centre on the surface. */
+  private static Vec3 spawnPoint(
+      ServerLevel level, BoundingBox structureBox, List<BlockPos> homes, int index) {
+    if (!homes.isEmpty()) {
+      return Vec3.atBottomCenterOf(homes.get(index % homes.size()).above());
+    }
+    int x = structureBox.getCenter().getX() + (index % 5) - 2;
+    int z = structureBox.getCenter().getZ() + (index / 5) % 5 - 2;
+    int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+    return new Vec3(x + 0.5, y, z + 0.5);
   }
 
   private static void assignProfessions(

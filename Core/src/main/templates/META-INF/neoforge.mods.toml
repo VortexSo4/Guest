@@ -9,7 +9,7 @@ displayName="${mod_name}"
 authors="Vortex_So"
 
 description='''
-TODO
+Shared library for the Guest addons: calendar, deterministic world primitives, weather/wildlife read-only contracts, sparse world history, cross-addon events and debug tools. Adds no gameplay content.
 '''
 
 [[mixins]]

@@ -9,7 +9,7 @@ displayName="${mod_name}"
 authors="Vortex_So"
 
 description='''
-TODO
+Villages that keep living while you are away: an aggregate simulation of food, housing, births and losses grounded in vanilla numbers, lunar rites and mourning at the village bell, villagers visibly trading with each other, caravans on the roads between villages, memories built on vanilla gossip, seasonal illager patrols and villages that fall to the infected.
 '''
 
 [[mixins]]

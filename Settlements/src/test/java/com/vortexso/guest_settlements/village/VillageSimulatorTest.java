@@ -1,212 +1,182 @@
 package com.vortexso.guest_settlements.village;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import net.minecraft.core.BlockPos;
+import com.vortexso.guest_core.api.GuestTime;
+import java.util.List;
+import java.util.Map;
+import net.minecraft.resources.Identifier;
 import org.junit.jupiter.api.Test;
 
 class VillageSimulatorTest {
-
   private static final long SEED = 123456789L;
-
+  private static final Identifier LIBRARIAN = Identifier.withDefaultNamespace("librarian");
   private static final VillageSimulationParameters PARAMETERS =
-      new VillageSimulationParameters(
-          2.0, // foodPerVillagerPerDay
-          2.0, // foodForBreedingVillager
-          12.0, // foodYieldPerFarmer
-          20.0, // childMaturationDays
-          0.02, // birthRatePerEligiblePairPerDay
-          0.001, // baseZombieDeathRatePerDay
-          0.0 // activeVariation
-          );
+      VillageSimulationParameters.defaults();
+  private static final VillageEnvironment CALM = VillageEnvironment.calm(1.0);
 
   private static VillageState village(
-      int population, int children, int housingCapacity, double foodReserve) {
+      int farmers, int librarians, int children, int beds, int farmland, double food) {
     return new VillageState(
-        1L, BlockPos.ZERO, 0L, population, children, housingCapacity, foodReserve);
-  }
-
-  private static VillageDayInput input(
-      int farmers, double fieldCapacity, double fertility, double zombiePressure) {
-    return new VillageDayInput(farmers, fieldCapacity, fertility, zombiePressure, 0, 0);
-  }
-
-  @Test
-  void deterministicSimulation() {
-    VillageState initial = village(20, 4, 30, 100.0);
-
-    VillageDayInput input = input(4, 100.0, 1.0, 0.1);
-
-    VillageState first = VillageSimulator.simulateDay(initial, input, SEED, PARAMETERS);
-
-    VillageState second = VillageSimulator.simulateDay(initial, input, SEED, PARAMETERS);
-
-    assertEquals(first, second);
+        1L,
+        0L,
+        new VillagePopulation(
+            children, Map.of(VillageSimulator.FARMER, farmers, LIBRARIAN, librarians)),
+        beds,
+        farmland,
+        food,
+        false,
+        0,
+        Long.MIN_VALUE);
   }
 
   @Test
-  void fieldCapacityLimitsProduction() {
-    VillageDayInput input = input(100, 100.0, 1.0, 0.0);
-
-    assertEquals(100.0, VillageSimulator.foodProduction(input, PARAMETERS), 1e-9);
-  }
-
-  @Test
-  void additionalFarmersDoNotIncreaseProductionAfterFieldCapacity() {
-    VillageDayInput fewFarmers = input(20, 100.0, 1.0, 0.0);
-
-    VillageDayInput manyFarmers = input(1000, 100.0, 1.0, 0.0);
-
+  void deterministic() {
+    VillageState start = village(3, 4, 2, 20, 100, 50.0);
     assertEquals(
-        VillageSimulator.foodProduction(fewFarmers, PARAMETERS),
-        VillageSimulator.foodProduction(manyFarmers, PARAMETERS),
-        1e-9);
+        VillageSimulator.simulateDays(start, CALM, SEED, PARAMETERS, 300),
+        VillageSimulator.simulateDays(start, CALM, SEED, PARAMETERS, 300));
   }
 
   @Test
-  void zeroFertilityProducesNoFood() {
-    VillageDayInput input = input(100, 10_000.0, 0.0, 0.0);
-
-    assertEquals(0.0, VillageSimulator.foodProduction(input, PARAMETERS), 1e-9);
+  void professionsSurviveSimulatedDays() {
+    VillageState start = village(2, 5, 0, 7, 80, 0.0);
+    VillageState after =
+        VillageSimulator.simulateDays(start, VillageEnvironment.calm(0.0), SEED, PARAMETERS, 64);
+    assertEquals(5, after.villagePopulation().professionCount(LIBRARIAN));
+    assertEquals(2, after.villagePopulation().professionCount(VillageSimulator.FARMER));
   }
 
   @Test
-  void incomingVillagersIncreasePopulation() {
-    VillageState initial = village(20, 4, 30, 100.0);
+  void productionFollowsCropGrowthAndFieldSize() {
+    VillageState oneFarmer = village(1, 0, 0, 1, 40, 0.0);
+    double expected = 40 * PARAMETERS.harvestsPerFarmlandPerDay() * PARAMETERS.foodPerHarvest();
+    assertEquals(
+        expected, VillageSimulator.rates(oneFarmer, 0.0, 1.0, 0, PARAMETERS).production(), 1e-9);
 
-    VillageDayInput input = new VillageDayInput(0, 0.0, 0.0, 0.0, 5, 0);
-
-    VillageState result = VillageSimulator.simulateDay(initial, input, SEED, PARAMETERS);
-
-    assertEquals(25, result.population());
-    assertEquals(4, result.children());
-    assertEquals(21, result.adults());
+    VillageState manyFarmers = village(10, 0, 0, 10, 40, 0.0);
+    assertEquals(
+        expected, VillageSimulator.rates(manyFarmers, 0.0, 1.0, 0, PARAMETERS).production(), 1e-9);
   }
 
   @Test
-  void outgoingVillagersAreAdults() {
-    VillageState initial = village(20, 8, 30, 100.0);
-
-    VillageDayInput input = new VillageDayInput(0, 0.0, 0.0, 0.0, 0, 5);
-
-    VillageState result = VillageSimulator.simulateDay(initial, input, SEED, PARAMETERS);
-
-    assertEquals(15, result.population());
-    assertEquals(8, result.children());
-    assertEquals(7, result.adults());
+  void winterStopsFarming() {
+    VillageState state = village(2, 0, 0, 2, 80, 0.0);
+    long winterDay = 3L * GuestTime.DAYS_PER_SEASON;
+    double spring = VillageSimulator.rates(state, 0.0, 1.0, 0, PARAMETERS).production();
+    double winter = VillageSimulator.rates(state, 0.0, 1.0, winterDay, PARAMETERS).production();
+    assertTrue(winter < spring * 0.1);
   }
 
   @Test
-  void outgoingVillagersCannotExceedAdultPopulation() {
-    VillageState initial = village(10, 7, 20, 100.0);
-
-    VillageDayInput input = new VillageDayInput(0, 0.0, 0.0, 0.0, 0, 100);
-
-    VillageState result = VillageSimulator.simulateDay(initial, input, SEED, PARAMETERS);
-
-    assertEquals(7, result.population());
-    assertEquals(7, result.children());
-    assertEquals(0, result.adults());
+  void severeWeatherRaisesLossesAndCutsWork() {
+    VillageState state = village(2, 8, 0, 10, 80, 0.0);
+    VillageSimulator.Rates calm = VillageSimulator.rates(state, 0.0, 1.0, 0, PARAMETERS);
+    VillageSimulator.Rates storm = VillageSimulator.rates(state, 1.0, 1.0, 0, PARAMETERS);
+    assertTrue(storm.deaths() > calm.deaths());
+    assertTrue(storm.production() < calm.production());
   }
 
   @Test
-  void fractionalFoodReserveIsPreserved() {
-    VillageState initial = village(1, 0, 10, 1.5);
-
-    VillageDayInput input = input(0, 0.0, 0.0, 0.0);
-
-    VillageSimulationParameters parameters =
-        new VillageSimulationParameters(0.25, 2.0, 12.0, 20.0, 0.0, 0.0, 0.0);
-
-    VillageState result = VillageSimulator.simulateDay(initial, input, SEED, parameters);
-
-    assertEquals(1.25, result.foodReserve(), 1e-9);
-  }
-
-  @Test
-  void populationNeverBecomesNegative() {
-    VillageState state = village(10, 5, 20, 0.0);
-
-    VillageDayInput input = input(0, 0.0, 0.0, 1000.0);
-
-    for (int day = 0; day < 100; day++) {
-      state = VillageSimulator.simulateDay(state, input, SEED, PARAMETERS);
-
-      assertTrue(state.population() >= 0);
-      assertTrue(state.children() >= 0);
-      assertTrue(state.children() <= state.population());
-      assertTrue(state.foodReserve() >= 0.0);
+  void populationStaysWithinBeds() {
+    VillageState state = village(4, 4, 0, 14, 200, 500.0);
+    VillageEnvironment safe = VillageEnvironment.calm(0.0);
+    for (int week = 0; week < 50; week++) {
+      state = VillageSimulator.simulateDays(state, safe, SEED, PARAMETERS, 8);
+      assertTrue(state.population() <= 14, "population " + state.population());
     }
+    assertEquals(14, state.population());
   }
 
   @Test
-  void villageCanBecomeExtinct() {
-    VillageState state = village(100, 20, 100, 0.0);
+  void hostileLossesMakeTheVillageFall() {
+    VillageState state = village(3, 3, 2, 10, 50, 0.0);
+    VillageState after =
+        VillageSimulator.simulateDays(state, VillageEnvironment.calm(80.0), SEED, PARAMETERS, 400);
+    assertEquals(0, after.population());
+    assertTrue(after.fallen());
+    assertTrue(after.infected() > 0);
+    assertTrue(after.lastDeathDay() >= 0);
+  }
 
-    VillageDayInput input = input(0, 0.0, 0.0, 1000.0);
+  @Test
+  void childrenGrowUpAsUnemployed() {
+    VillageState state = village(0, 2, 4, 6, 0, 0.0);
+    VillageState after =
+        VillageSimulator.simulateDays(state, VillageEnvironment.calm(0.0), SEED, PARAMETERS, 8);
+    assertEquals(0, after.children());
+    assertEquals(4, after.villagePopulation().professionCount(VillageSimulator.NONE));
+  }
 
-    for (int day = 0; day < 100 && state.population() > 0; day++) {
-
-      state = VillageSimulator.simulateDay(state, input, SEED, PARAMETERS);
+  @Test
+  void weekAlignedStepsDoNotDependOnPolling() {
+    VillageState start = village(3, 4, 2, 20, 100, 50.0);
+    VillageState once = VillageSimulator.simulateDays(start, CALM, SEED, PARAMETERS, 32);
+    VillageState weekly = start;
+    for (int i = 0; i < 4; i++) {
+      weekly = VillageSimulator.simulateDays(weekly, CALM, SEED, PARAMETERS, 8);
     }
-
-    assertEquals(0, state.population());
-    assertEquals(0, state.children());
-    assertTrue(state.isAbandoned());
+    assertEquals(once, weekly);
   }
 
   @Test
-  void populationCannotGrowBeyondHousingCapacity() {
-    VillageState state = village(20, 4, 20, 1000.0);
-
-    VillageDayInput input = input(20, 1000.0, 1.0, 0.0);
-
-    for (int day = 0; day < 1000; day++) {
-      state = VillageSimulator.simulateDay(state, input, SEED, PARAMETERS);
-
-      assertTrue(state.population() <= state.housingCapacity());
-    }
+  void observedVillagesOnlyAdvanceTheEconomy() {
+    VillageState start = village(2, 3, 1, 20, 80, 0.0);
+    VillageState after =
+        VillageSimulator.simulate(
+            start, VillageEnvironment.calm(50.0), SEED, PARAMETERS, 10, false);
+    assertEquals(start.villagePopulation(), after.villagePopulation());
+    assertEquals(10, after.day());
+    assertTrue(after.foodReserve() > 0.0);
   }
 
   @Test
-  void childrenCanMatureIntoAdults() {
-    VillageState state = village(20, 10, 30, 1000.0);
-
-    VillageDayInput input = input(0, 0.0, 0.0, 0.0);
-
-    for (int day = 0; day < 100; day++) {
-      state = VillageSimulator.simulateDay(state, input, SEED, PARAMETERS);
-    }
-
-    assertTrue(state.children() < 10);
-    assertTrue(state.adults() > 10);
+  void centuryOfAbsenceIsCheap() {
+    VillageState start = village(3, 4, 2, 20, 100, 50.0);
+    long started = System.nanoTime();
+    VillageState after =
+        VillageSimulator.simulateDays(
+            start, CALM, SEED, PARAMETERS, 100L * GuestTime.DAYS_PER_YEAR);
+    assertTrue(System.nanoTime() - started < 500_000_000L);
+    assertEquals(100L * GuestTime.DAYS_PER_YEAR, after.day());
   }
 
   @Test
-  void activeVariationRemainsDeterministic() {
-    VillageSimulationParameters parameters =
-        new VillageSimulationParameters(2.0, 2.0, 12.0, 20.0, 0.02, 0.001, 0.10);
+  void caravansAreDeterministicAndStayHomeInStorms() {
+    RoadEdge edge = RoadEdge.of(1L, 2L);
+    Caravans.Parameters parameters = new Caravans.Parameters(0.5, 1000.0, 0.0, 1.0, 24.0);
+    List<Caravans.Caravan> first =
+        Caravans.departures(SEED, edge, 2500.0, 0, 200, parameters, d -> false);
+    assertEquals(first, Caravans.departures(SEED, edge, 2500.0, 0, 200, parameters, d -> false));
+    assertFalse(first.isEmpty());
+    assertTrue(first.stream().allMatch(c -> c.arriveDay() - c.departDay() == 3 && !c.lost()));
+    assertTrue(Caravans.departures(SEED, edge, 2500.0, 0, 200, parameters, d -> true).isEmpty());
 
-    VillageDayInput input = new VillageDayInput(6, 200.0, 0.8, 0.5, 0, 0);
-
-    VillageState first = village(30, 5, 50, 500.0);
-
-    VillageState second = first;
-
-    for (int day = 0; day < 1000; day++) {
-      first = VillageSimulator.simulateDay(first, input, SEED, parameters);
-
-      second = VillageSimulator.simulateDay(second, input, SEED, parameters);
-
-      assertEquals(first, second);
-    }
+    List<Caravans.Caravan> arrivals =
+        Caravans.arrivals(SEED, edge, 2500.0, 3, 203, parameters, d -> false);
+    assertEquals(first, arrivals);
   }
 
   @Test
-  void fieldHasLimitedEffectiveFarmerCapacity() {
-    VillageSimulationParameters parameters =
-        new VillageSimulationParameters(2.0, 2.0, 12.0, 20.0, 0.02, 0.001, 0.0);
+  void caravanCargoFeedsTheVillage() {
+    VillageState start = village(0, 2, 0, 2, 0, 0.0);
+    VillageEnvironment trade =
+        new VillageEnvironment(
+            0.0,
+            new VillageEnvironment.Timeline() {
+              @Override
+              public double severeFraction(long fromDay, long toDay) {
+                return 0.0;
+              }
 
-    assertEquals(9, VillageEconomy.effectiveFarmerCapacity(100.0, parameters));
+              @Override
+              public double importedFood(long fromDay, long toDay) {
+                return fromDay <= 4 && 4 < toDay ? 24.0 : 0.0;
+              }
+            });
+    VillageState after = VillageSimulator.simulate(start, trade, SEED, PARAMETERS, 8, false);
+    assertEquals(24.0 - 8 * 2 * PARAMETERS.foodPerVillagerPerDay(), after.foodReserve(), 1e-9);
   }
 }

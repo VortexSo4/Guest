@@ -3,6 +3,8 @@ package com.vortexso.guest_core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.vortexso.guest_core.api.GuestTime;
+import com.vortexso.guest_core.api.Season;
+import net.minecraft.world.level.MoonPhase;
 import org.junit.jupiter.api.Test;
 
 class GuestTimeTest {
@@ -10,11 +12,11 @@ class GuestTimeTest {
   @Test
   void calendarRepeatsEvery128Days() {
     long day = GuestTime.TICKS_PER_DAY;
-    assertEquals(0, GuestTime.season(0));
-    assertEquals(1, GuestTime.season(32 * day));
-    assertEquals(2, GuestTime.season(64 * day));
-    assertEquals(3, GuestTime.season(96 * day));
-    assertEquals(0, GuestTime.season(128 * day));
+    assertEquals(Season.SPRING, GuestTime.season(0));
+    assertEquals(Season.SUMMER, GuestTime.season(32 * day));
+    assertEquals(Season.AUTUMN, GuestTime.season(64 * day));
+    assertEquals(Season.WINTER, GuestTime.season(96 * day));
+    assertEquals(Season.SPRING, GuestTime.season(128 * day));
   }
 
   @Test
@@ -39,8 +41,8 @@ class GuestTimeTest {
 
   @Test
   void lunarPhaseRepeatsEveryEightDays() {
-    assertEquals(0, GuestTime.lunarPhase(0));
-    assertEquals(7, GuestTime.lunarPhase(7 * GuestTime.TICKS_PER_DAY));
-    assertEquals(0, GuestTime.lunarPhase(8 * GuestTime.TICKS_PER_DAY));
+    assertEquals(MoonPhase.FULL_MOON, GuestTime.moonPhase(0));
+    assertEquals(MoonPhase.NEW_MOON, GuestTime.moonPhase(4 * GuestTime.TICKS_PER_DAY));
+    assertEquals(MoonPhase.FULL_MOON, GuestTime.moonPhase(8 * GuestTime.TICKS_PER_DAY));
   }
 }

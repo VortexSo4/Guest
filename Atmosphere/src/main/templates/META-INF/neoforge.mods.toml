@@ -1,0 +1,37 @@
+license="${mod_license}"
+
+[[mods]]
+
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+
+authors="Vortex_So"
+
+description='''
+Regional, seasonal weather for the Guest world: deterministic weather fronts per region and biome (fog, wind, leaf fall, heat, drizzle to thunderstorms, snowfall, blizzards, snowstorms, sandstorms, winter auroras), driving vanilla rain and snow, with visibility, wind sounds, storm slowdown and reversible traces left in the world (snow drifts, mud, ice, drifted sand, dry and scorched ground).
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.guest_atmosphere]]
+    modId = "guest_core"
+    type = "required"
+    versionRange = "[1.0.0,)"
+    ordering = "AFTER"
+    side = "BOTH"

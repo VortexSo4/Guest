@@ -10,3 +10,7 @@ plugins {
 
 include 'Core'
 include 'Settlements'
+include 'Architects'
+include 'Wilds'
+include 'Hands'
+include 'Atmosphere'

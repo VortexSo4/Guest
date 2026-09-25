@@ -1,0 +1,40 @@
+{
+  "guest_core.common.yes": "yes",
+  "guest_core.common.no": "no",
+
+  "guest_core.season.spring": "Spring",
+  "guest_core.season.summer": "Summer",
+  "guest_core.season.autumn": "Autumn",
+  "guest_core.season.winter": "Winter",
+
+  "guest_core.moon.full_moon": "Full moon",
+  "guest_core.moon.waning_gibbous": "Waning gibbous",
+  "guest_core.moon.third_quarter": "Third quarter",
+  "guest_core.moon.waning_crescent": "Waning crescent",
+  "guest_core.moon.new_moon": "New moon",
+  "guest_core.moon.waxing_crescent": "Waxing crescent",
+  "guest_core.moon.first_quarter": "First quarter",
+  "guest_core.moon.waxing_gibbous": "Waxing gibbous",
+
+  "guest_core.weather.clear": "Clear",
+  "guest_core.weather.fog": "Fog",
+  "guest_core.weather.wind": "Wind",
+  "guest_core.weather.leaf_fall": "Leaf fall",
+  "guest_core.weather.heat": "Heat",
+  "guest_core.weather.drizzle": "Drizzle",
+  "guest_core.weather.rain": "Rain",
+  "guest_core.weather.downpour": "Downpour",
+  "guest_core.weather.thunderstorm": "Thunderstorm",
+  "guest_core.weather.snowfall": "Snowfall",
+  "guest_core.weather.blizzard": "Blizzard",
+  "guest_core.weather.snowstorm": "Snowstorm",
+  "guest_core.weather.sandstorm": "Sandstorm",
+
+  "guest_core.command.time.too_large": "Time value is too large.",
+  "guest_core.command.time.added": "Advanced time by %s days.",
+  "guest_core.command.calendar": "Year %s, %s, week %s, day %s of 8 (%s)",
+  "guest_core.command.weather": "Weather here: %s, intensity %s, wind %s, aurora: %s",
+  "guest_core.command.debug.unknown": "Unknown debug channel: %s",
+  "guest_core.command.debug.on": "Debug channel %s enabled",
+  "guest_core.command.debug.off": "Debug channel %s disabled"
+}
