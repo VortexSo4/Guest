@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_post",
+  "textures": {
+    "wall": "guest_atmosphere:block/sandy_cobbled_deepslate"
+  }
+}

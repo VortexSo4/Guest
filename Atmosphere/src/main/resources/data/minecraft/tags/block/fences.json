@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "guest_atmosphere:charred_fence",
+    "guest_atmosphere:sandy_wooden_fence",
+    "guest_atmosphere:snowy_wooden_fence"
+  ]
+}

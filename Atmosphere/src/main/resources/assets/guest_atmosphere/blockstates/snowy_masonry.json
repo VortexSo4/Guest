@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "base=cobblestone": {
+      "model": "guest_atmosphere:block/snowy_cobblestone"
+    },
+    "base=mossy_cobblestone": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone"
+    },
+    "base=stone": {
+      "model": "guest_atmosphere:block/snowy_stone"
+    },
+    "base=stone_bricks": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks"
+    },
+    "base=mossy_stone_bricks": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks"
+    },
+    "base=cracked_stone_bricks": {
+      "model": "guest_atmosphere:block/snowy_cracked_stone_bricks"
+    },
+    "base=chiseled_stone_bricks": {
+      "model": "guest_atmosphere:block/snowy_chiseled_stone_bricks"
+    },
+    "base=bricks": {
+      "model": "guest_atmosphere:block/snowy_bricks"
+    },
+    "base=cobbled_deepslate": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate"
+    },
+    "base=deepslate_bricks": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks"
+    },
+    "base=mud_bricks": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks"
+    }
+  }
+}

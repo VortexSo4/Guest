@@ -1,0 +1,70 @@
+{
+  "textures": {
+    "particle": "guest_atmosphere:block/thin_ice_cracked_1",
+    "ice": "guest_atmosphere:block/thin_ice_cracked_1"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        12,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#ice",
+          "cullface": "down"
+        },
+        "up": {
+          "texture": "#ice",
+          "cullface": "up"
+        },
+        "north": {
+          "texture": "#ice",
+          "cullface": "north",
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ]
+        },
+        "south": {
+          "texture": "#ice",
+          "cullface": "south",
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ]
+        },
+        "west": {
+          "texture": "#ice",
+          "cullface": "west",
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ]
+        },
+        "east": {
+          "texture": "#ice",
+          "cullface": "east",
+          "uv": [
+            0,
+            0,
+            16,
+            4
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "architect.melody": {
+    "sounds": [
+      { "name": "minecraft:block.note_block.flute", "type": "event" }
+    ],
+    "subtitle": "subtitles.guest_architects.architect.melody"
+  },
+  "architect.portal": {
+    "sounds": [
+      { "name": "minecraft:block.portal.travel", "type": "event", "volume": 0.4 }
+    ],
+    "subtitle": "subtitles.guest_architects.architect.portal"
+  },
+  "architect.unmake": {
+    "sounds": [
+      { "name": "minecraft:block.fire.extinguish", "type": "event", "pitch": 0.7 }
+    ],
+    "subtitle": "subtitles.guest_architects.architect.unmake"
+  }
+}

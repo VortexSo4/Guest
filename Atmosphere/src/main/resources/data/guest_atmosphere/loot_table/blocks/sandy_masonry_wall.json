@@ -1,0 +1,126 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cobblestone_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "cobblestone"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mossy_cobblestone_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "mossy_cobblestone"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:stone_brick_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mossy_stone_brick_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "mossy_stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:brick_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cobbled_deepslate_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "cobbled_deepslate"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:deepslate_brick_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "deepslate_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mud_brick_wall",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_masonry_wall",
+                  "properties": {
+                    "base": "mud_bricks"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "guest_atmosphere:blocks/sandy_masonry_wall"
+}

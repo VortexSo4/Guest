@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "guest_atmosphere:block/charred_slab"
+    },
+    "type=double": {
+      "model": "guest_atmosphere:block/charred_planks"
+    },
+    "type=top": {
+      "model": "guest_atmosphere:block/charred_slab_top"
+    }
+  }
+}

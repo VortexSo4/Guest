@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "snowy=false": {
+      "model": "guest_atmosphere:block/cryosol"
+    },
+    "snowy=true": {
+      "model": "guest_atmosphere:block/cryosol_snow"
+    }
+  }
+}

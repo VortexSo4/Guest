@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "guest_atmosphere:block/snowy_pale_oak_planks"
+  }
+}

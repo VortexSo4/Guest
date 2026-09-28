@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "guest_atmosphere:block/snowy_acacia_planks",
+    "side": "guest_atmosphere:block/snowy_acacia_planks",
+    "top": "guest_atmosphere:block/snowy_acacia_planks"
+  }
+}

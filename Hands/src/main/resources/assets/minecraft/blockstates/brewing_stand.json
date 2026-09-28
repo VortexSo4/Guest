@@ -1,0 +1,57 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "minecraft:block/brewing_stand"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_hands:block/brewing_stand_holder0"
+      },
+      "when": {
+        "has_bottle_0": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_hands:block/brewing_stand_holder1"
+      },
+      "when": {
+        "has_bottle_1": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_hands:block/brewing_stand_holder2"
+      },
+      "when": {
+        "has_bottle_2": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "minecraft:block/brewing_stand_empty0"
+      },
+      "when": {
+        "has_bottle_0": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "minecraft:block/brewing_stand_empty1"
+      },
+      "when": {
+        "has_bottle_1": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "minecraft:block/brewing_stand_empty2"
+      },
+      "when": {
+        "has_bottle_2": "false"
+      }
+    }
+  ]
+}

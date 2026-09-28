@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "axis=x,smoldering=false": {
+      "model": "guest_atmosphere:block/charred_log_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,smoldering=false": {
+      "model": "guest_atmosphere:block/charred_log"
+    },
+    "axis=z,smoldering=false": {
+      "model": "guest_atmosphere:block/charred_log_horizontal",
+      "x": 90
+    },
+    "axis=x,smoldering=true": {
+      "model": "guest_atmosphere:block/charred_log_smoldering_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y,smoldering=true": {
+      "model": "guest_atmosphere:block/charred_log_smoldering"
+    },
+    "axis=z,smoldering=true": {
+      "model": "guest_atmosphere:block/charred_log_smoldering_horizontal",
+      "x": 90
+    }
+  }
+}

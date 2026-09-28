@@ -1,0 +1,310 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:oak_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "oak"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:spruce_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "spruce"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:birch_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "birch"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:jungle_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "jungle"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:acacia_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "acacia"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:dark_oak_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "dark_oak"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mangrove_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "mangrove"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cherry_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "cherry"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:pale_oak_slab",
+              "functions": [
+                {
+                  "function": "minecraft:set_count",
+                  "add": false,
+                  "count": 2.0,
+                  "conditions": [
+                    {
+                      "condition": "minecraft:block_state_property",
+                      "block": "guest_atmosphere:sandy_wooden_slab",
+                      "properties": {
+                        "type": "double"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "function": "minecraft:explosion_decay"
+                }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_slab",
+                  "properties": {
+                    "base": "pale_oak"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "guest_atmosphere:blocks/sandy_wooden_slab"
+}

@@ -1,0 +1,76 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:block_state",
+    "block_state_property": "base",
+    "cases": [
+      {
+        "when": "oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_oak_stairs"
+        }
+      },
+      {
+        "when": "spruce",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_spruce_stairs"
+        }
+      },
+      {
+        "when": "birch",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_birch_stairs"
+        }
+      },
+      {
+        "when": "jungle",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_jungle_stairs"
+        }
+      },
+      {
+        "when": "acacia",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_acacia_stairs"
+        }
+      },
+      {
+        "when": "dark_oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_dark_oak_stairs"
+        }
+      },
+      {
+        "when": "mangrove",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_mangrove_stairs"
+        }
+      },
+      {
+        "when": "cherry",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_cherry_stairs"
+        }
+      },
+      {
+        "when": "pale_oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_pale_oak_stairs"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "guest_atmosphere:block/snowy_oak_stairs"
+    }
+  }
+}

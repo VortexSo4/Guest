@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "guest_atmosphere:block/snowy_spruce_planks",
+    "side": "guest_atmosphere:block/snowy_spruce_planks",
+    "top": "guest_atmosphere:block/snowy_spruce_planks"
+  }
+}

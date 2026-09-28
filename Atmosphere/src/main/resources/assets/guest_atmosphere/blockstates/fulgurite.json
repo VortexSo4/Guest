@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "guest_atmosphere:block/fulgurite",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "guest_atmosphere:block/fulgurite",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "guest_atmosphere:block/fulgurite",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "guest_atmosphere:block/fulgurite",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "guest_atmosphere:block/fulgurite"
+    },
+    "facing=west": {
+      "model": "guest_atmosphere:block/fulgurite",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

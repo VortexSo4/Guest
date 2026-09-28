@@ -1,0 +1,76 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:block_state",
+    "block_state_property": "base",
+    "cases": [
+      {
+        "when": "oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_oak_fence_inventory"
+        }
+      },
+      {
+        "when": "spruce",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_spruce_fence_inventory"
+        }
+      },
+      {
+        "when": "birch",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_birch_fence_inventory"
+        }
+      },
+      {
+        "when": "jungle",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_jungle_fence_inventory"
+        }
+      },
+      {
+        "when": "acacia",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_acacia_fence_inventory"
+        }
+      },
+      {
+        "when": "dark_oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_dark_oak_fence_inventory"
+        }
+      },
+      {
+        "when": "mangrove",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_mangrove_fence_inventory"
+        }
+      },
+      {
+        "when": "cherry",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_cherry_fence_inventory"
+        }
+      },
+      {
+        "when": "pale_oak",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_pale_oak_fence_inventory"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "guest_atmosphere:block/sandy_oak_fence_inventory"
+    }
+  }
+}

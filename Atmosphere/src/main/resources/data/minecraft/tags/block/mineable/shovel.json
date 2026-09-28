@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "guest_atmosphere:ash",
+    "guest_atmosphere:cracked_mud",
+    "guest_atmosphere:cryosol",
+    "guest_atmosphere:permafrost",
+    "guest_atmosphere:red_sand_pile",
+    "guest_atmosphere:sand_pile",
+    "guest_atmosphere:silt",
+    "guest_atmosphere:snowy_plant"
+  ]
+}

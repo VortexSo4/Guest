@@ -1,0 +1,165 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cobblestone",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "cobblestone"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mossy_cobblestone",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "mossy_cobblestone"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cobblestone",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "stone"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:stone_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mossy_stone_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "mossy_stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cracked_stone_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "cracked_stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:chiseled_stone_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "chiseled_stone_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cobbled_deepslate",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "cobbled_deepslate"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:deepslate_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "deepslate_bricks"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mud_bricks",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:snowy_masonry",
+                  "properties": {
+                    "base": "mud_bricks"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "guest_atmosphere:blocks/snowy_masonry"
+}

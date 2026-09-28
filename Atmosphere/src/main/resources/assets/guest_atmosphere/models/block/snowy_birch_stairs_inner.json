@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "guest_atmosphere:block/snowy_birch_planks",
+    "side": "guest_atmosphere:block/snowy_birch_planks",
+    "top": "guest_atmosphere:block/snowy_birch_planks"
+  }
+}

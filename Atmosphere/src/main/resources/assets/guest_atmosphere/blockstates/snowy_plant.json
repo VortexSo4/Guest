@@ -1,0 +1,228 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "plant": "short_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/short_grass"
+      }
+    },
+    {
+      "when": {
+        "plant": "fern"
+      },
+      "apply": {
+        "model": "minecraft:block/fern"
+      }
+    },
+    {
+      "when": {
+        "plant": "bush"
+      },
+      "apply": {
+        "model": "minecraft:block/bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "dead_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/dead_bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "short_dry_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/short_dry_grass"
+      }
+    },
+    {
+      "when": {
+        "plant": "firefly_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/firefly_bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "dandelion"
+      },
+      "apply": {
+        "model": "minecraft:block/dandelion"
+      }
+    },
+    {
+      "when": {
+        "plant": "golden_dandelion"
+      },
+      "apply": {
+        "model": "minecraft:block/golden_dandelion"
+      }
+    },
+    {
+      "when": {
+        "plant": "poppy"
+      },
+      "apply": {
+        "model": "minecraft:block/poppy"
+      }
+    },
+    {
+      "when": {
+        "plant": "blue_orchid"
+      },
+      "apply": {
+        "model": "minecraft:block/blue_orchid"
+      }
+    },
+    {
+      "when": {
+        "plant": "allium"
+      },
+      "apply": {
+        "model": "minecraft:block/allium"
+      }
+    },
+    {
+      "when": {
+        "plant": "azure_bluet"
+      },
+      "apply": {
+        "model": "minecraft:block/azure_bluet"
+      }
+    },
+    {
+      "when": {
+        "plant": "red_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/red_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "orange_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/orange_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "white_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/white_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "pink_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/pink_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "oxeye_daisy"
+      },
+      "apply": {
+        "model": "minecraft:block/oxeye_daisy"
+      }
+    },
+    {
+      "when": {
+        "plant": "cornflower"
+      },
+      "apply": {
+        "model": "minecraft:block/cornflower"
+      }
+    },
+    {
+      "when": {
+        "plant": "lily_of_the_valley"
+      },
+      "apply": {
+        "model": "minecraft:block/lily_of_the_valley"
+      }
+    },
+    {
+      "when": {
+        "plant": "torchflower"
+      },
+      "apply": {
+        "model": "minecraft:block/torchflower"
+      }
+    },
+    {
+      "when": {
+        "layers": "1"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height2"
+      }
+    },
+    {
+      "when": {
+        "layers": "2"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height4"
+      }
+    },
+    {
+      "when": {
+        "layers": "3"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height6"
+      }
+    },
+    {
+      "when": {
+        "layers": "4"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height8"
+      }
+    },
+    {
+      "when": {
+        "layers": "5"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height10"
+      }
+    },
+    {
+      "when": {
+        "layers": "6"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height12"
+      }
+    },
+    {
+      "when": {
+        "layers": "7"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_height14"
+      }
+    },
+    {
+      "when": {
+        "layers": "8"
+      },
+      "apply": {
+        "model": "minecraft:block/snow_block"
+      }
+    }
+  ]
+}

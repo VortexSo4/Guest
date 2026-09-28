@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "guest_atmosphere:charred_fence",
+    "guest_atmosphere:charred_fence_gate",
+    "guest_atmosphere:charred_log",
+    "guest_atmosphere:charred_planks",
+    "guest_atmosphere:charred_slab",
+    "guest_atmosphere:charred_stairs",
+    "guest_atmosphere:ivy",
+    "guest_atmosphere:sandy_planks",
+    "guest_atmosphere:sandy_wooden_fence",
+    "guest_atmosphere:sandy_wooden_slab",
+    "guest_atmosphere:sandy_wooden_stairs",
+    "guest_atmosphere:snowy_planks",
+    "guest_atmosphere:snowy_wooden_fence",
+    "guest_atmosphere:snowy_wooden_slab",
+    "guest_atmosphere:snowy_wooden_stairs"
+  ]
+}

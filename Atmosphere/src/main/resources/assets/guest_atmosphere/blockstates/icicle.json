@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "tip=true": {
+      "model": "guest_atmosphere:block/icicle_tip"
+    },
+    "tip=false": {
+      "model": "guest_atmosphere:block/icicle_body"
+    }
+  }
+}

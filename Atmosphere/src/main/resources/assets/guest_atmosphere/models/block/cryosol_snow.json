@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "guest_atmosphere:block/permafrost",
+    "side": "minecraft:block/grass_block_snow",
+    "top": "guest_atmosphere:block/cryosol_top",
+    "particle": "guest_atmosphere:block/permafrost"
+  }
+}

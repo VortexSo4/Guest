@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "guest_atmosphere:block/charred_log_top",
+    "side": "guest_atmosphere:block/charred_log_smoldering"
+  }
+}

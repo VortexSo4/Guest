@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "guest_atmosphere:block/sandy_jungle_planks"
+  }
+}

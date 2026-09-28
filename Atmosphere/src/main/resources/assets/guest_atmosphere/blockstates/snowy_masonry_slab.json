@@ -1,0 +1,85 @@
+{
+  "variants": {
+    "base=cobblestone,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_slab"
+    },
+    "base=cobblestone,type=double": {
+      "model": "guest_atmosphere:block/snowy_cobblestone"
+    },
+    "base=cobblestone,type=top": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_slab_top"
+    },
+    "base=mossy_cobblestone,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_slab"
+    },
+    "base=mossy_cobblestone,type=double": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone"
+    },
+    "base=mossy_cobblestone,type=top": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_slab_top"
+    },
+    "base=stone,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_stone_slab"
+    },
+    "base=stone,type=double": {
+      "model": "guest_atmosphere:block/snowy_stone"
+    },
+    "base=stone,type=top": {
+      "model": "guest_atmosphere:block/snowy_stone_slab_top"
+    },
+    "base=stone_bricks,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_slab"
+    },
+    "base=stone_bricks,type=double": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks"
+    },
+    "base=stone_bricks,type=top": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_slab_top"
+    },
+    "base=mossy_stone_bricks,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_slab"
+    },
+    "base=mossy_stone_bricks,type=double": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks"
+    },
+    "base=mossy_stone_bricks,type=top": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_slab_top"
+    },
+    "base=bricks,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_bricks_slab"
+    },
+    "base=bricks,type=double": {
+      "model": "guest_atmosphere:block/snowy_bricks"
+    },
+    "base=bricks,type=top": {
+      "model": "guest_atmosphere:block/snowy_bricks_slab_top"
+    },
+    "base=cobbled_deepslate,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_slab"
+    },
+    "base=cobbled_deepslate,type=double": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate"
+    },
+    "base=cobbled_deepslate,type=top": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_slab_top"
+    },
+    "base=deepslate_bricks,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_slab"
+    },
+    "base=deepslate_bricks,type=double": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks"
+    },
+    "base=deepslate_bricks,type=top": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_slab_top"
+    },
+    "base=mud_bricks,type=bottom": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_slab"
+    },
+    "base=mud_bricks,type=double": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks"
+    },
+    "base=mud_bricks,type=top": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_slab_top"
+    }
+  }
+}

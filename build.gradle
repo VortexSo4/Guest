@@ -1,0 +1,153 @@
+import java.util.regex.Pattern
+
+plugins {
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.147'
+    id 'me.champeau.jmh' version '0.7.3' apply false
+    id 'com.diffplug.spotless' version '7.0.2' apply false
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+allprojects {
+    idea {
+        module {
+            downloadSources = true
+            downloadJavadoc = true
+        }
+    }
+}
+
+subprojects {
+    plugins.withId('java') {
+        apply plugin: 'me.champeau.jmh'
+        apply plugin: 'com.diffplug.spotless'
+
+        spotless {
+            java {
+                target 'src/**/*.java'
+                targetExclude '**/build/**', '**/generated/**'
+
+                googleJavaFormat('1.28.0')
+
+                removeUnusedImports()
+                trimTrailingWhitespace()
+                endWithNewline()
+            }
+        }
+
+        jmh {
+            warmupIterations = 3
+            warmup = '1s'
+
+            iterations = 5
+            timeOnIteration = '1s'
+
+            fork = 1
+            threads = 1
+
+            timeUnit = 'ns'
+
+            zip64 = true
+
+            if (rootProject.hasProperty('benchmark')) {
+                String requested =
+                        rootProject.property('benchmark').toString()
+
+                includes = [
+                        '^' + Pattern.quote(requested) + '(\\..*)?$'
+                ]
+            }
+        }
+    }
+}
+
+evaluationDependsOn(':Core')
+evaluationDependsOn(':Settlements')
+evaluationDependsOn(':Architects')
+evaluationDependsOn(':Wilds')
+evaluationDependsOn(':Hands')
+evaluationDependsOn(':Atmosphere')
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+            // Dev testing: -PquickPlay=<world folder> joins that singleplayer world on launch.
+            if (project.hasProperty('quickPlay')) {
+                programArguments.addAll('--quickPlaySingleplayer', project.property('quickPlay').toString())
+            }
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
+        }
+
+        configureEach {
+            gameDirectory = rootProject.file('run')
+
+            // Dev testing: -PguestDevConsole=<file> runs commands appended to that file (see Core/DEBUG.md).
+            if (project.hasProperty('guestDevConsole')) {
+                systemProperty 'guest.devConsole', project.property('guestDevConsole').toString()
+            }
+
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        guest_core {
+            sourceSet project(':Core').sourceSets.main
+        }
+
+        guest_settlements {
+            sourceSet project(':Settlements').sourceSets.main
+        }
+
+        guest_architects {
+            sourceSet project(':Architects').sourceSets.main
+        }
+
+        guest_wilds {
+            sourceSet project(':Wilds').sourceSets.main
+        }
+
+        guest_hands {
+            sourceSet project(':Hands').sourceSets.main
+        }
+
+        guest_atmosphere {
+            sourceSet project(':Atmosphere').sourceSets.main
+        }
+    }
+}
+
+tasks.register('benchmark') {
+    group = 'verification'
+    description = 'Run JMH benchmarks.'
+
+    dependsOn(
+            subprojects.collectMany { project ->
+                if (!project.plugins.hasPlugin('me.champeau.jmh')) {
+                    return []
+                }
+
+                File benchmarkSource =
+                        project.file('src/jmh/java')
+
+                if (!benchmarkSource.exists()) {
+                    return []
+                }
+
+                return [project.tasks.named('jmh')]
+            }
+    )
+}

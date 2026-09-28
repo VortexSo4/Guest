@@ -1,0 +1,1849 @@
+{
+  "variants": {
+    "base=cobblestone,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobblestone,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner"
+    },
+    "base=cobblestone,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobblestone,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer"
+    },
+    "base=cobblestone,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs"
+    },
+    "base=cobblestone,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobblestone,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobblestone,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobblestone,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobblestone,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobblestone,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobblestone,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobblestone,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobblestone,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobblestone,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobblestone,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobblestone,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobblestone,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobblestone,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobblestone,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobblestone,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner"
+    },
+    "base=cobblestone,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobblestone,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer"
+    },
+    "base=cobblestone,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobblestone,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobblestone,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobblestone,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobblestone,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobblestone,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobblestone,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobblestone,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobblestone,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobblestone,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobblestone,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobblestone,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobblestone,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobblestone,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobblestone,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobblestone,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobblestone,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner"
+    },
+    "base=mossy_cobblestone,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer"
+    },
+    "base=mossy_cobblestone,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs"
+    },
+    "base=mossy_cobblestone,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_cobblestone,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_cobblestone,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_cobblestone,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_cobblestone,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_cobblestone,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner"
+    },
+    "base=mossy_cobblestone,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer"
+    },
+    "base=mossy_cobblestone,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_cobblestone,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_cobblestone,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_cobblestone,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_cobblestone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner"
+    },
+    "base=stone,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer"
+    },
+    "base=stone,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs"
+    },
+    "base=stone,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner"
+    },
+    "base=stone,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer"
+    },
+    "base=stone,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone_bricks,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone_bricks,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner"
+    },
+    "base=stone_bricks,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone_bricks,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer"
+    },
+    "base=stone_bricks,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs"
+    },
+    "base=stone_bricks,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone_bricks,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone_bricks,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone_bricks,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone_bricks,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone_bricks,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone_bricks,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone_bricks,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone_bricks,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone_bricks,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=stone_bricks,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone_bricks,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone_bricks,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone_bricks,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=stone_bricks,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone_bricks,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner"
+    },
+    "base=stone_bricks,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone_bricks,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer"
+    },
+    "base=stone_bricks,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone_bricks,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone_bricks,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone_bricks,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone_bricks,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone_bricks,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone_bricks,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=stone_bricks,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone_bricks,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone_bricks,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=stone_bricks,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone_bricks,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=stone_bricks,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone_bricks,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone_bricks,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=stone_bricks,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=stone_bricks,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner"
+    },
+    "base=mossy_stone_bricks,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer"
+    },
+    "base=mossy_stone_bricks,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs"
+    },
+    "base=mossy_stone_bricks,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_stone_bricks,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_stone_bricks,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_stone_bricks,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_stone_bricks,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mossy_stone_bricks,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner"
+    },
+    "base=mossy_stone_bricks,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer"
+    },
+    "base=mossy_stone_bricks,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mossy_stone_bricks,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mossy_stone_bricks,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mossy_stone_bricks,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=bricks,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=bricks,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner"
+    },
+    "base=bricks,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=bricks,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer"
+    },
+    "base=bricks,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs"
+    },
+    "base=bricks,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=bricks,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=bricks,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=bricks,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=bricks,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=bricks,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=bricks,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=bricks,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=bricks,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=bricks,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=bricks,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=bricks,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=bricks,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=bricks,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=bricks,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=bricks,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner"
+    },
+    "base=bricks,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=bricks,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer"
+    },
+    "base=bricks,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=bricks,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=bricks,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=bricks,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=bricks,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=bricks,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=bricks,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=bricks,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=bricks,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=bricks,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=bricks,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=bricks,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=bricks,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=bricks,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=bricks,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=bricks,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=bricks,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner"
+    },
+    "base=cobbled_deepslate,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer"
+    },
+    "base=cobbled_deepslate,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs"
+    },
+    "base=cobbled_deepslate,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobbled_deepslate,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobbled_deepslate,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobbled_deepslate,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobbled_deepslate,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=cobbled_deepslate,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner"
+    },
+    "base=cobbled_deepslate,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer"
+    },
+    "base=cobbled_deepslate,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=cobbled_deepslate,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=cobbled_deepslate,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=cobbled_deepslate,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_cobbled_deepslate_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner"
+    },
+    "base=deepslate_bricks,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer"
+    },
+    "base=deepslate_bricks,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs"
+    },
+    "base=deepslate_bricks,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=deepslate_bricks,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=deepslate_bricks,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=deepslate_bricks,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=deepslate_bricks,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=deepslate_bricks,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner"
+    },
+    "base=deepslate_bricks,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer"
+    },
+    "base=deepslate_bricks,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=deepslate_bricks,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=deepslate_bricks,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=deepslate_bricks,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_deepslate_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mud_bricks,facing=east,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mud_bricks,facing=east,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner"
+    },
+    "base=mud_bricks,facing=east,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mud_bricks,facing=east,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer"
+    },
+    "base=mud_bricks,facing=east,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs"
+    },
+    "base=mud_bricks,facing=east,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mud_bricks,facing=east,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mud_bricks,facing=east,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mud_bricks,facing=east,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mud_bricks,facing=east,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mud_bricks,facing=north,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mud_bricks,facing=north,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mud_bricks,facing=north,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mud_bricks,facing=north,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mud_bricks,facing=north,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "y": 270
+    },
+    "base=mud_bricks,facing=north,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mud_bricks,facing=north,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mud_bricks,facing=north,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mud_bricks,facing=north,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180
+    },
+    "base=mud_bricks,facing=north,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mud_bricks,facing=south,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner"
+    },
+    "base=mud_bricks,facing=south,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mud_bricks,facing=south,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer"
+    },
+    "base=mud_bricks,facing=south,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mud_bricks,facing=south,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mud_bricks,facing=south,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mud_bricks,facing=south,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mud_bricks,facing=south,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mud_bricks,facing=south,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mud_bricks,facing=south,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 90
+    },
+    "base=mud_bricks,facing=west,half=bottom,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mud_bricks,facing=west,half=bottom,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mud_bricks,facing=west,half=bottom,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 90
+    },
+    "base=mud_bricks,facing=west,half=bottom,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mud_bricks,facing=west,half=bottom,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "y": 180
+    },
+    "base=mud_bricks,facing=west,half=top,shape=inner_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mud_bricks,facing=west,half=top,shape=inner_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_inner",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mud_bricks,facing=west,half=top,shape=outer_left": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    },
+    "base=mud_bricks,facing=west,half=top,shape=outer_right": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs_outer",
+      "uvlock": true,
+      "x": 180,
+      "y": 270
+    },
+    "base=mud_bricks,facing=west,half=top,shape=straight": {
+      "model": "guest_atmosphere:block/snowy_mud_bricks_stairs",
+      "uvlock": true,
+      "x": 180,
+      "y": 180
+    }
+  }
+}

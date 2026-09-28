@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "guest_architects:block/architect_portal"
+    }
+  }
+}

@@ -1,0 +1,764 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_cobblestone_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "mossy_cobblestone"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mossy_stone_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "mossy_stone_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_cobbled_deepslate_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "cobbled_deepslate"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_deepslate_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "deepslate_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_post"
+      },
+      "when": {
+        "up": "true",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side",
+        "uvlock": true
+      },
+      "when": {
+        "north": "low",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "low",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "low",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "low",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side_tall",
+        "uvlock": true
+      },
+      "when": {
+        "north": "tall",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 90
+      },
+      "when": {
+        "east": "tall",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 180
+      },
+      "when": {
+        "south": "tall",
+        "base": "mud_bricks"
+      }
+    },
+    {
+      "apply": {
+        "model": "guest_atmosphere:block/snowy_mud_bricks_wall_side_tall",
+        "uvlock": true,
+        "y": 270
+      },
+      "when": {
+        "west": "tall",
+        "base": "mud_bricks"
+      }
+    }
+  ]
+}

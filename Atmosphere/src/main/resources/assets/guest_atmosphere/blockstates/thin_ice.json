@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "cracks=0": {
+      "model": "guest_atmosphere:block/thin_ice"
+    },
+    "cracks=1": {
+      "model": "guest_atmosphere:block/thin_ice_cracked_1"
+    },
+    "cracks=2": {
+      "model": "guest_atmosphere:block/thin_ice_cracked_2"
+    }
+  }
+}

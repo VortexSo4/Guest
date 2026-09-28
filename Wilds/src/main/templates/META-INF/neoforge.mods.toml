@@ -1,0 +1,37 @@
+license="${mod_license}"
+
+[[mods]]
+
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+
+authors="Vortex_So"
+
+description='''
+Living wilds for Guest: wear turns much-used routes into paths that regrow when abandoned; undead, spiders and creepers live in cave lairs that grow, compete and migrate; wild herds graze and move between pastures; fish shoals deplete and regrow; creatures react to weather and season with vanilla forms; endermen gather at places of power.
+'''
+
+[[mixins]]
+config="${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.guest_wilds]]
+    modId = "guest_core"
+    type = "required"
+    versionRange = "[1.0.0,)"
+    ordering = "AFTER"
+    side = "BOTH"

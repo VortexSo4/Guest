@@ -1,0 +1,62 @@
+{
+  "weather.wind": {
+    "sounds": [
+      {"name": "item/elytra/elytra_loop", "stream": true, "volume": 0.6, "pitch": 0.6}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.weather.wind"
+  },
+  "weather.blizzard": {
+    "sounds": [
+      {"name": "item/elytra/elytra_loop", "stream": true, "volume": 1.0, "pitch": 0.8}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.weather.blizzard"
+  },
+  "weather.sandstorm": {
+    "sounds": [
+      {"name": "item/elytra/elytra_loop", "stream": true, "volume": 0.9, "pitch": 0.5}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.weather.sandstorm"
+  },
+  "weather.drizzle": {
+    "sounds": [
+      {"name": "ambient/weather/rain1", "volume": 0.45, "pitch": 1.25},
+      {"name": "ambient/weather/rain2", "volume": 0.45, "pitch": 1.25},
+      {"name": "ambient/weather/rain3", "volume": 0.45, "pitch": 1.25},
+      {"name": "ambient/weather/rain4", "volume": 0.45, "pitch": 1.25}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.weather.drizzle"
+  },
+  "weather.downpour": {
+    "sounds": [
+      {"name": "ambient/weather/rain1", "volume": 1.0, "pitch": 0.8},
+      {"name": "ambient/weather/rain2", "volume": 1.0, "pitch": 0.8},
+      {"name": "ambient/weather/rain3", "volume": 1.0, "pitch": 0.8},
+      {"name": "ambient/weather/rain4", "volume": 1.0, "pitch": 0.8}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.weather.downpour"
+  },
+  "ambient.heat.insects": {
+    "sounds": [
+      {"name": "mob/bee/loop1", "stream": true, "volume": 0.35, "pitch": 1.9}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.ambient.heat.insects"
+  },
+  "ambient.wind.tree_creak": {
+    "sounds": [
+      {"name": "ambient/nether/warped_forest/creak1", "volume": 0.5, "pitch": 0.7},
+      {"name": "ambient/nether/warped_forest/creak2", "volume": 0.5, "pitch": 0.7},
+      {"name": "ambient/nether/warped_forest/creak3", "volume": 0.5, "pitch": 0.7},
+      {"name": "ambient/nether/warped_forest/creak4", "volume": 0.5, "pitch": 0.7}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.ambient.wind.tree_creak"
+  },
+  "ambient.wind.bell": {
+    "sounds": [
+      {"name": "block/chain/step1", "volume": 0.3, "pitch": 1.7, "attenuation_distance": 32},
+      {"name": "block/chain/step2", "volume": 0.3, "pitch": 1.7, "attenuation_distance": 32},
+      {"name": "block/chain/step3", "volume": 0.3, "pitch": 1.7, "attenuation_distance": 32},
+      {"name": "block/chain/step4", "volume": 0.3, "pitch": 1.7, "attenuation_distance": 32}
+    ],
+    "subtitle": "subtitles.guest_atmosphere.ambient.wind.bell"
+  }
+}

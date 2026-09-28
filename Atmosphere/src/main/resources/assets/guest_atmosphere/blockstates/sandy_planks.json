@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "base=oak": {
+      "model": "guest_atmosphere:block/sandy_oak"
+    },
+    "base=spruce": {
+      "model": "guest_atmosphere:block/sandy_spruce"
+    },
+    "base=birch": {
+      "model": "guest_atmosphere:block/sandy_birch"
+    },
+    "base=jungle": {
+      "model": "guest_atmosphere:block/sandy_jungle"
+    },
+    "base=acacia": {
+      "model": "guest_atmosphere:block/sandy_acacia"
+    },
+    "base=dark_oak": {
+      "model": "guest_atmosphere:block/sandy_dark_oak"
+    },
+    "base=mangrove": {
+      "model": "guest_atmosphere:block/sandy_mangrove"
+    },
+    "base=cherry": {
+      "model": "guest_atmosphere:block/sandy_cherry"
+    },
+    "base=pale_oak": {
+      "model": "guest_atmosphere:block/sandy_pale_oak"
+    }
+  }
+}

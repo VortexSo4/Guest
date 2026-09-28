@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/pointed_dripstone",
+  "textures": {
+    "cross": "guest_atmosphere:block/icicle_tip"
+  }
+}

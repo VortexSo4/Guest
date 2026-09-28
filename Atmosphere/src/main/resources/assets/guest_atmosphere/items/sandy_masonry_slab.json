@@ -1,0 +1,76 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:block_state",
+    "block_state_property": "base",
+    "cases": [
+      {
+        "when": "cobblestone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_cobblestone_slab"
+        }
+      },
+      {
+        "when": "mossy_cobblestone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_mossy_cobblestone_slab"
+        }
+      },
+      {
+        "when": "stone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_stone_slab"
+        }
+      },
+      {
+        "when": "stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_stone_bricks_slab"
+        }
+      },
+      {
+        "when": "mossy_stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_mossy_stone_bricks_slab"
+        }
+      },
+      {
+        "when": "bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_bricks_slab"
+        }
+      },
+      {
+        "when": "cobbled_deepslate",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_cobbled_deepslate_slab"
+        }
+      },
+      {
+        "when": "deepslate_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_deepslate_bricks_slab"
+        }
+      },
+      {
+        "when": "mud_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/sandy_mud_bricks_slab"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "guest_atmosphere:block/sandy_cobblestone_slab"
+    }
+  }
+}

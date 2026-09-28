@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "guest_atmosphere:cryosol",
+    "guest_atmosphere:permafrost",
+    "guest_atmosphere:silt"
+  ]
+}

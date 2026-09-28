@@ -1,0 +1,139 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:oak_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "oak"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:spruce_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "spruce"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:birch_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "birch"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:jungle_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "jungle"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:acacia_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "acacia"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:dark_oak_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "dark_oak"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:mangrove_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "mangrove"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:cherry_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "cherry"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "minecraft:item",
+              "name": "minecraft:pale_oak_fence",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "guest_atmosphere:sandy_wooden_fence",
+                  "properties": {
+                    "base": "pale_oak"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "guest_atmosphere:blocks/sandy_wooden_fence"
+}

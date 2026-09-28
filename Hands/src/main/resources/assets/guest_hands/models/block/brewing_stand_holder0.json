@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/brewing_stand_bottle0",
+  "textures": {
+    "stand": "guest_hands:block/brewing_stand_holder"
+  }
+}

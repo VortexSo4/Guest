@@ -1,0 +1,90 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "property": "minecraft:block_state",
+    "block_state_property": "base",
+    "cases": [
+      {
+        "when": "cobblestone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_cobblestone"
+        }
+      },
+      {
+        "when": "mossy_cobblestone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_mossy_cobblestone"
+        }
+      },
+      {
+        "when": "stone",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_stone"
+        }
+      },
+      {
+        "when": "stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_stone_bricks"
+        }
+      },
+      {
+        "when": "mossy_stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_mossy_stone_bricks"
+        }
+      },
+      {
+        "when": "cracked_stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_cracked_stone_bricks"
+        }
+      },
+      {
+        "when": "chiseled_stone_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_chiseled_stone_bricks"
+        }
+      },
+      {
+        "when": "bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_bricks"
+        }
+      },
+      {
+        "when": "cobbled_deepslate",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_cobbled_deepslate"
+        }
+      },
+      {
+        "when": "deepslate_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_deepslate_bricks"
+        }
+      },
+      {
+        "when": "mud_bricks",
+        "model": {
+          "type": "minecraft:model",
+          "model": "guest_atmosphere:block/snowy_mud_bricks"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "guest_atmosphere:block/snowy_cobblestone"
+    }
+  }
+}

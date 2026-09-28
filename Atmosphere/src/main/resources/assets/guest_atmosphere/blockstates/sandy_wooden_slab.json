@@ -1,0 +1,85 @@
+{
+  "variants": {
+    "base=oak,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_oak_slab"
+    },
+    "base=oak,type=double": {
+      "model": "guest_atmosphere:block/sandy_oak"
+    },
+    "base=oak,type=top": {
+      "model": "guest_atmosphere:block/sandy_oak_slab_top"
+    },
+    "base=spruce,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_spruce_slab"
+    },
+    "base=spruce,type=double": {
+      "model": "guest_atmosphere:block/sandy_spruce"
+    },
+    "base=spruce,type=top": {
+      "model": "guest_atmosphere:block/sandy_spruce_slab_top"
+    },
+    "base=birch,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_birch_slab"
+    },
+    "base=birch,type=double": {
+      "model": "guest_atmosphere:block/sandy_birch"
+    },
+    "base=birch,type=top": {
+      "model": "guest_atmosphere:block/sandy_birch_slab_top"
+    },
+    "base=jungle,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_jungle_slab"
+    },
+    "base=jungle,type=double": {
+      "model": "guest_atmosphere:block/sandy_jungle"
+    },
+    "base=jungle,type=top": {
+      "model": "guest_atmosphere:block/sandy_jungle_slab_top"
+    },
+    "base=acacia,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_acacia_slab"
+    },
+    "base=acacia,type=double": {
+      "model": "guest_atmosphere:block/sandy_acacia"
+    },
+    "base=acacia,type=top": {
+      "model": "guest_atmosphere:block/sandy_acacia_slab_top"
+    },
+    "base=dark_oak,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_dark_oak_slab"
+    },
+    "base=dark_oak,type=double": {
+      "model": "guest_atmosphere:block/sandy_dark_oak"
+    },
+    "base=dark_oak,type=top": {
+      "model": "guest_atmosphere:block/sandy_dark_oak_slab_top"
+    },
+    "base=mangrove,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_mangrove_slab"
+    },
+    "base=mangrove,type=double": {
+      "model": "guest_atmosphere:block/sandy_mangrove"
+    },
+    "base=mangrove,type=top": {
+      "model": "guest_atmosphere:block/sandy_mangrove_slab_top"
+    },
+    "base=cherry,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_cherry_slab"
+    },
+    "base=cherry,type=double": {
+      "model": "guest_atmosphere:block/sandy_cherry"
+    },
+    "base=cherry,type=top": {
+      "model": "guest_atmosphere:block/sandy_cherry_slab_top"
+    },
+    "base=pale_oak,type=bottom": {
+      "model": "guest_atmosphere:block/sandy_pale_oak_slab"
+    },
+    "base=pale_oak,type=double": {
+      "model": "guest_atmosphere:block/sandy_pale_oak"
+    },
+    "base=pale_oak,type=top": {
+      "model": "guest_atmosphere:block/sandy_pale_oak_slab_top"
+    }
+  }
+}

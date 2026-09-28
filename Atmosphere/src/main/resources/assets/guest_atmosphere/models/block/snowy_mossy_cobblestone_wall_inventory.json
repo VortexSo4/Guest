@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "guest_atmosphere:block/snowy_mossy_cobblestone"
+  }
+}
