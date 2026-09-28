@@ -151,3 +151,18 @@ tasks.register('benchmark') {
             }
     )
 }
+
+def modsOutputDir = rootProject.layout.buildDirectory.dir('mods')
+
+subprojects {
+    plugins.withId('java') {
+        def collectJar = tasks.register('collectJar', Copy) {
+            from tasks.named('jar')
+            into modsOutputDir
+        }
+
+        tasks.named('build') {
+            finalizedBy collectJar
+        }
+    }
+}
