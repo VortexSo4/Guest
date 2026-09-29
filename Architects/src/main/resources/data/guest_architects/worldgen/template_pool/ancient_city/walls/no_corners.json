@@ -57,15 +57,6 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "guest_architects:ancient_city/walls/intact_horizontal_wall_stairs_5",
-        "processors": "minecraft:empty",
-        "projection": "rigid"
-      },
-      "weight": 1
-    },
-    {
-      "element": {
-        "element_type": "minecraft:single_pool_element",
         "location": "guest_architects:ancient_city/walls/intact_horizontal_wall_bridge",
         "processors": "minecraft:empty",
         "projection": "rigid"

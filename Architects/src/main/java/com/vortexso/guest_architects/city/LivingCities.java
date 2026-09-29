@@ -217,7 +217,7 @@ public final class LivingCities {
       for (Holder.Reference<StructureTemplatePool> pool :
           level.registryAccess().lookupOrThrow(Registries.TEMPLATE_POOL).listElements().toList()) {
         Identifier id = pool.key().identifier();
-        if (!id.getNamespace().equals(Identifier.DEFAULT_NAMESPACE)
+        if (!id.getNamespace().equals(GuestArchitects.MODID)
             || !id.getPath().startsWith("ancient_city")) {
           continue;
         }

@@ -12,15 +12,6 @@
     {
       "element": {
         "element_type": "minecraft:single_pool_element",
-        "location": "guest_architects:ancient_city/city_center/walls/bottom_2",
-        "processors": "minecraft:empty",
-        "projection": "rigid"
-      },
-      "weight": 1
-    },
-    {
-      "element": {
-        "element_type": "minecraft:single_pool_element",
         "location": "guest_architects:ancient_city/city_center/walls/bottom_left_corner",
         "processors": "minecraft:empty",
         "projection": "rigid"

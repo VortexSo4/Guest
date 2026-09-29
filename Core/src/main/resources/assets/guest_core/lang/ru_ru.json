@@ -34,6 +34,6 @@
   "guest_core.command.debug.on": "Отладочный канал %s включён",
   "guest_core.command.debug.off": "Отладочный канал %s выключен",
   "guest_core.configuration.debugLogging": "Отладочные сообщения в логе",
-  "guest_core.configuration.debugLogging.tooltip": "Писать в лог информационные и отладочные сообщения всех модов Guest; если выключено — только предупреждения и ошибки.",
+  "guest_core.configuration.debugLogging.tooltip": "Писать в лог информационные и отладочные сообщения всех модов Guest; если выключено - только предупреждения и ошибки.",
   "guest_core.configuration.title": "Guest Core"
 }

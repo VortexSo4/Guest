@@ -22,7 +22,7 @@
   "guest_architects.configuration.max_assistance_days": "Maks. opóźnienie dzięki pomocy (dni)",
   "guest_architects.configuration.max_assistance_days.tooltip": "Maksymalne łączne opóźnienie upadku miasta, jakie może dać pomoc gracza.",
   "guest_architects.configuration.notice_threshold": "Próg zauważenia",
-  "guest_architects.configuration.notice_threshold.tooltip": "Punkty ingerencji, przy których Architekci zatrzymują się i obserwują gracza (uderzenie to 2 punkty, zniszczona wełna, świeca lub wrzask – 1; zniszczenie sculku, ramy ze zbrojonego łupka lub miejsca pamięci od razu podnosi wynik do progu ekwipunku).",
+  "guest_architects.configuration.notice_threshold.tooltip": "Punkty ingerencji, przy których Architekci zatrzymują się i obserwują gracza (uderzenie to 2 punkty, zniszczona wełna, świeca lub wrzask - 1; zniszczenie sculku, ramy ze zbrojonego łupka lub miejsca pamięci od razu podnosi wynik do progu ekwipunku).",
   "guest_architects.configuration.immobilize_threshold": "Próg unieruchomienia",
   "guest_architects.configuration.immobilize_threshold.tooltip": "Punkty ingerencji, przy których gracz zostaje uniesiony i zawieszony w powietrzu.",
   "guest_architects.configuration.equipment_threshold": "Próg ekwipunku",
