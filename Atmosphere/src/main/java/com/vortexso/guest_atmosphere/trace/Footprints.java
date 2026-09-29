@@ -23,7 +23,8 @@ public final class Footprints {
         || !(entity instanceof LivingEntity)
         || (entity.getX() == entity.xo && entity.getZ() == entity.zo)
         || !AtmosphereConfig.TRACES_ENABLED.get()
-        || !AtmosphereConfig.FOOTPRINTS.get()) {
+        || !AtmosphereConfig.FOOTPRINTS.get()
+        || ChunkTraces.isFixed(level, pos)) {
       return;
     }
     int layers = state.getValue(SnowLayerBlock.LAYERS);

@@ -123,7 +123,7 @@ public final class SettlementsConfig {
         b.comment("The butcher culls an animal every few days when the herd outgrows the village.")
             .define("livestockCulling", true);
     SNOW_CLEARING =
-        b.comment("After snowfall villagers shovel snow layers off the square and their doorsteps.")
+        b.comment("Villagers shovel snow and sand layers off the square and their doorsteps.")
             .define("snowClearing", true);
     CARTOGRAPHER_TRIPS =
         b.comment("Cartographers leave for days and come back with a map they sell.")

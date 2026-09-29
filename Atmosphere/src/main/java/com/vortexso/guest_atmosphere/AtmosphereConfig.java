@@ -58,7 +58,7 @@ public final class AtmosphereConfig {
   public static final ModConfigSpec.DoubleValue SNOW_MELT_OFFSET;
   public static final ModConfigSpec.DoubleValue SNOW_MELT_RATE;
   public static final ModConfigSpec.DoubleValue RAIN_SNOW_MELT;
-  public static final ModConfigSpec.BooleanValue SNOWY_PLANTS;
+  public static final ModConfigSpec.BooleanValue COVERED_PLANTS;
   public static final ModConfigSpec.BooleanValue FOOTPRINTS;
   public static final ModConfigSpec.DoubleValue FOOTPRINT_CHANCE;
   public static final ModConfigSpec.BooleanValue ICICLES;
@@ -242,9 +242,9 @@ public final class AtmosphereConfig {
     RAIN_SNOW_MELT =
         b.comment("Extra layers melted per day while it rains on snow.")
             .defineInRange("rainSnowMelt", 1.0, 0.0, 16.0);
-    SNOWY_PLANTS =
-        b.comment("Snow covers grass and flowers without destroying them (Bedrock-style).")
-            .define("snowyPlants", true);
+    COVERED_PLANTS =
+        b.comment("Snow and drifting sand cover grass and flowers without destroying them.")
+            .define("coveredPlants", true);
     FOOTPRINTS =
         b.comment("Walking through deep snow, sand or ash packs it down into visible trails.")
             .define("footprints", true);

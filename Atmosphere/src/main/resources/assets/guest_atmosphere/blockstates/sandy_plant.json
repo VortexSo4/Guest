@@ -1,0 +1,362 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "plant": "short_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/short_grass"
+      }
+    },
+    {
+      "when": {
+        "plant": "fern"
+      },
+      "apply": {
+        "model": "minecraft:block/fern"
+      }
+    },
+    {
+      "when": {
+        "plant": "bush"
+      },
+      "apply": {
+        "model": "minecraft:block/bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "dead_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/dead_bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "short_dry_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/short_dry_grass"
+      }
+    },
+    {
+      "when": {
+        "plant": "firefly_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/firefly_bush"
+      }
+    },
+    {
+      "when": {
+        "plant": "dandelion"
+      },
+      "apply": {
+        "model": "minecraft:block/dandelion"
+      }
+    },
+    {
+      "when": {
+        "plant": "golden_dandelion"
+      },
+      "apply": {
+        "model": "minecraft:block/golden_dandelion"
+      }
+    },
+    {
+      "when": {
+        "plant": "poppy"
+      },
+      "apply": {
+        "model": "minecraft:block/poppy"
+      }
+    },
+    {
+      "when": {
+        "plant": "blue_orchid"
+      },
+      "apply": {
+        "model": "minecraft:block/blue_orchid"
+      }
+    },
+    {
+      "when": {
+        "plant": "allium"
+      },
+      "apply": {
+        "model": "minecraft:block/allium"
+      }
+    },
+    {
+      "when": {
+        "plant": "azure_bluet"
+      },
+      "apply": {
+        "model": "minecraft:block/azure_bluet"
+      }
+    },
+    {
+      "when": {
+        "plant": "red_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/red_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "orange_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/orange_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "white_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/white_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "pink_tulip"
+      },
+      "apply": {
+        "model": "minecraft:block/pink_tulip"
+      }
+    },
+    {
+      "when": {
+        "plant": "oxeye_daisy"
+      },
+      "apply": {
+        "model": "minecraft:block/oxeye_daisy"
+      }
+    },
+    {
+      "when": {
+        "plant": "cornflower"
+      },
+      "apply": {
+        "model": "minecraft:block/cornflower"
+      }
+    },
+    {
+      "when": {
+        "plant": "lily_of_the_valley"
+      },
+      "apply": {
+        "model": "minecraft:block/lily_of_the_valley"
+      }
+    },
+    {
+      "when": {
+        "plant": "torchflower"
+      },
+      "apply": {
+        "model": "minecraft:block/torchflower"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "tall_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/tall_grass_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "tall_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/tall_grass_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "large_fern"
+      },
+      "apply": {
+        "model": "minecraft:block/large_fern_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "large_fern"
+      },
+      "apply": {
+        "model": "minecraft:block/large_fern_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "sunflower"
+      },
+      "apply": {
+        "model": "minecraft:block/sunflower_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "sunflower"
+      },
+      "apply": {
+        "model": "minecraft:block/sunflower_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "lilac"
+      },
+      "apply": {
+        "model": "minecraft:block/lilac_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "lilac"
+      },
+      "apply": {
+        "model": "minecraft:block/lilac_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "rose_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/rose_bush_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "rose_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/rose_bush_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "peony"
+      },
+      "apply": {
+        "model": "minecraft:block/peony_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "peony"
+      },
+      "apply": {
+        "model": "minecraft:block/peony_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "pitcher_plant"
+      },
+      "apply": {
+        "model": "minecraft:block/pitcher_plant_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "pitcher_plant"
+      },
+      "apply": {
+        "model": "minecraft:block/pitcher_plant_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "1"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height2"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "2"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height4"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "3"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height6"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "4"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height8"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "5"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height10"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "6"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height12"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "7"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_height14"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "layers": "8"
+      },
+      "apply": {
+        "model": "guest_atmosphere:block/sand_pile_block"
+      }
+    }
+  ]
+}

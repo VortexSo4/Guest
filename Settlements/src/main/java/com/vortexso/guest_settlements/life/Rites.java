@@ -66,6 +66,7 @@ public final class Rites {
   private static final long AURORA_TO = 22000;
   private static final int AURORA_WALK = 600;
   private static final int AURORA_SILENCE = 1200;
+  private static final Vec3 AURORA_GAZE = new Vec3(0.0, 20.0, -40.0);
 
   private static final long STORM_LOOKAHEAD = 2000;
 
@@ -429,7 +430,7 @@ public final class Rites {
                       ringer ? 2 : 1,
                       0.5F,
                       Integer.MAX_VALUE,
-                      Errands.at(villager.getEyePosition().add(2.0, 30.0, 0.0)),
+                      Errands.at(villager.getEyePosition().add(AURORA_GAZE)),
                       ItemStack.EMPTY,
                       (level, watcher, tick) -> {
                         if (ringer && (tick == 0 || tick == 30 || tick == 60)) {
@@ -439,7 +440,7 @@ public final class Rites {
                             .getBrain()
                             .setMemory(
                                 MemoryModuleType.LOOK_TARGET,
-                                Errands.at(watcher.getEyePosition().add(2.0, 30.0, 0.0)));
+                                Errands.at(watcher.getEyePosition().add(AURORA_GAZE)));
                       }))));
     }
     return true;

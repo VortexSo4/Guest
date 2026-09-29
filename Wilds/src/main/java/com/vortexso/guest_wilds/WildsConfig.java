@@ -22,7 +22,6 @@ public final class WildsConfig {
   public static final ModConfigSpec.BooleanValue FOG_SHIELDS_UNDEAD =
       bool("fogShieldsUndead", true);
   public static final ModConfigSpec.BooleanValue LAIR_FIGHTS = bool("lairFights", true);
-  public static final ModConfigSpec.BooleanValue CLUTCH_EXPLODES = bool("clutchExplodes", true);
   public static final ModConfigSpec.BooleanValue HERDS = bool("herds", true);
   public static final ModConfigSpec.BooleanValue HERD_RELOCATION = bool("herdRelocation", true);
   public static final ModConfigSpec.BooleanValue GRAZERS_EAT_GRASS = bool("grazersEatGrass", true);

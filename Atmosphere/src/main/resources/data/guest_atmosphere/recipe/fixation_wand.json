@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "S": "minecraft:snowball",
+    "A": "minecraft:amethyst_shard",
+    "P": [
+      "guest_atmosphere:sand_pile",
+      "guest_atmosphere:red_sand_pile"
+    ],
+    "C": "minecraft:stick"
+  },
+  "pattern": [
+    " SP",
+    " CA",
+    "C  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "guest_atmosphere:fixation_wand"
+  }
+}

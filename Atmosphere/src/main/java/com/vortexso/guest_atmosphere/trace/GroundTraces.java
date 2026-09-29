@@ -3,6 +3,7 @@ package com.vortexso.guest_atmosphere.trace;
 import com.vortexso.guest_atmosphere.AtmosphereConfig;
 import com.vortexso.guest_atmosphere.block.AtmosphereBlocks;
 import com.vortexso.guest_atmosphere.block.Coating.Coat;
+import com.vortexso.guest_atmosphere.block.CoveredPlantBlock;
 import com.vortexso.guest_atmosphere.trace.ChunkTraces.Kind;
 import com.vortexso.guest_atmosphere.trace.ChunkTraces.Trace;
 import com.vortexso.guest_atmosphere.weather.AtmosphereWeather;
@@ -46,8 +47,7 @@ final class GroundTraces {
       WeatherType type = c.type();
       if (type == WeatherType.SANDSTORM) {
         if (piles
-            && shelter > 0
-            && (surface.isAir() || pile)
+            && (coverable(surface) || shelter > 0 && (surface.isAir() || pile))
             && !c.state(c.ground).is(BlockTags.SAND)
             && c.chance(17, c.intensity() * c.params.sandChance())) {
           addPile(c, surface, shelter >= 2 ? 4 : 2);
@@ -83,13 +83,12 @@ final class GroundTraces {
                         / (AtmosphereConfig.SAND_LIFETIME_DAYS.get() * GuestTime.TICKS_PER_DAY)));
     if (!lying) {
       if (pile) {
-        c.set(c.top, Blocks.AIR.defaultBlockState());
+        c.set(c.top, CoveredPlantBlock.withLayers(surface, 0));
       }
       Surfaces.uncoatAll(c, Coat.SANDY);
     } else if (c.chance(17, History.coverage(h.sandHits))) {
       if (piles
-          && shelter > 0
-          && (surface.isAir() || pile)
+          && (coverable(surface) || shelter > 0 && (surface.isAir() || pile))
           && !c.state(c.ground).is(BlockTags.SAND)) {
         int depth = shelter >= 2 ? 4 : 2;
         for (int i = pile ? surface.getValue(SnowLayerBlock.LAYERS) : 0; i < depth; i++) {
@@ -104,8 +103,14 @@ final class GroundTraces {
   }
 
   private static boolean isPile(BlockState state) {
-    return state.is(AtmosphereBlocks.SAND_PILE.get())
-        || state.is(AtmosphereBlocks.RED_SAND_PILE.get());
+    Block block =
+        state.getBlock() instanceof CoveredPlantBlock covered ? covered.cover() : state.getBlock();
+    return block == AtmosphereBlocks.SAND_PILE.get()
+        || block == AtmosphereBlocks.RED_SAND_PILE.get();
+  }
+
+  private static boolean coverable(BlockState state) {
+    return AtmosphereConfig.COVERED_PLANTS.get() && CoveredPlantBlock.Plant.of(state) != null;
   }
 
   private static int shelter(Column c) {
@@ -131,19 +136,16 @@ final class GroundTraces {
         AtmosphereWeather.isRedSand(c.level, c.top)
             ? AtmosphereBlocks.RED_SAND_PILE.get()
             : AtmosphereBlocks.SAND_PILE.get();
-    BlockState state = pile.defaultBlockState();
-    if (state.canSurvive(c.level, c.top)) {
+    BlockState state =
+        surface.isAir() ? pile.defaultBlockState() : CoveredPlantBlock.cover(surface, pile, 1);
+    if (state != null && state.canSurvive(c.level, c.top)) {
       c.set(c.top, state);
     }
   }
 
   static void lowerLayer(Column c, BlockState surface) {
-    int layers = surface.getValue(SnowLayerBlock.LAYERS);
     c.set(
-        c.top,
-        layers <= 1
-            ? Blocks.AIR.defaultBlockState()
-            : surface.setValue(SnowLayerBlock.LAYERS, layers - 1));
+        c.top, CoveredPlantBlock.withLayers(surface, surface.getValue(SnowLayerBlock.LAYERS) - 1));
   }
 
   private static void mud(Column c) {

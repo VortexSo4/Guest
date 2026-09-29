@@ -19,6 +19,7 @@ public final class VillageNode {
   private int totalChunks;
   private final List<VillageFarmRegion> farmRegions = new ArrayList<>();
   private @Nullable BlockPos bell;
+  private int fieldFarmland;
 
   public VillageNode(long id, BlockPos center, @Nullable VillageState state) {
     this.id = id;
@@ -50,8 +51,12 @@ public final class VillageNode {
     return farmRegions;
   }
 
+  public void setFieldFarmland(int fieldFarmland) {
+    this.fieldFarmland = fieldFarmland;
+  }
+
   public int farmland() {
-    int total = 0;
+    int total = fieldFarmland;
     for (VillageFarmRegion region : farmRegions) {
       total += region.farmlandAmount();
     }

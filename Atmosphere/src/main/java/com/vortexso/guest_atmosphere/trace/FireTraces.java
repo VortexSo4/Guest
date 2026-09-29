@@ -108,6 +108,9 @@ public final class FireTraces {
       BlockPos pos = queue.poll();
       BlockState state = level.getBlockState(pos);
       boolean log = state.is(BlockTags.LOGS_THAT_BURN);
+      if (ChunkTraces.isFixed(level, pos)) {
+        continue;
+      }
       if (log) {
         if (pos.getY() < base.getY()) {
           base = pos;
@@ -316,6 +319,9 @@ public final class FireTraces {
   }
 
   private static void fuse(ServerLevel level, BlockPos strike, BlockPos pos, int depth) {
+    if (ChunkTraces.isFixed(level, pos)) {
+      return;
+    }
     level.setBlockAndUpdate(pos, AtmosphereBlocks.VITRIFIED_SAND.get().defaultBlockState());
     if (depth >= 5) {
       return;
@@ -339,7 +345,8 @@ public final class FireTraces {
     if (!(level instanceof ServerLevel)
         || !AtmosphereConfig.TRACES_ENABLED.get()
         || !AtmosphereConfig.FIRE_CHARS_WOOD.get()
-        || level.getRandom().nextFloat() >= AtmosphereConfig.FIRE_CHAR_CHANCE.get()) {
+        || level.getRandom().nextFloat() >= AtmosphereConfig.FIRE_CHAR_CHANCE.get()
+        || ChunkTraces.isFixed(level, pos)) {
       return false;
     }
     BlockState charred = charred(level.getBlockState(pos));
@@ -469,6 +476,9 @@ public final class FireTraces {
       long now) {
     LevelChunk chunk = level.getChunkAt(pos);
     ChunkTraces traces = Column.traces(chunk);
+    if (ChunkTraces.isFixed(level, pos)) {
+      return false;
+    }
     if (traces.get(pos.asLong()) == null
         && traces.size() >= AtmosphereConfig.MAX_TRACES_PER_CHUNK.get()) {
       return false;

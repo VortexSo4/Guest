@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
+import com.vortexso.guest_core.api.GuestTime;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -329,6 +330,7 @@ public final class Errands {
       if (step.held() != null) {
         hold(body, step.held());
       }
+      hush(level, body, errand.role);
       Brain<Villager> brain = body.getBrain();
       if (step.where() != null && !errand.settled && !arrived(body, step)) {
 
@@ -391,6 +393,18 @@ public final class Errands {
         if (errand.step() == null) {
           end(body, errand);
         }
+      }
+    }
+
+    private static void hush(ServerLevel level, Villager body, VillageLife.Role role) {
+      boolean mourning =
+          role == VillageLife.Role.MOURNING
+              || (role == VillageLife.Role.RINGER
+                  && GuestTime.weekday(GuestTime.gameTime(level)) == Rites.NEW_MOON);
+      if (mourning) {
+        body.ambientSoundTime = -body.getAmbientSoundInterval();
+      } else if (role == VillageLife.Role.AURORA && level.getGameTime() % 4 != 0) {
+        body.ambientSoundTime--;
       }
     }
 

@@ -10,6 +10,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
@@ -38,6 +39,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 public final class AtmosphereBlocks {
@@ -51,21 +53,6 @@ public final class AtmosphereBlocks {
   private static final Map<Coat, Map<Family, List<DeferredBlock<Block>>>> COATED =
       new EnumMap<>(Coat.class);
 
-  public static final DeferredBlock<SnowyPlantBlock> SNOWY_PLANT =
-      register(
-          "snowy_plant",
-          SnowyPlantBlock::new,
-          p ->
-              p.mapColor(MapColor.SNOW)
-                  .forceSolidOff()
-                  .randomTicks()
-                  .strength(0.1F)
-                  .sound(SoundType.SNOW)
-                  .isViewBlocking(
-                      (state, level, pos) -> state.getValue(SnowyPlantBlock.LAYERS) >= 8)
-                  .pushReaction(PushReaction.DESTROY),
-          null);
-
   public static final DeferredBlock<TraceBlocks.LayerBlock> SAND_PILE =
       register("sand_pile", TraceBlocks.LayerBlock::new, p -> layer(p, MapColor.SAND), NATURAL);
   public static final DeferredBlock<TraceBlocks.LayerBlock> RED_SAND_PILE =
@@ -74,6 +61,12 @@ public final class AtmosphereBlocks {
           TraceBlocks.LayerBlock::new,
           p -> layer(p, MapColor.COLOR_ORANGE),
           NATURAL);
+  public static final DeferredBlock<CoveredPlantBlock> SNOWY_PLANT =
+      coveredPlant("snowy_plant", () -> Blocks.SNOW, MapColor.SNOW, SoundType.SNOW);
+  public static final DeferredBlock<CoveredPlantBlock> SANDY_PLANT =
+      coveredPlant("sandy_plant", SAND_PILE, MapColor.SAND, SoundType.SAND);
+  public static final DeferredBlock<CoveredPlantBlock> RED_SANDY_PLANT =
+      coveredPlant("red_sandy_plant", RED_SAND_PILE, MapColor.COLOR_ORANGE, SoundType.SAND);
   public static final DeferredBlock<TraceBlocks.LayerBlock> ASH =
       register("ash", TraceBlocks.LayerBlock::new, p -> layer(p, MapColor.COLOR_GRAY), NATURAL);
 
@@ -250,6 +243,9 @@ public final class AtmosphereBlocks {
                   .strength(2.0F, 6.0F),
           BUILDING);
 
+  public static final DeferredItem<FixationWandItem> FIXATION_WAND =
+      ITEMS.registerItem("fixation_wand", FixationWandItem::new, p -> p.stacksTo(1));
+
   static {
     for (Coat coat : Coat.values()) {
       Map<Family, List<DeferredBlock<Block>>> families = new EnumMap<>(Family.class);
@@ -349,6 +345,26 @@ public final class AtmosphereBlocks {
     return block;
   }
 
+  private static DeferredBlock<CoveredPlantBlock> coveredPlant(
+      String name, Supplier<? extends Block> cover, MapColor color, SoundType sound) {
+    return register(
+        name,
+        p -> new CoveredPlantBlock(p, cover),
+        p ->
+            p.mapColor(color)
+                .forceSolidOff()
+                .strength(0.1F)
+                .sound(sound)
+                .isViewBlocking(
+                    (state, level, pos) -> state.getValue(CoveredPlantBlock.LAYERS) >= 8)
+                .pushReaction(PushReaction.DESTROY),
+        null);
+  }
+
+  public static List<CoveredPlantBlock> coveredPlants() {
+    return List.of(SNOWY_PLANT.get(), SANDY_PLANT.get(), RED_SANDY_PLANT.get());
+  }
+
   private static BlockBehaviour.Properties layer(BlockBehaviour.Properties p, MapColor color) {
     return p.mapColor(color)
         .replaceable()
@@ -387,7 +403,9 @@ public final class AtmosphereBlocks {
   }
 
   private static void onCreativeTabs(BuildCreativeModeTabContentsEvent event) {
-    if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+    if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+      event.accept(FIXATION_WAND);
+    } else if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
       NATURAL.forEach(block -> event.accept(block));
     } else if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
       BUILDING.forEach(block -> event.accept(block));

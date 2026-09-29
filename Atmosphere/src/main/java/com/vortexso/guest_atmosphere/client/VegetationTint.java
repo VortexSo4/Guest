@@ -2,12 +2,14 @@ package com.vortexso.guest_atmosphere.client;
 
 import com.vortexso.guest_atmosphere.AtmosphereConfig;
 import com.vortexso.guest_atmosphere.GuestAtmosphere;
+import com.vortexso.guest_atmosphere.block.AtmosphereBlocks;
 import com.vortexso.guest_atmosphere.network.WeatherSyncPayload;
 import com.vortexso.guest_core.api.GuestHash;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockTintSource;
+import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.core.BlockPos;
@@ -79,6 +81,14 @@ public final class VegetationTint {
   @SubscribeEvent
   public static void onRegisterTints(RegisterColorHandlersEvent.BlockTintSources event) {
     wrap(event, GRASSES, 1.0F);
+    event.register(
+        List.of(new Tint(BlockTintSources.grass(), 1.0F)),
+        AtmosphereBlocks.FROSTY_GRASS.get(),
+        AtmosphereBlocks.FROSTY_FERN.get(),
+        AtmosphereBlocks.SNOWY_PLANT.get(),
+        AtmosphereBlocks.SANDY_PLANT.get(),
+        AtmosphereBlocks.RED_SANDY_PLANT.get());
+    event.register(List.of(BlockTintSources.foliage()), AtmosphereBlocks.IVY.get());
 
     wrap(event, FOLIAGE, 0.4F);
   }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "guest_atmosphere:block/frosty_grass"
+    "layer0": "minecraft:block/short_grass",
+    "layer1": "guest_atmosphere:block/frosty_grass"
   }
 }

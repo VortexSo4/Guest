@@ -2,6 +2,7 @@ package com.vortexso.guest_settlements.life;
 
 import com.vortexso.guest_core.api.GuestHash;
 import com.vortexso.guest_core.api.Season;
+import com.vortexso.guest_settlements.GuestSettlements;
 import com.vortexso.guest_settlements.SettlementsConfig;
 import com.vortexso.guest_settlements.life.Errands.Action;
 import com.vortexso.guest_settlements.life.Errands.Errand;
@@ -46,6 +47,7 @@ import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
@@ -61,6 +63,8 @@ final class Work {
   private static final int PASTURE = 32;
   private static final int HERD = 16;
   private static final int EXCHANGE_TIMEOUT = 1200;
+  private static final int DRIFT_TRIES = 8;
+  private static final int DRIFT_RETRY = 1200;
 
   private record TradeRoute(
       ResourceKey<VillagerProfession> supplier,
@@ -85,6 +89,8 @@ final class Work {
   private static final Map<Villager, Long> LIVESTOCK_DAY = new WeakHashMap<>();
 
   private static final Map<ServerLevel, Map<Long, long[]>> TILLED = new WeakHashMap<>();
+
+  private static final Map<Villager, Long> NO_DRIFT = new WeakHashMap<>();
 
   private Work() {}
 
@@ -1283,12 +1289,18 @@ final class Work {
       }
       if (villager.isBaby()
           || !idle(villager)
-          || villager.getVillagerData().profession().is(VillagerProfession.CLERIC)) {
+          || villager.getVillagerData().profession().is(VillagerProfession.CLERIC)
+          || NO_DRIFT.getOrDefault(villager, Long.MIN_VALUE) > v.gameTime()) {
         continue;
       }
+      int first = next;
       List<Step> steps = new ArrayList<>();
-      for (int i = 0; i < 4 && next < drifts.size(); i++) {
+      while (steps.size() < 4 && next < drifts.size() && next - first < DRIFT_TRIES) {
         BlockPos drift = drifts.get(next++);
+        Path path = villager.getNavigation().createPath(drift, 1);
+        if (path == null || !path.canReach()) {
+          continue;
+        }
         steps.add(
             Step.at(
                     drift,
@@ -1296,11 +1308,17 @@ final class Work {
                     25,
                     new ItemStack(Items.IRON_SHOVEL),
                     (level, worker, tick) -> {
-                      if (tick == 20 && level.getBlockState(drift).is(Blocks.SNOW)) {
+                      if (tick == 20
+                          && level.getBlockState(drift).is(GuestSettlements.CLEARABLE_COVER)) {
                         level.destroyBlock(drift, false, worker);
                       }
                     })
                 .looking(Errands.at(Vec3.atCenterOf(drift))));
+      }
+      if (steps.isEmpty()) {
+        next = first;
+        NO_DRIFT.put(villager, v.gameTime() + DRIFT_RETRY);
+        continue;
       }
       Errands.offer(
           v.level(),
@@ -1320,7 +1338,9 @@ final class Work {
         for (int z = -r; z <= r; z++) {
           BlockPos top = Places.top(v.level(), center.getX() + x, center.getZ() + z);
           if (top != null
-              && v.level().getBlockState(top.above()).is(Blocks.SNOW)
+              && Construction.ground(v.level().getBlockState(top))
+              && v.level().getBlockState(top.above()).is(GuestSettlements.CLEARABLE_COVER)
+              && !Errands.unreachable(v.level(), top.above())
               && !found.contains(top.above())) {
             found.add(top.above());
           }

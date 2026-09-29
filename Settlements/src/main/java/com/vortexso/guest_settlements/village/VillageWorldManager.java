@@ -54,6 +54,8 @@ public final class VillageWorldManager {
   private static final int PRESSURE_RADIUS = 64;
   private static final int HOUSING_MARGIN = 8;
   private static final int OBSERVE_INTERVAL = 100;
+  private static final int FIELD_MARGIN = 14;
+  private static final int FIELD_SCAN_INTERVAL = OBSERVE_INTERVAL * 6;
 
   private static final BlockPos[] NEIGHBOR_PROBES = {
     new BlockPos(544, 0, 0),
@@ -186,6 +188,7 @@ public final class VillageWorldManager {
     }
     active.add(node.id());
     refreshDirtyRegions(node);
+    scanFields(node);
     node.setBell(findBell(node));
     List<BlockPos> homes = homes(node);
     long today = currentDay();
@@ -267,6 +270,9 @@ public final class VillageWorldManager {
     VillagePopulation population = VillageLife.population(level, node);
 
     int beds = homes(node).size();
+    if (level.getGameTime() % FIELD_SCAN_INTERVAL == 0) {
+      scanFields(node);
+    }
     if (state.day() < today) {
       node.setBell(findBell(node));
       VillageState before = state;
@@ -657,6 +663,15 @@ public final class VillageWorldManager {
         region.update(VillageFarmScanner.scan(level, region.pieceBox()));
       }
     }
+  }
+
+  private void scanFields(VillageNode node) {
+    node.setFieldFarmland(
+        VillageFarmScanner.scan(
+                level,
+                node.structureBox().inflatedBy(FIELD_MARGIN),
+                node.farmRegions().stream().map(VillageFarmRegion::pieceBox).toList())
+            .farmlandAmount());
   }
 
   private void rebuildFarmRegions(VillageNode node, StructureStart start) {

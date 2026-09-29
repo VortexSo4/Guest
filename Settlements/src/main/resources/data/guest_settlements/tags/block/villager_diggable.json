@@ -1,0 +1,12 @@
+{
+  "values": [
+    "#guest_settlements:clearable_cover",
+    "#minecraft:dirt",
+    "#minecraft:grass_blocks",
+    "minecraft:sand",
+    "minecraft:red_sand",
+    "minecraft:gravel",
+    "minecraft:snow_block",
+    "minecraft:powder_snow"
+  ]
+}

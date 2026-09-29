@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:snow",
+    {
+      "id": "guest_atmosphere:sand_pile",
+      "required": false
+    },
+    {
+      "id": "guest_atmosphere:red_sand_pile",
+      "required": false
+    }
+  ]
+}

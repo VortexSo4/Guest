@@ -1,12 +1,10 @@
 {
   "guest_core.common.yes": "да",
   "guest_core.common.no": "нет",
-
   "guest_core.season.spring": "Весна",
   "guest_core.season.summer": "Лето",
   "guest_core.season.autumn": "Осень",
   "guest_core.season.winter": "Зима",
-
   "guest_core.moon.full_moon": "Полнолуние",
   "guest_core.moon.waning_gibbous": "Убывающая луна",
   "guest_core.moon.third_quarter": "Последняя четверть",
@@ -15,7 +13,6 @@
   "guest_core.moon.waxing_crescent": "Молодой месяц",
   "guest_core.moon.first_quarter": "Первая четверть",
   "guest_core.moon.waxing_gibbous": "Растущая луна",
-
   "guest_core.weather.clear": "Ясно",
   "guest_core.weather.fog": "Туман",
   "guest_core.weather.wind": "Ветер",
@@ -29,12 +26,14 @@
   "guest_core.weather.blizzard": "Метель",
   "guest_core.weather.snowstorm": "Буран",
   "guest_core.weather.sandstorm": "Песчаная буря",
-
   "guest_core.command.time.too_large": "Слишком большое значение времени.",
   "guest_core.command.time.added": "Время сдвинуто на %s дн.",
   "guest_core.command.calendar": "Год %s, %s, неделя %s, день %s из 8 (%s)",
   "guest_core.command.weather": "Погода здесь: %s, интенсивность %s, ветер %s, сияние: %s",
   "guest_core.command.debug.unknown": "Неизвестный отладочный канал: %s",
   "guest_core.command.debug.on": "Отладочный канал %s включён",
-  "guest_core.command.debug.off": "Отладочный канал %s выключен"
+  "guest_core.command.debug.off": "Отладочный канал %s выключен",
+  "guest_core.configuration.debugLogging": "Отладочные сообщения в логе",
+  "guest_core.configuration.debugLogging.tooltip": "Писать в лог информационные и отладочные сообщения всех модов Guest; если выключено — только предупреждения и ошибки.",
+  "guest_core.configuration.title": "Guest Core"
 }

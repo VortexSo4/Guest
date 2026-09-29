@@ -3,7 +3,7 @@ package com.vortexso.guest_atmosphere.trace;
 import com.vortexso.guest_atmosphere.GuestAtmosphere;
 import com.vortexso.guest_atmosphere.block.AtmosphereBlocks;
 import com.vortexso.guest_atmosphere.block.Coating;
-import com.vortexso.guest_atmosphere.block.SnowyPlantBlock;
+import com.vortexso.guest_atmosphere.block.CoveredPlantBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,6 +29,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent;
 import org.jspecify.annotations.Nullable;
 
 @EventBusSubscriber(modid = GuestAtmosphere.MODID)
@@ -44,13 +46,17 @@ public final class TraceInteractions {
     BlockState state = level.getBlockState(pos);
     ItemStack stack = event.getItemStack();
     BlockState result = null;
-    if (stack.is(Items.SNOW)) {
-      if (state.is(AtmosphereBlocks.SNOWY_PLANT.get())) {
-        int layers = state.getValue(SnowLayerBlock.LAYERS);
-        result = layers < 8 ? state.setValue(SnowLayerBlock.LAYERS, layers + 1) : null;
-      } else {
-        result = SnowyPlantBlock.cover(state, 1);
-      }
+    Block cover = Block.byItem(stack.getItem());
+    if (state.hasProperty(CoveredPlantBlock.HALF)
+        && state.getValue(CoveredPlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+      pos = pos.below();
+      state = level.getBlockState(pos);
+    }
+    if (state.getBlock() instanceof CoveredPlantBlock covered && covered.cover() == cover) {
+      int layers = state.getValue(SnowLayerBlock.LAYERS);
+      result = layers < 8 ? state.setValue(SnowLayerBlock.LAYERS, layers + 1) : null;
+    } else if (cover instanceof SnowLayerBlock) {
+      result = CoveredPlantBlock.cover(state, cover, 1);
       if (result != null && !result.canSurvive(level, pos)) {
         result = null;
       }
@@ -66,7 +72,9 @@ public final class TraceInteractions {
       level.playSound(
           null,
           pos,
-          stack.is(Items.SNOW) ? SoundEvents.SNOW_PLACE : SoundEvents.MUD_BRICKS_PLACE,
+          stack.is(Items.CLAY_BALL)
+              ? SoundEvents.MUD_BRICKS_PLACE
+              : result.getSoundType().getPlaceSound(),
           SoundSource.BLOCKS,
           1.0F,
           1.0F);
@@ -74,6 +82,13 @@ public final class TraceInteractions {
     }
     event.setCanceled(true);
     event.setCancellationResult(InteractionResult.SUCCESS);
+  }
+
+  @SubscribeEvent
+  public static void onBreak(BreakBlockEvent event) {
+    if (event.getLevel() instanceof ServerLevel level) {
+      ChunkTraces.setFixed(level, event.getPos(), false);
+    }
   }
 
   @SubscribeEvent
@@ -155,11 +170,10 @@ public final class TraceInteractions {
     }
     if (state.is(AtmosphereBlocks.SAND_PILE.get())
         || state.is(AtmosphereBlocks.RED_SAND_PILE.get())
-        || state.is(AtmosphereBlocks.ASH.get())) {
-      int layers = state.getValue(SnowLayerBlock.LAYERS);
-      return layers <= 1
-          ? Blocks.AIR.defaultBlockState()
-          : state.setValue(SnowLayerBlock.LAYERS, layers - 1);
+        || state.is(AtmosphereBlocks.ASH.get())
+        || state.is(AtmosphereBlocks.SANDY_PLANT.get())
+        || state.is(AtmosphereBlocks.RED_SANDY_PLANT.get())) {
+      return CoveredPlantBlock.withLayers(state, state.getValue(SnowLayerBlock.LAYERS) - 1);
     }
     return null;
   }

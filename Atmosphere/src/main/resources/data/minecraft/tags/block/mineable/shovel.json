@@ -6,7 +6,9 @@
     "guest_atmosphere:cryosol",
     "guest_atmosphere:permafrost",
     "guest_atmosphere:red_sand_pile",
+    "guest_atmosphere:red_sandy_plant",
     "guest_atmosphere:sand_pile",
+    "guest_atmosphere:sandy_plant",
     "guest_atmosphere:silt",
     "guest_atmosphere:snowy_plant"
   ]

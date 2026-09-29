@@ -231,12 +231,18 @@ final class Column {
   }
 
   void set(BlockPos pos, BlockState state) {
+    if (ChunkTraces.isFixed(level, pos)) {
+      return;
+    }
     level.setBlockAndUpdate(pos, state);
     chunk.markUnsaved();
   }
 
   boolean change(BlockPos pos, BlockState newState, Kind kind) {
     BlockState original = level.getBlockState(pos);
+    if (ChunkTraces.isFixed(level, pos)) {
+      return false;
+    }
     if (traces.get(pos.asLong()) == null
         && traces.size() >= AtmosphereConfig.MAX_TRACES_PER_CHUNK.get()) {
       return false;
@@ -249,7 +255,9 @@ final class Column {
 
   void revert(BlockPos pos, Trace trace) {
     traces.remove(pos.asLong());
-    level.setBlockAndUpdate(pos, trace.original());
+    if (!ChunkTraces.isFixed(level, pos)) {
+      level.setBlockAndUpdate(pos, trace.original());
+    }
     chunk.markUnsaved();
   }
 

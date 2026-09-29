@@ -170,7 +170,7 @@
   "guest_settlements.debug.role.service": "день службы, кузня стоит",
   "guest_settlements.debug.role.shearing": "стрижёт овец",
   "guest_settlements.debug.role.shelter": "спешит домой",
-  "guest_settlements.debug.role.snow": "расчищает снег",
+  "guest_settlements.debug.role.snow": "расчищает снег и песок",
   "guest_settlements.debug.role.storm": "идёт на звон",
   "guest_settlements.debug.role.tag": "играет в пятнашки",
   "guest_settlements.debug.role.tilling": "вспахивает",

@@ -42,7 +42,6 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.TurtleEggBlock;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -679,6 +678,11 @@ public final class Lairs extends SavedData {
     boolean renew = node.renewed < 0 || day - node.renewed >= P.renewDays();
     CaveScan.Cave cave = known;
     boolean changed = false;
+    if (node.traces.stream().anyMatch(trace -> trace.placed().is(Blocks.TURTLE_EGG))) {
+      removeTraces(level, node, LairSpecies.CREEPER.ordinal());
+      renew = true;
+      changed = true;
+    }
     for (LairSpecies species : LairSpecies.VALUES) {
       int i = species.ordinal();
       boolean traced = node.traces.stream().anyMatch(trace -> trace.species() == i);
@@ -849,9 +853,6 @@ public final class Lairs extends SavedData {
 
   private static BlockState vary(BlockState state, long h) {
     int roll = (int) (GuestHash.unit(GuestHash.hash(h, 3)) * 16);
-    if (state.hasProperty(TurtleEggBlock.EGGS)) {
-      state = state.setValue(TurtleEggBlock.EGGS, 1 + roll % 4);
-    }
     if (state.hasProperty(BlockStateProperties.ROTATION_16)) {
       state = state.setValue(BlockStateProperties.ROTATION_16, roll);
     }
@@ -902,34 +903,6 @@ public final class Lairs extends SavedData {
     removeTraces(level, node, -1);
     nodes.remove(node.key);
     setDirty();
-  }
-
-  public static boolean burstClutch(ServerLevel level, BlockPos pos, BlockState state) {
-    if (!WildsConfig.LAIRS.get()
-        || !WildsConfig.CLUTCH_EXPLODES.get()
-        || level.dimension() != Level.OVERWORLD) {
-      return false;
-    }
-    Node node = get(level).nodes.get(ChunkPos.pack(pos));
-    if (node == null) {
-      return false;
-    }
-    for (Trace trace : node.traces) {
-      if (trace.pos().equals(pos) && trace.placed().is(Blocks.TURTLE_EGG)) {
-
-        level.removeBlock(pos, false);
-        int eggs = state.hasProperty(TurtleEggBlock.EGGS) ? state.getValue(TurtleEggBlock.EGGS) : 1;
-        level.explode(
-            null,
-            pos.getX() + 0.5,
-            pos.getY() + 0.3,
-            pos.getZ() + 0.5,
-            P.clutchPowerPerEgg() * (1 + eggs),
-            Level.ExplosionInteraction.MOB);
-        return true;
-      }
-    }
-    return false;
   }
 
   public void materializeNear(ServerLevel level, ServerPlayer player) {

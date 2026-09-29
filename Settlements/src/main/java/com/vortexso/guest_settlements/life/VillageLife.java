@@ -170,6 +170,7 @@ public final class VillageLife {
           });
       for (Villager villager : villagers) {
         Errands.maintain(level, villager);
+        Stuck.check(level, villager, node.bell() != null ? node.bell() : node.center());
       }
       Cartographers.tick(level, manager, node, villagers, clock);
       if (villagers.isEmpty()) {

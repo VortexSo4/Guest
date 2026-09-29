@@ -4,6 +4,7 @@ import com.vortexso.guest_atmosphere.GuestAtmosphere;
 import com.vortexso.guest_atmosphere.debug.AtmosphereDebug;
 import com.vortexso.guest_atmosphere.trace.ChunkTraces;
 import com.vortexso.guest_atmosphere.weather.WeatherModel.Sample;
+import com.vortexso.guest_core.api.GuestTime;
 import com.vortexso.guest_core.client.GuestGizmos;
 import com.vortexso.guest_core.debug.GuestDebug;
 import java.util.Locale;
@@ -54,6 +55,13 @@ public final class AtmosphereDebugRenderer {
       lines(
           camera.add(minecraft.player.getLookAngle().scale(4.0)).add(0.0, 1.2, 0.0),
           Component.translatable("guest_atmosphere.debug.here"),
+          Component.translatable(
+              "guest_atmosphere.command.here.calendar",
+              GuestTime.year(snapshot.time()),
+              GuestTime.season(snapshot.time()).displayName(),
+              GuestTime.dayOfYear(snapshot.time()) % GuestTime.DAYS_PER_SEASON + 1,
+              GuestTime.DAYS_PER_SEASON,
+              GuestTime.day(snapshot.time()) + 1),
           describe(snapshot.here()),
           values(snapshot.here()),
           Component.translatable(

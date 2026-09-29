@@ -162,6 +162,133 @@
     },
     {
       "when": {
+        "half": "lower",
+        "plant": "tall_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/tall_grass_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "tall_grass"
+      },
+      "apply": {
+        "model": "minecraft:block/tall_grass_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "large_fern"
+      },
+      "apply": {
+        "model": "minecraft:block/large_fern_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "large_fern"
+      },
+      "apply": {
+        "model": "minecraft:block/large_fern_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "sunflower"
+      },
+      "apply": {
+        "model": "minecraft:block/sunflower_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "sunflower"
+      },
+      "apply": {
+        "model": "minecraft:block/sunflower_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "lilac"
+      },
+      "apply": {
+        "model": "minecraft:block/lilac_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "lilac"
+      },
+      "apply": {
+        "model": "minecraft:block/lilac_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "rose_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/rose_bush_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "rose_bush"
+      },
+      "apply": {
+        "model": "minecraft:block/rose_bush_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "peony"
+      },
+      "apply": {
+        "model": "minecraft:block/peony_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "peony"
+      },
+      "apply": {
+        "model": "minecraft:block/peony_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
+        "plant": "pitcher_plant"
+      },
+      "apply": {
+        "model": "minecraft:block/pitcher_plant_bottom"
+      }
+    },
+    {
+      "when": {
+        "half": "upper",
+        "plant": "pitcher_plant"
+      },
+      "apply": {
+        "model": "minecraft:block/pitcher_plant_top"
+      }
+    },
+    {
+      "when": {
+        "half": "lower",
         "layers": "1"
       },
       "apply": {
@@ -170,6 +297,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "2"
       },
       "apply": {
@@ -178,6 +306,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "3"
       },
       "apply": {
@@ -186,6 +315,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "4"
       },
       "apply": {
@@ -194,6 +324,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "5"
       },
       "apply": {
@@ -202,6 +333,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "6"
       },
       "apply": {
@@ -210,6 +342,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "7"
       },
       "apply": {
@@ -218,6 +351,7 @@
     },
     {
       "when": {
+        "half": "lower",
         "layers": "8"
       },
       "apply": {

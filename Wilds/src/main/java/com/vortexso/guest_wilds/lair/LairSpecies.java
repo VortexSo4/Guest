@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CaveVinesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.Nullable;
 
@@ -140,10 +141,18 @@ public enum LairSpecies {
 
     private static final List<TraceSpec> CREEPER_TRACES =
         List.of(
-            new TraceSpec(Zone.MOUTH, Kind.FLOOR, Blocks.BLACKSTONE.defaultBlockState(), 3),
+            new TraceSpec(Zone.MOUTH, Kind.FLOOR, Blocks.MOSS_BLOCK.defaultBlockState(), 3),
             new TraceSpec(Zone.MOUTH, Kind.CRATER, Blocks.AIR.defaultBlockState(), 1),
-            new TraceSpec(Zone.DEN, Kind.STAND, Blocks.TURTLE_EGG.defaultBlockState(), 4),
-            new TraceSpec(Zone.DEN, Kind.FLOOR, Blocks.BLACKSTONE.defaultBlockState(), 2));
+            new TraceSpec(Zone.MOUTH, Kind.STAND, Blocks.MOSS_CARPET.defaultBlockState(), 2),
+            new TraceSpec(Zone.DEN, Kind.FLOOR, Blocks.MOSS_BLOCK.defaultBlockState(), 5),
+            new TraceSpec(Zone.DEN, Kind.STAND, Blocks.MOSS_CARPET.defaultBlockState(), 4),
+            new TraceSpec(Zone.DEN, Kind.STAND, Blocks.AZALEA.defaultBlockState(), 1),
+            new TraceSpec(
+                Zone.DEN,
+                Kind.CEILING,
+                Blocks.CAVE_VINES.defaultBlockState().setValue(CaveVinesBlock.AGE, 25),
+                2),
+            new TraceSpec(Zone.DEN, Kind.FLOOR, Blocks.BLACKSTONE.defaultBlockState(), 1));
   }
 
   public List<TraceSpec> traces() {
@@ -158,7 +167,7 @@ public enum LairSpecies {
   public static boolean renewable(BlockState state) {
     return state.is(Blocks.COBWEB)
         || state.is(Blocks.WHITE_WOOL)
-        || state.is(Blocks.TURTLE_EGG)
+        || state.is(Blocks.MOSS_CARPET)
         || state.is(Blocks.BROWN_MUSHROOM);
   }
 

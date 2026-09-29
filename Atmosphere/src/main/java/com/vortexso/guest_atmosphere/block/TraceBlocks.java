@@ -1,6 +1,7 @@
 package com.vortexso.guest_atmosphere.block;
 
 import com.vortexso.guest_atmosphere.AtmosphereConfig;
+import com.vortexso.guest_atmosphere.trace.ChunkTraces;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -74,7 +75,7 @@ public final class TraceBlocks {
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
       if (!level.isClientSide()
-          && heavy(entity)
+          && heavy(level, pos, entity)
           && !entity.isShiftKeyDown()
           && (entity.getX() != entity.xo || entity.getZ() != entity.zo)
           && level.getRandom().nextInt(20) == 0) {
@@ -86,14 +87,15 @@ public final class TraceBlocks {
     @Override
     public void fallOn(
         Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-      if (!level.isClientSide() && heavy(entity) && fallDistance > 1.5) {
+      if (!level.isClientSide() && heavy(level, pos, entity) && fallDistance > 1.5) {
         shatter(level, pos);
       }
       super.fallOn(level, state, pos, entity, fallDistance);
     }
 
-    private static boolean heavy(Entity entity) {
+    private static boolean heavy(Level level, BlockPos pos, Entity entity) {
       return AtmosphereConfig.THIN_ICE_CRACKS.get()
+          && !ChunkTraces.isFixed(level, pos)
           && entity instanceof LivingEntity
           && entity.getBbWidth() * entity.getBbWidth() * entity.getBbHeight() > 0.5F;
     }

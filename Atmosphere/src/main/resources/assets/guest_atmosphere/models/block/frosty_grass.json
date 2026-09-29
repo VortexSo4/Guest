@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "guest_atmosphere:block/frosty_cross",
   "textures": {
-    "cross": "guest_atmosphere:block/frosty_grass"
+    "cross": "minecraft:block/short_grass",
+    "frost": "guest_atmosphere:block/frosty_grass"
   }
 }

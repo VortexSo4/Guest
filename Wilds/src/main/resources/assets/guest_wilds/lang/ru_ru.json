@@ -57,8 +57,6 @@
   "guest_wilds.configuration.surfaceSpawnShare.tooltip": "Доля обычных ночных появлений зомби, скелетов, пауков и криперов, которая остаётся на поверхности; остальные выходят из логов. Пещеры, спаунеры, ведьмы и эндермены не затронуты. 1 - как в ванилле.",
   "guest_wilds.configuration.lairFights": "Борьба за логова",
   "guest_wilds.configuration.lairFights.tooltip": "Два вида, делящие пещеру, дерутся, когда оба снаружи; слабый бежит.",
-  "guest_wilds.configuration.clutchExplodes": "Кладка криперов взрывается",
-  "guest_wilds.configuration.clutchExplodes.tooltip": "Кладка в логове криперов взрывается, если на неё наступить или разбить её.",
   "guest_wilds.configuration.fishSchoolSize": "Размер косяка",
   "guest_wilds.configuration.fishSchoolSize.tooltip": "Сколько рыб может следовать за одним вожаком косяка (в ванилле: 8 трески, 5 лососей).",
   "guest_wilds.configuration.fishingByPlace": "Улов зависит от места",

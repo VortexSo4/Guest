@@ -1,5 +1,6 @@
 package com.vortexso.guest_settlements.village;
 
+import java.util.List;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -12,6 +13,10 @@ public final class VillageFarmScanner {
   private VillageFarmScanner() {}
 
   public static ScanResult scan(ServerLevel level, BoundingBox box) {
+    return scan(level, box, List.of());
+  }
+
+  public static ScanResult scan(ServerLevel level, BoundingBox box, List<BoundingBox> skip) {
     int farmlandAmount = 0;
 
     int minX = Integer.MAX_VALUE;
@@ -44,14 +49,17 @@ public final class VillageFarmScanner {
 
         for (int x = x0; x <= x1; x++) {
           for (int z = z0; z <= z1; z++) {
-            int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z) - 1;
+            if (skipped(skip, x, z)) {
+              continue;
+            }
+            int y = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x & 15, z & 15);
 
             if (y < box.minY() || y > box.maxY()) {
               continue;
             }
 
             pos.set(x, y, z);
-            BlockState state = level.getBlockState(pos);
+            BlockState state = chunk.getBlockState(pos);
             if (!state.is(Blocks.FARMLAND)) {
               continue;
             }
@@ -72,6 +80,15 @@ public final class VillageFarmScanner {
         farmlandAmount == 0 ? null : new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 
     return new ScanResult(farmlandAmount, farmBox, complete);
+  }
+
+  private static boolean skipped(List<BoundingBox> skip, int x, int z) {
+    for (BoundingBox box : skip) {
+      if (x >= box.minX() && x <= box.maxX() && z >= box.minZ() && z <= box.maxZ()) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public record ScanResult(int farmlandAmount, BoundingBox farmBox, boolean complete) {}

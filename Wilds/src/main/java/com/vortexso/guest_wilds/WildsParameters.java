@@ -30,7 +30,6 @@ public record WildsParameters(
     int roamRadius,
     int emigrantRange,
     int renewDays,
-    float clutchPowerPerEgg,
     double herdBirthPerDay,
     double herdMortalityPerDay,
     double predationPerDayAtBaseline,
@@ -63,7 +62,7 @@ public record WildsParameters(
   public static final WildsParameters DEFAULT =
       new WildsParameters(
           4.0, 8.0, 32.0, 96.0, 0.5, 2.0, 20.0, 0.25, 0.17, 8.0, 0.35, 0.5, 0.25, 0.15, 0.03, 0.7,
-          1.5, 24_000L, 16.0, 32.0, 0.25, 32.0, 10, 0.5, 48, 3, 32, 96, 8, 0.75F, 0.05, 0.01, 0.005,
-          0.02, 0.05, 0.3, 0.3, 20.0, 160, 16, 7, 2.0, 6.0, 8.0, 40.0, 24.0, 12.0, 0.3, 0.6, 0.15,
-          1200, 0.25, 0.5, 40, 10, 20, 3.0, 10.0);
+          1.5, 24_000L, 16.0, 32.0, 0.25, 32.0, 10, 0.5, 48, 3, 32, 96, 8, 0.05, 0.01, 0.005, 0.02,
+          0.05, 0.3, 0.3, 20.0, 160, 16, 7, 2.0, 6.0, 8.0, 40.0, 24.0, 12.0, 0.3, 0.6, 0.15, 1200,
+          0.25, 0.5, 40, 10, 20, 3.0, 10.0);
 }

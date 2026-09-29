@@ -4,7 +4,7 @@ import com.vortexso.guest_atmosphere.AtmosphereConfig;
 import com.vortexso.guest_atmosphere.block.AtmosphereBlocks;
 import com.vortexso.guest_atmosphere.block.Coating;
 import com.vortexso.guest_atmosphere.block.Coating.Coat;
-import com.vortexso.guest_atmosphere.block.SnowyPlantBlock;
+import com.vortexso.guest_atmosphere.block.CoveredPlantBlock;
 import com.vortexso.guest_atmosphere.weather.WeatherModel.ClimateClass;
 import com.vortexso.guest_core.api.GuestTime;
 import com.vortexso.guest_core.api.world.WeatherType;
@@ -102,8 +102,8 @@ final class WinterTraces {
       c.set(pos, Block.pushEntitiesUp(state, deeper, c.level, pos));
       return true;
     }
-    if (AtmosphereConfig.SNOWY_PLANTS.get()) {
-      BlockState covered = SnowyPlantBlock.cover(state, 1);
+    if (AtmosphereConfig.COVERED_PLANTS.get()) {
+      BlockState covered = CoveredPlantBlock.cover(state, Blocks.SNOW, 1);
       if (covered != null && covered.canSurvive(c.level, pos)) {
         c.set(pos, covered);
         return true;
@@ -113,14 +113,8 @@ final class WinterTraces {
   }
 
   private static void lower(Column c, BlockState state, int target) {
-    if (state.is(Blocks.SNOW)) {
-      c.set(
-          c.top,
-          target <= 0
-              ? Blocks.AIR.defaultBlockState()
-              : state.setValue(SnowLayerBlock.LAYERS, target));
-    } else if (state.is(AtmosphereBlocks.SNOWY_PLANT.get())) {
-      c.set(c.top, SnowyPlantBlock.withLayers(state, target));
+    if (layers(state) > 0) {
+      c.set(c.top, CoveredPlantBlock.withLayers(state, target));
     }
   }
 

@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
@@ -22,9 +23,11 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jspecify.annotations.Nullable;
 
 public class IcicleBlock extends Block implements Fallable {
   public static final BooleanProperty TIP = BooleanProperty.create("tip");
@@ -46,6 +49,12 @@ public class IcicleBlock extends Block implements Fallable {
   protected VoxelShape getShape(
       BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
     return state.getValue(TIP) ? TIP_SHAPE : BODY_SHAPE;
+  }
+
+  @Override
+  public PathType getBlockPathType(
+      BlockState state, BlockGetter level, BlockPos pos, @Nullable Mob mob) {
+    return PathType.BLOCKED;
   }
 
   @Override

@@ -57,8 +57,6 @@
   "guest_wilds.configuration.surfaceSpawnShare.tooltip": "Share of vanilla night spawns of zombies, skeletons, spiders and creepers still allowed on the surface; the rest come out of lairs. Caves, spawners, witches and endermen are unaffected. 1 = vanilla.",
   "guest_wilds.configuration.lairFights": "Fights over lairs",
   "guest_wilds.configuration.lairFights.tooltip": "Two species sharing a cave fight when both are out; the weaker one flees.",
-  "guest_wilds.configuration.clutchExplodes": "Creeper clutches explode",
-  "guest_wilds.configuration.clutchExplodes.tooltip": "The egg clutch in a creeper lair explodes when trampled or broken.",
   "guest_wilds.configuration.fishSchoolSize": "Fish school size",
   "guest_wilds.configuration.fishSchoolSize.tooltip": "How many fish can follow one school leader (vanilla: 8 cod, 5 salmon).",
   "guest_wilds.configuration.fishingByPlace": "Fishing by place",

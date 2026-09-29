@@ -3,14 +3,19 @@ package com.vortexso.guest_atmosphere.trace;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.vortexso.guest_atmosphere.GuestAtmosphere;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 
 public final class ChunkTraces {
   public static final long NEVER = Long.MIN_VALUE;
@@ -29,7 +34,11 @@ public final class ChunkTraces {
                           .forGetter(ChunkTraces::entries),
                       Codec.LONG
                           .optionalFieldOf("mineshaft_aged", NEVER)
-                          .forGetter(traces -> traces.mineshaftAged))
+                          .forGetter(traces -> traces.mineshaftAged),
+                      Codec.LONG
+                          .listOf()
+                          .optionalFieldOf("fixed", List.of())
+                          .forGetter(traces -> List.copyOf(traces.fixed)))
                   .apply(instance, ChunkTraces::new));
 
   private long lastUpdate;
@@ -38,20 +47,41 @@ public final class ChunkTraces {
 
   private final Long2ObjectOpenHashMap<Trace> traces = new Long2ObjectOpenHashMap<>();
 
+  private final LongOpenHashSet fixed = new LongOpenHashSet();
+
   public ChunkTraces() {
-    this(NEVER, List.of(), NEVER);
+    this(NEVER, List.of(), NEVER, List.of());
   }
 
-  private ChunkTraces(long lastUpdate, List<Entry> entries, long mineshaftAged) {
+  private ChunkTraces(
+      long lastUpdate, List<Entry> entries, long mineshaftAged, List<Long> fixedPositions) {
     this.lastUpdate = lastUpdate;
     this.mineshaftAged = mineshaftAged;
+    fixed.addAll(fixedPositions);
     for (Entry entry : entries) {
       traces.put(entry.pos(), new Trace(entry.kind(), entry.original(), entry.placedAt()));
     }
   }
 
   public boolean shouldSave() {
-    return lastUpdate != NEVER || !traces.isEmpty();
+    return lastUpdate != NEVER || !traces.isEmpty() || !fixed.isEmpty();
+  }
+
+  public static boolean isFixed(Level level, BlockPos pos) {
+    ChunkTraces traces = level.getChunkAt(pos).getExistingDataOrNull(GuestAtmosphere.CHUNK_TRACES);
+    return traces != null && traces.fixed.contains(pos.asLong());
+  }
+
+  public static void setFixed(Level level, BlockPos pos, boolean value) {
+    LevelChunk chunk = level.getChunkAt(pos);
+    ChunkTraces traces =
+        value
+            ? chunk.getData(GuestAtmosphere.CHUNK_TRACES)
+            : chunk.getExistingDataOrNull(GuestAtmosphere.CHUNK_TRACES);
+    if (traces != null
+        && (value ? traces.fixed.add(pos.asLong()) : traces.fixed.remove(pos.asLong()))) {
+      chunk.markUnsaved();
+    }
   }
 
   public long lastUpdate() {

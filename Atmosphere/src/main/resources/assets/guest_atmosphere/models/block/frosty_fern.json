@@ -1,6 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
+  "parent": "guest_atmosphere:block/frosty_cross",
   "textures": {
-    "cross": "guest_atmosphere:block/frosty_fern"
+    "cross": "minecraft:block/fern",
+    "frost": "guest_atmosphere:block/frosty_fern"
   }
 }

@@ -590,11 +590,14 @@ public final class Herds extends SavedData {
   }
 
   private void findWater(ServerLevel level, Herd herd) {
-    if (herd.water != null || herd.waterSearched) {
+    if (herd.waterSearched) {
       return;
     }
     herd.waterSearched = true;
+    herd.water = null;
+    setDirty();
     for (int r = 4; r <= WATER_SEARCH; r += 4) {
+      int bestSlope = Integer.MAX_VALUE;
       for (int i = -r; i <= r; i += 4) {
         for (int[] offset : new int[][] {{i, -r}, {i, r}, {-r, i}, {r, i}}) {
           int x = herd.x + offset[0];
@@ -606,21 +609,34 @@ public final class Herds extends SavedData {
           if (!level.getFluidState(top.below()).is(FluidTags.WATER)) {
             continue;
           }
-
           double length = Math.max(1.0, Math.sqrt(offset[0] * offset[0] + offset[1] * offset[1]));
+          double stepX = offset[0] / length;
+          double stepZ = offset[1] / length;
           for (int back = 1; back <= 3; back++) {
             BlockPos shore =
                 surface(
-                    level,
-                    x - (int) Math.round(offset[0] / length * back),
-                    z - (int) Math.round(offset[1] / length * back));
-            if (shore != null) {
-              herd.water = shore;
-              setDirty();
-              return;
+                    level, x - (int) Math.round(stepX * back), z - (int) Math.round(stepZ * back));
+            if (shore == null) {
+              continue;
             }
+            BlockPos exit =
+                surface(
+                    level,
+                    x - (int) Math.round(stepX * (back + 1)),
+                    z - (int) Math.round(stepZ * (back + 1)));
+            int drop = shore.getY() - top.getY();
+            int slope =
+                exit == null ? Integer.MAX_VALUE : drop + Math.abs(exit.getY() - shore.getY());
+            if (drop >= 0 && drop <= 1 && slope <= 2 && slope < bestSlope) {
+              bestSlope = slope;
+              herd.water = shore;
+            }
+            break;
           }
         }
+      }
+      if (herd.water != null) {
+        return;
       }
     }
   }

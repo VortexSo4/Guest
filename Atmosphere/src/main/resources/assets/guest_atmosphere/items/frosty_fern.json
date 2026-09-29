@@ -1,6 +1,17 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "guest_atmosphere:item/frosty_fern"
+    "model": "guest_atmosphere:item/frosty_fern",
+    "tints": [
+      {
+        "type": "minecraft:grass",
+        "downfall": 1.0,
+        "temperature": 0.5
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -1
+      }
+    ]
   }
 }

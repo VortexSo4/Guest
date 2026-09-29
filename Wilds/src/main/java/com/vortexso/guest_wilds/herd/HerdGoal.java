@@ -5,9 +5,11 @@ import com.vortexso.guest_wilds.WildsParameters;
 import java.util.EnumSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
@@ -67,7 +69,15 @@ public final class HerdGoal extends Goal {
   private Vec3 spot(Mob head) {
     double angle = (mob.getId() * 2.399963) % (Math.PI * 2.0);
     double ring = 2.0 + (mob.getId() % 3);
-    return head.position().add(Math.cos(angle) * ring, 0.0, Math.sin(angle) * ring);
+    Vec3 offset = new Vec3(Math.cos(angle) * ring, 0.0, Math.sin(angle) * ring);
+    Vec3 spot = head.position().add(offset);
+    return wet(spot) ? head.position().subtract(offset) : spot;
+  }
+
+  private boolean wet(Vec3 spot) {
+    BlockPos column =
+        mob.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(spot));
+    return mob.level().getFluidState(column.below()).is(FluidTags.WATER);
   }
 
   @Override

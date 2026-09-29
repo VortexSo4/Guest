@@ -840,6 +840,7 @@ public final class Construction {
       BlockPos land = null;
       BlockPos bank = null;
       int run = 0;
+      long previous = Long.MIN_VALUE;
       for (int s = 0; s + 1 < route.size(); s++) {
         BlockPos a = route.get(s);
         BlockPos b = route.get(s + 1);
@@ -849,21 +850,35 @@ public final class Construction {
         for (int t = 0; t <= length; t++) {
           int x = (int) Math.round(a.getX() + (b.getX() - a.getX()) * t / length);
           int z = (int) Math.round(a.getZ() + (b.getZ() - a.getZ()) * t / length);
+          long column = BlockPos.asLong(x, 0, z);
+          if (column == previous) {
+            continue;
+          }
+          previous = column;
           BlockPos top = Places.top(level, x, z);
           if (top == null || Math.abs(x - from.getX()) + Math.abs(z - from.getZ()) > reach * 1.5) {
             break;
           }
+          boolean ground = ground(level.getBlockState(top));
           if (bank == null) {
-            if (land != null && (Places.isWater(level, top) || top.getY() < land.getY() - 3)) {
+            if (land != null && gap(level, top, land)) {
               bank = land;
               run = 1;
             } else {
-              land = top;
+              land = ground ? top : null;
             }
-          } else if (Places.isWater(level, top) || top.getY() < bank.getY() - 3) {
+          } else if (gap(level, top, bank)) {
             run++;
+          } else if (!ground) {
+            bank = null;
+            run = 0;
+            land = null;
           } else {
-            if (run >= 2 && run <= BRIDGE_MAX && !bridged(level, bank, direction, run)) {
+            if (run >= 2
+                && run <= BRIDGE_MAX
+                && Math.abs(top.getY() - bank.getY()) <= 1
+                && span(level, bank, direction, run)
+                && !bridged(level, bank, direction, run)) {
               BlockPos origin = bank.relative(direction.getOpposite());
               return new Project(
                   node.id(),
@@ -885,6 +900,41 @@ public final class Construction {
       }
     }
     return null;
+  }
+
+  private static boolean gap(ServerLevel level, BlockPos top, BlockPos bank) {
+    return water(level, top) || (top.getY() < bank.getY() - 3 && ground(level.getBlockState(top)));
+  }
+
+  private static boolean water(ServerLevel level, BlockPos top) {
+    return Places.isWater(level, top) || level.getBlockState(top).is(BlockTags.ICE);
+  }
+
+  static boolean ground(BlockState state) {
+    return natural(state) || state.is(Blocks.DIRT_PATH);
+  }
+
+  private static boolean span(ServerLevel level, BlockPos bank, Direction along, int run) {
+    Direction side = along.getClockWise();
+    for (int i = -1; i <= run + 1; i++) {
+      for (int w = -2; w <= 2; w++) {
+        BlockPos top =
+            Places.top(
+                level,
+                bank.getX() + along.getStepX() * i + side.getStepX() * w,
+                bank.getZ() + along.getStepZ() * i + side.getStepZ() * w);
+        if (top == null
+            || top.getY() > bank.getY() + 1
+            || !(water(level, top) || ground(level.getBlockState(top)))) {
+          return false;
+        }
+        boolean over = i >= 1 && i <= run;
+        if (w == 0 && (over ? !gap(level, top, bank) : !ground(level.getBlockState(top)))) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   private static boolean bridged(ServerLevel level, BlockPos bank, Direction direction, int run) {
