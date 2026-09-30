@@ -85,6 +85,7 @@ public final class VegetationTint {
         List.of(new Tint(BlockTintSources.grass(), 1.0F)),
         AtmosphereBlocks.FROSTY_GRASS.get(),
         AtmosphereBlocks.FROSTY_FERN.get(),
+        AtmosphereBlocks.CRYOSOL.get(),
         AtmosphereBlocks.SNOWY_PLANT.get(),
         AtmosphereBlocks.SANDY_PLANT.get(),
         AtmosphereBlocks.RED_SANDY_PLANT.get());
