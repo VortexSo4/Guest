@@ -74,12 +74,12 @@ public final class TraceBlocks {
 
     @Override
     public void stepOn(Level level, BlockPos pos, BlockState state, Entity entity) {
-      if (!level.isClientSide()
-          && heavy(level, pos, entity)
-          && !entity.isShiftKeyDown()
-          && (entity.getX() != entity.xo || entity.getZ() != entity.zo)
-          && level.getRandom().nextInt(20) == 0) {
-        crack(level, pos, state);
+      if (!level.isClientSide() && heavy(level, pos, entity) && !entity.isShiftKeyDown()) {
+        boolean moving = entity.getX() != entity.xo || entity.getZ() != entity.zo;
+        int chance = moving ? 20 : 120;
+        if (level.getRandom().nextInt(chance) == 0) {
+          crack(level, pos, state);
+        }
       }
       super.stepOn(level, pos, state, entity);
     }
@@ -87,8 +87,12 @@ public final class TraceBlocks {
     @Override
     public void fallOn(
         Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
-      if (!level.isClientSide() && heavy(level, pos, entity) && fallDistance > 1.5) {
-        shatter(level, pos);
+      if (!level.isClientSide() && heavy(level, pos, entity)) {
+        if (fallDistance > 1.5) {
+          shatter(level, pos);
+        } else if (fallDistance > 0.5) {
+          crack(level, pos, state);
+        }
       }
       super.fallOn(level, state, pos, entity, fallDistance);
     }

@@ -11,8 +11,8 @@
     "C": "minecraft:stick"
   },
   "pattern": [
-    " SP",
-    " CA",
+    " SA",
+    " CP",
     "C  "
   ],
   "result": {
