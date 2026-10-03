@@ -20,7 +20,7 @@ public final class GuestCoreConfig {
               "Log informational and debug messages of all Guest mods. When off, only warnings and"
                   + " errors are written.")
           .translation("guest_core.configuration.debugLogging")
-          .define("debugLogging", true);
+          .define("debugLogging", false);
 
   public static final ModConfigSpec SPEC = BUILDER.build();
 
