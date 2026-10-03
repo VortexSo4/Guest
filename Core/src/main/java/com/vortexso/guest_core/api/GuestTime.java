@@ -11,6 +11,8 @@ public final class GuestTime {
   public static final int SEASONS_PER_YEAR = 4;
   public static final int DAYS_PER_YEAR = 128;
 
+  public static final int START_DAY_OFFSET = 40;
+
   private GuestTime() {}
 
   public static long gameTime(Level level) {
@@ -26,11 +28,11 @@ public final class GuestTime {
   }
 
   public static long year(long gameTime) {
-    return Math.floorDiv(day(gameTime), DAYS_PER_YEAR);
+    return Math.floorDiv(day(gameTime) + START_DAY_OFFSET, DAYS_PER_YEAR);
   }
 
   public static int dayOfYear(long gameTime) {
-    return (int) Math.floorMod(day(gameTime), DAYS_PER_YEAR);
+    return (int) Math.floorMod(day(gameTime) + START_DAY_OFFSET, DAYS_PER_YEAR);
   }
 
   public static Season season(long gameTime) {
