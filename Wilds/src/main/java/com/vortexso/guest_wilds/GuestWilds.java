@@ -1,8 +1,10 @@
 package com.vortexso.guest_wilds;
 
 import com.mojang.logging.LogUtils;
+import com.mojang.serialization.Codec;
 import com.vortexso.guest_core.api.world.GuestWildlife;
 import com.vortexso.guest_core.debug.GuestDebug;
+import com.vortexso.guest_wilds.flora.Spread;
 import com.vortexso.guest_wilds.lair.Lairs;
 import java.util.function.Supplier;
 import net.minecraft.core.BlockPos;
@@ -37,6 +39,14 @@ public class GuestWilds {
           () ->
               AttachmentType.builder(() -> Membership.NONE)
                   .serialize(Membership.MAP_CODEC)
+                  .build());
+
+  public static final Supplier<AttachmentType<Long>> SPREAD =
+      ATTACHMENTS.register(
+          "forest_spread",
+          () ->
+              AttachmentType.builder(() -> Spread.NEVER)
+                  .serialize(Codec.LONG.fieldOf("period"))
                   .build());
 
   public static boolean loaded(ServerLevel level, BlockPos pos) {

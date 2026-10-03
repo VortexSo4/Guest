@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "한 쌍당 하루 번식 확률",
   "guest_settlements.configuration.campLife": "우민 야영지 생활",
   "guest_settlements.configuration.campPens": "우민 야영지의 우리",
+  "guest_settlements.configuration.outpostPillagers": "전초 기지 약탈자 (몬스터 한도 비율)",
   "guest_settlements.configuration.caravanBlocksPerDay": "상단 속도(하루 블록 수)",
   "guest_settlements.configuration.caravanCargoFood": "상단 화물(식량 점수)",
   "guest_settlements.configuration.caravanDepartureChance": "하루 상단 출발 확률",

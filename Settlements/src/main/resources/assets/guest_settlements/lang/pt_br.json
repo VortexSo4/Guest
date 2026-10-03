@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Chance de nascimento por casal por dia",
   "guest_settlements.configuration.campLife": "Vida nos acampamentos de Illagers",
   "guest_settlements.configuration.campPens": "Cercados nos acampamentos de Illagers",
+  "guest_settlements.configuration.outpostPillagers": "Saqueadores em postos avançados (parte do limite de monstros)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Velocidade da caravana (blocos por dia)",
   "guest_settlements.configuration.caravanCargoFood": "Carga da caravana (pontos de comida)",
   "guest_settlements.configuration.caravanDepartureChance": "Chance diária de partida de caravana",

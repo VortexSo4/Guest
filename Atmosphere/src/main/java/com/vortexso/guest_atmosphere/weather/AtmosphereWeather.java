@@ -50,7 +50,7 @@ public final class AtmosphereWeather {
     return sample(level, pos, time, climate(level, pos));
   }
 
-  private static Sample sample(ServerLevel level, BlockPos pos, long time, Climate climate) {
+  public static Sample sample(ServerLevel level, BlockPos pos, long time, Climate climate) {
     Sample modelled =
         WeatherModel.sample(
             level.getSeed(), time, pos.getX(), pos.getZ(), climate, AtmosphereConfig.weather());

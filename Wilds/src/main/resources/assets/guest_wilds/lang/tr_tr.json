@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "Gemi enkazlarının ve harabelerin üzerindeki sudan onların kalıntıları çıkar; açık sudan yalnızca balık çıkar. Asla çöp tutulmaz.",
   "guest_wilds.configuration.forestRegrowth": "Ormanın yenilenmesi",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Kesilmiş ağaçların kütükleri önce çalıyla kaplanır, sonra aynı ağacın fidanını verir.",
+  "guest_wilds.configuration.forestSpread": "Ormanın yayılması",
+  "guest_wilds.configuration.forestSpread.tooltip": "Canlı ağaçlar yakındaki açık çimenlere fidan saçar; böylece tek bir ağaç ya da yanmış bir açıklık haftalar ve aylar içinde küçük bir koruya dönüşür. Orman yeterince sıklaşınca durur, köylere ve patikalara asla ekmez.",
   "guest_wilds.command.lairs": "Bilinen yuva: %s (%s blok içinde). Bu oturum: %s yığın tarandı, %s mağara girişi bulundu, %s yuva kuruldu, %s yığın atlandı (oyuncular yaşıyor), taranan yığın başına %s ms, taranan yığın başına %s sakin.",
   "guest_wilds.command.lairs.entry": "%s: giriş %s konumunda, %s blok %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "yalnızca kalıntı",
   "guest_wilds.command.route.bad": "Ara noktalar \"x y z; x y z; ...\" biçiminde ya da \"surface\" olmalıdır.",
   "guest_wilds.command.regrowth": "%s kesilmiş kütük yeniden büyüyor; en yakını %s konumunda (aşama %s, %s gün önce kesildi).",
+  "guest_wilds.command.spread": "Ormanın yayılması: bu yığın %s. güne kadar tohumlandı (bugün %s. gün); bu oturumda %s fidan ekildi.",
   "guest_wilds.command.lair.trace": "%s konumundaki iz: %s (%s)",
   "guest_wilds.command.herds": "Yabani sürü ve kurt sürüsü: %s (%s blok içinde):",
   "guest_wilds.command.herds.entry": "%s: %s hayvan (%s dışarıda), %s konumunda, %s blok %s"

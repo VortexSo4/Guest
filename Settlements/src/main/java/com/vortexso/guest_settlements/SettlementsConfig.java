@@ -53,6 +53,7 @@ public final class SettlementsConfig {
   public static final ModConfigSpec.DoubleValue EMIGRATION_CHANCE;
   public static final ModConfigSpec.BooleanValue CAMP_LIFE;
   public static final ModConfigSpec.BooleanValue CAMP_PENS;
+  public static final ModConfigSpec.DoubleValue OUTPOST_PILLAGERS;
   public static final ModConfigSpec.BooleanValue RITUALS;
   public static final ModConfigSpec.DoubleValue RITUAL_CHANCE;
   public static final ModConfigSpec.BooleanValue ILLAGER_TENTS;
@@ -240,6 +241,10 @@ public final class SettlementsConfig {
     CAMP_PENS =
         b.comment("Place an animal pen at an observed illager camp (changes the world).")
             .define("campPens", true);
+    OUTPOST_PILLAGERS =
+        b.comment(
+                "Most pillagers an outpost spawns at once, as a share of the vanilla monster cap.")
+            .defineInRange("outpostPillagers", 0.2, 0.0, 1.0);
     RITUALS =
         b.comment("Evokers practise magic outside camps and turn illagers into ravagers.")
             .define("rituals", true);

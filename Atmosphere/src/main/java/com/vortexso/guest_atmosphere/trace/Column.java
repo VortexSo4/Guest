@@ -16,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -27,6 +28,8 @@ final class Column {
   private static final long SALT_COLUMN = 0x1F83D9ABFB41BD6BL;
 
   static final int MAX_BLOCK_LIGHT = 10;
+
+  static final int NO_SHORE = Integer.MAX_VALUE;
 
   final ServerLevel level;
   final LevelChunk chunk;
@@ -46,21 +49,30 @@ final class Column {
 
   final Climate climate;
 
+  final double snowDepth;
+
+  final int shore;
+
   private final long rollTime;
 
   private @Nullable History history;
+
+  private int highestSide = Integer.MIN_VALUE;
 
   private Column(
       ServerLevel level,
       LevelChunk chunk,
       ChunkTraces traces,
       BlockPos top,
+      Climate climate,
       long now,
       boolean live,
       History.Params params,
       Sample sample,
       long rollTime,
-      @Nullable History history) {
+      @Nullable History history,
+      double snowDepth,
+      int shore) {
     this.level = level;
     this.chunk = chunk;
     this.traces = traces;
@@ -72,9 +84,11 @@ final class Column {
     this.live = live;
     this.params = params;
     this.sample = sample;
-    this.climate = AtmosphereWeather.climate(level, top);
+    this.climate = climate;
     this.rollTime = rollTime;
     this.history = history;
+    this.snowDepth = snowDepth;
+    this.shore = shore;
   }
 
   static @Nullable Column live(
@@ -86,39 +100,51 @@ final class Column {
       long now,
       long rollTime,
       History.Params params) {
-    BlockPos top = surface(level, chunk, localX, localZ);
+    BlockPos top = surface(chunk, localX, localZ);
     if (top == null) {
       return null;
     }
-    Sample sample = AtmosphereWeather.sample(level, top, now);
-    return new Column(level, chunk, traces, top, now, true, params, sample, rollTime, null);
+    Climate climate = AtmosphereWeather.climate(level, top);
+    Sample sample = AtmosphereWeather.sample(level, top, now, climate);
+    return new Column(
+        level, chunk, traces, top, climate, now, true, params, sample, rollTime, null, 0.0,
+        NO_SHORE);
   }
 
-  static @Nullable Column catchUp(
+  static Column catchUp(
       ServerLevel level,
       LevelChunk chunk,
       ChunkTraces traces,
-      int localX,
-      int localZ,
+      BlockPos top,
+      Climate climate,
       long now,
       History history,
-      Sample last) {
-    BlockPos top = surface(level, chunk, localX, localZ);
-    if (top == null) {
-      return null;
-    }
+      Sample last,
+      double snowDepth,
+      int shore) {
     return new Column(
-        level, chunk, traces, top, now, false, history.params, last, history.growthFrom, history);
+        level,
+        chunk,
+        traces,
+        top,
+        climate,
+        now,
+        false,
+        history.params,
+        last,
+        history.growthFrom,
+        history,
+        snowDepth,
+        shore);
   }
 
-  private static @Nullable BlockPos surface(
-      ServerLevel level, LevelChunk chunk, int localX, int localZ) {
+  static @Nullable BlockPos surface(LevelChunk chunk, int localX, int localZ) {
+    int y = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, localX, localZ) + 1;
+    if (y <= chunk.getMinY()) {
+      return null;
+    }
     ChunkPos pos = chunk.getPos();
-    BlockPos top =
-        level.getHeightmapPos(
-            Heightmap.Types.MOTION_BLOCKING,
-            new BlockPos(pos.getMinBlockX() + localX, 0, pos.getMinBlockZ() + localZ));
-    return top.getY() <= level.getMinY() ? null : top;
+    return new BlockPos(pos.getMinBlockX() + localX, y, pos.getMinBlockZ() + localZ);
   }
 
   WeatherType type() {
@@ -135,7 +161,7 @@ final class Column {
 
   History history() {
     if (history == null) {
-      history = replay(level, top, now - lookback(), now, 0.0, now, params);
+      history = replay(level, top, climate, now - lookback(), now, 0.0, now, params);
     }
     return history;
   }
@@ -152,6 +178,7 @@ final class Column {
   static History replay(
       ServerLevel level,
       BlockPos pos,
+      Climate climate,
       long from,
       long now,
       double initialSnow,
@@ -159,10 +186,9 @@ final class Column {
       History.Params params) {
     History history = new History(params, from, initialSnow, growthFrom);
     long step = Math.max(1L, AtmosphereConfig.weather().segmentTicks() / 2);
-    Climate climate = AtmosphereWeather.climate(level, pos);
     boolean wet = climate.climateClass() == ClimateClass.WET;
     for (long time = from + step; time <= now; time += step) {
-      Sample sample = AtmosphereWeather.sample(level, pos, time);
+      Sample sample = AtmosphereWeather.sample(level, pos, time, climate);
       history.add(
           time,
           step,
@@ -210,20 +236,41 @@ final class Column {
   }
 
   BlockState state(BlockPos pos) {
-    return level.isLoaded(pos) ? level.getBlockState(pos) : Blocks.AIR.defaultBlockState();
+    LevelChunk at = chunkAt(level, chunk, pos);
+    return at == null ? Blocks.AIR.defaultBlockState() : at.getBlockState(pos);
   }
 
   boolean loaded(BlockPos pos) {
-    return level.isLoaded(pos);
+    return chunkAt(level, chunk, pos) != null;
+  }
+
+  static @Nullable LevelChunk chunkAt(ServerLevel level, LevelChunk chunk, BlockPos pos) {
+    int chunkX = pos.getX() >> 4;
+    int chunkZ = pos.getZ() >> 4;
+    ChunkPos own = chunk.getPos();
+    if (chunkX == own.x() && chunkZ == own.z()) {
+      return chunk;
+    }
+    return level.getChunkSource().getChunkNow(chunkX, chunkZ);
   }
 
   int topY(Direction direction) {
-    int nx = x + direction.getStepX();
-    int nz = z + direction.getStepZ();
-    if (!level.hasChunk(nx >> 4, nz >> 4)) {
+    BlockPos side = new BlockPos(x + direction.getStepX(), 0, z + direction.getStepZ());
+    LevelChunk at = chunkAt(level, chunk, side);
+    if (at == null) {
       return Integer.MIN_VALUE;
     }
-    return level.getHeight(Heightmap.Types.MOTION_BLOCKING, nx, nz);
+    return at.getHeight(Heightmap.Types.MOTION_BLOCKING, side.getX(), side.getZ()) + 1;
+  }
+
+  int highestSide() {
+    if (highestSide == Integer.MIN_VALUE) {
+      highestSide = Integer.MIN_VALUE + 1;
+      for (Direction direction : Direction.Plane.HORIZONTAL) {
+        highestSide = Math.max(highestSide, topY(direction));
+      }
+    }
+    return highestSide;
   }
 
   boolean dark(BlockPos pos) {
@@ -234,12 +281,11 @@ final class Column {
     if (ChunkTraces.isFixed(level, pos)) {
       return;
     }
-    level.setBlockAndUpdate(pos, state);
-    chunk.markUnsaved();
+    write(pos, state);
   }
 
   boolean change(BlockPos pos, BlockState newState, Kind kind) {
-    BlockState original = level.getBlockState(pos);
+    BlockState original = state(pos);
     if (ChunkTraces.isFixed(level, pos)) {
       return false;
     }
@@ -248,7 +294,7 @@ final class Column {
       return false;
     }
     traces.put(pos.asLong(), new Trace(kind, original, now));
-    level.setBlockAndUpdate(pos, newState);
+    write(pos, newState);
     chunk.markUnsaved();
     return true;
   }
@@ -256,7 +302,7 @@ final class Column {
   void revert(BlockPos pos, Trace trace) {
     traces.remove(pos.asLong());
     if (!ChunkTraces.isFixed(level, pos)) {
-      level.setBlockAndUpdate(pos, trace.original());
+      write(pos, trace.original());
     }
     chunk.markUnsaved();
   }
@@ -264,6 +310,34 @@ final class Column {
   void forget(BlockPos pos) {
     traces.remove(pos.asLong());
     chunk.markUnsaved();
+  }
+
+  private void write(BlockPos pos, BlockState state) {
+    LevelChunk at = chunkAt(level, chunk, pos);
+    if (at != null) {
+      write(level, at, pos, state);
+    }
+  }
+
+  static void write(ServerLevel level, LevelChunk chunk, BlockPos pos, BlockState state) {
+    if (chunk.setBlockState(pos, state, Block.UPDATE_CLIENTS) == null) {
+      return;
+    }
+    level.getChunkSource().blockChanged(pos);
+    for (Direction direction : Direction.values()) {
+      BlockPos side = pos.relative(direction);
+      LevelChunk at = chunkAt(level, chunk, side);
+      if (at == null) {
+        continue;
+      }
+      BlockState neighbour = at.getBlockState(side);
+      BlockState shaped =
+          neighbour.updateShape(
+              level, level, side, direction.getOpposite(), pos, state, level.getRandom());
+      if (shaped != neighbour && at.setBlockState(side, shaped, Block.UPDATE_CLIENTS) != null) {
+        level.getChunkSource().blockChanged(side);
+      }
+    }
   }
 
   static ChunkTraces traces(LevelChunk chunk) {

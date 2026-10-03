@@ -34,6 +34,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.goal.MoveTowardsRestrictionGoal;
 import net.minecraft.world.entity.animal.allay.Allay;
 import net.minecraft.world.entity.animal.golem.IronGolem;
@@ -64,6 +65,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import org.jspecify.annotations.Nullable;
@@ -780,6 +782,25 @@ public final class IllagerCamps {
         && ravager.entityTags().stream().anyMatch(tag -> tag.startsWith(RAVAGER_TAG))) {
 
       ravager.goalSelector.addGoal(5, new MoveTowardsRestrictionGoal(ravager, 0.6));
+    }
+  }
+
+  @SubscribeEvent
+  public static void onSpawnCheck(MobSpawnEvent.SpawnPlacementCheck event) {
+    if (event.getEntityType() != EntityType.PILLAGER
+        || event.getSpawnType() != EntitySpawnReason.NATURAL
+        || !(event.getLevel() instanceof ServerLevel level)) {
+      return;
+    }
+    Camp camp = campAt(level, event.getPos());
+    if (camp == null || camp.kind() != CampKind.OUTPOST) {
+      return;
+    }
+    double cap =
+        MobCategory.MONSTER.getMaxInstancesPerChunk()
+            * SettlementsConfig.value(SettlementsConfig.OUTPOST_PILLAGERS);
+    if (level.getEntitiesOfClass(Pillager.class, area(camp)).size() >= cap) {
+      event.setResult(MobSpawnEvent.SpawnPlacementCheck.Result.FAIL);
     }
   }
 

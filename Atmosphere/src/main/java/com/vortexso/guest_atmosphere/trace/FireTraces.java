@@ -268,12 +268,12 @@ public final class FireTraces {
       double radius = 2.0 + c.fixed(base, 80 + i) * 4.0;
       int x = base.getX() + (int) Math.round(Math.cos(angle) * radius);
       int z = base.getZ() + (int) Math.round(Math.sin(angle) * radius);
-      if (!c.level.hasChunk(x >> 4, z >> 4)) {
+      if (!c.loaded(new BlockPos(x, 0, z))) {
         continue;
       }
       BlockPos top =
           c.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, 0, z));
-      BlockState surface = c.level.getBlockState(top);
+      BlockState surface = c.state(top);
       if (!(surface.isAir() || surface.is(AtmosphereBlocks.ASH.get()))) {
         continue;
       }
@@ -281,7 +281,7 @@ public final class FireTraces {
           planted < 2 ? sapling : c.fixed(base, 100 + i) < 0.5 ? Blocks.BUSH : Blocks.SHORT_GRASS;
       BlockState state = plant.defaultBlockState();
       if (state.canSurvive(c.level, top)) {
-        c.level.setBlockAndUpdate(top, state);
+        c.set(top, state);
         planted++;
       }
     }

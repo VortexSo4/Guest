@@ -226,12 +226,12 @@ public final class History {
     return event == NEVER || lastRain > event || lastWind > event;
   }
 
-  public int snowLayers(double variation, int cap) {
-    if (snowDepth < 0.5) {
+  public int snowLayers(double depth, double variation, int cap) {
+    if (depth < 0.5) {
       return 0;
     }
     double drift = cap > params.stormCap() ? 1.5 : 1.0;
-    return (int) Math.min(cap, Math.round(snowDepth * (0.75 + 0.5 * variation) * drift));
+    return (int) Math.min(cap, Math.round(depth * (0.75 + 0.5 * variation) * drift));
   }
 
   public static double coverage(double hits) {

@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "El agua sobre naufragios y ruinas da sus reliquias; el agua abierta solo da peces. Nunca se pesca basura.",
   "guest_wilds.configuration.forestRegrowth": "Regeneración del bosque",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Los tocones de los árboles talados se cubren con un arbusto y después brota un brote de la misma madera.",
+  "guest_wilds.configuration.forestSpread": "Expansión del bosque",
+  "guest_wilds.configuration.forestSpread.tooltip": "Los árboles vivos siembran brotes en la hierba abierta cercana, así que un árbol solitario o un claro quemado se convierte poco a poco en una arboleda a lo largo de semanas y meses. Se detiene cuando el bosque es lo bastante denso y nunca siembra en aldeas ni caminos.",
   "guest_wilds.command.lairs": "%s guaridas conocidas en un radio de %s bloques. Esta sesión: %s chunks analizados, %s entradas de cueva encontradas, %s guaridas fundadas, %s chunks omitidos (viven jugadores allí), %s ms por chunk analizado, %s habitantes por chunk analizado.",
   "guest_wilds.command.lairs.entry": "%s: entrada en %s, a %s bloques %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "solo reliquias",
   "guest_wilds.command.route.bad": "Los puntos de ruta deben tener la forma \"x y z; x y z; ...\" o ser \"surface\".",
   "guest_wilds.command.regrowth": "%s tocones de árboles talados están rebrotando; el más cercano en %s (fase %s, talado hace %s días).",
+  "guest_wilds.command.spread": "Expansión del bosque: este chunk está sembrado hasta el día %s (hoy es el día %s); %s brotes sembrados en esta sesión.",
   "guest_wilds.command.lair.trace": "Rastro en %s: %s (%s)",
   "guest_wilds.command.herds": "%s manadas salvajes y jaurías en un radio de %s bloques:",
   "guest_wilds.command.herds.entry": "%s: %s animales (%s fuera) en %s, a %s bloques %s"

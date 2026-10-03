@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "Wasser über Wracks und Ruinen liefert deren Fundstücke; offenes Wasser liefert nur Fisch. Plunder wird nie gefangen.",
   "guest_wilds.configuration.forestRegrowth": "Nachwachsender Wald",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Stümpfe gefällter Bäume überwuchern mit einem Busch und treiben später einen Setzling derselben Holzart aus.",
+  "guest_wilds.configuration.forestSpread": "Ausbreitung des Waldes",
+  "guest_wilds.configuration.forestSpread.tooltip": "Lebende Bäume säen Setzlinge in offenes Gras in der Nähe, sodass ein einzelner Baum oder eine abgebrannte Lichtung über Wochen und Monate zu einem Hain wird. Hört auf, sobald der Wald dicht genug ist, und sät nie in Dörfern oder auf Pfaden.",
   "guest_wilds.command.lairs": "%s bekannte Unterschlüpfe im Umkreis von %s Blöcken. Diese Sitzung: %s Chunks durchsucht, %s Höhleneingänge gefunden, %s Unterschlüpfe gegründet, %s Chunks übersprungen (dort wohnen Spieler), %s ms pro durchsuchtem Chunk, %s Bewohner pro durchsuchtem Chunk.",
   "guest_wilds.command.lairs.entry": "%s: Eingang bei %s, %s Blöcke %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "nur Fundstücke",
   "guest_wilds.command.route.bad": "Wegpunkte müssen wie \"x y z; x y z; ...\" aussehen oder \"surface\" lauten.",
   "guest_wilds.command.regrowth": "%s Stümpfe gefällter Bäume wachsen nach; der nächste bei %s (Stufe %s, vor %s Tagen gefällt).",
+  "guest_wilds.command.spread": "Ausbreitung des Waldes: Dieser Chunk ist bis Tag %s besät (heute ist Tag %s); %s Setzlinge in dieser Sitzung gesät.",
   "guest_wilds.command.lair.trace": "Spur bei %s: %s (%s)",
   "guest_wilds.command.herds": "%s wilde Herden und Rudel im Umkreis von %s Blöcken:",
   "guest_wilds.command.herds.entry": "%s: %s Tiere (%s draußen) bei %s, %s Blöcke %s"

@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "A água sobre naufrágios e ruínas dá as relíquias deles; águas abertas dão só peixes. Nunca se pesca lixo.",
   "guest_wilds.configuration.forestRegrowth": "Regeneração da floresta",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Os tocos das árvores cortadas são cobertos por um arbusto e depois brotam uma muda da mesma madeira.",
+  "guest_wilds.configuration.forestSpread": "Expansão da floresta",
+  "guest_wilds.configuration.forestSpread.tooltip": "Árvores vivas espalham mudas na grama aberta próxima, então uma árvore solitária ou uma clareira queimada vira aos poucos um bosque ao longo de semanas e meses. Para quando a mata está densa o bastante e nunca semeia em vilas ou trilhas.",
   "guest_wilds.command.lairs": "%s covis conhecidos num raio de %s blocos. Nesta sessão: %s chunks examinados, %s entradas de caverna encontradas, %s covis fundados, %s chunks ignorados (jogadores moram lá), %s ms por chunk examinado, %s habitantes por chunk examinado.",
   "guest_wilds.command.lairs.entry": "%s: entrada em %s, a %s blocos %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "só relíquias",
   "guest_wilds.command.route.bad": "Os pontos de rota devem ter o formato \"x y z; x y z; ...\" ou ser \"surface\".",
   "guest_wilds.command.regrowth": "%s tocos de árvores cortadas estão rebrotando; o mais próximo em %s (estágio %s, cortado há %s dias).",
+  "guest_wilds.command.spread": "Expansão da floresta: este chunk foi semeado até o dia %s (hoje é o dia %s); %s mudas plantadas nesta sessão.",
   "guest_wilds.command.lair.trace": "Vestígio em %s: %s (%s)",
   "guest_wilds.command.herds": "%s rebanhos e matilhas selvagens num raio de %s blocos:",
   "guest_wilds.command.herds.entry": "%s: %s animais (%s fora) em %s, a %s blocos %s"

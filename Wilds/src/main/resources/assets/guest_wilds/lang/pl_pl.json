@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "Woda nad wrakami i ruinami daje ich znaleziska; otwarta woda daje tylko ryby. Śmieci nigdy nie da się złowić.",
   "guest_wilds.configuration.forestRegrowth": "Odrastanie lasu",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Pniaki ściętych drzew zarastają krzewem, a później wypuszczają sadzonkę tego samego drzewa.",
+  "guest_wilds.configuration.forestSpread": "Rozrastanie się lasu",
+  "guest_wilds.configuration.forestSpread.tooltip": "Żywe drzewa wysiewają sadzonki na pobliską otwartą trawę, więc samotne drzewo lub wypalona polana w ciągu tygodni i miesięcy zmienia się w zagajnik. Ustaje, gdy las jest dość gęsty, i nigdy nie sieje w wioskach ani na ścieżkach.",
   "guest_wilds.command.lairs": "Znane legowiska: %s w promieniu %s bloków. W tej sesji: przeskanowane chunki: %s, znalezione wejścia do jaskiń: %s, założone legowiska: %s, pominięte chunki (mieszkają tam gracze): %s, %s ms na przeskanowany chunk, mieszkańcy na przeskanowany chunk: %s.",
   "guest_wilds.command.lairs.entry": "%s: wejście w %s, %s bloków %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "tylko znaleziska",
   "guest_wilds.command.route.bad": "Punkty trasy muszą mieć postać \"x y z; x y z; ...\" albo brzmieć \"surface\".",
   "guest_wilds.command.regrowth": "Odrastające pniaki: %s; najbliższy w %s (etap %s, ścięty %s dni temu).",
+  "guest_wilds.command.spread": "Rozrastanie się lasu: ten chunk obsiano do dnia %s (dziś dzień %s); posadzone sadzonki w tej sesji: %s.",
   "guest_wilds.command.lair.trace": "Ślad w %s: %s (%s)",
   "guest_wilds.command.herds": "Dzikie stada i watahy: %s w promieniu %s bloków:",
   "guest_wilds.command.herds.entry": "%s: zwierzęta: %s (poza stadem %s) przy %s, %s bloków %s"

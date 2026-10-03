@@ -12,6 +12,7 @@ import com.vortexso.guest_settlements.life.VillageLife.Role;
 import com.vortexso.guest_settlements.life.VillageLife.Village;
 import com.vortexso.guest_settlements.village.Caravans;
 import com.vortexso.guest_settlements.village.RoadEdge;
+import com.vortexso.guest_settlements.village.Roads;
 import com.vortexso.guest_settlements.village.RoutePlanner;
 import com.vortexso.guest_settlements.village.VillageNode;
 import com.vortexso.guest_settlements.village.VillageSimulationParameters;
@@ -99,6 +100,7 @@ public final class Construction {
   private static final int FENCE_LENGTH = 12;
   private static final int MAX_PROJECTS_PER_CATCH_UP = 4;
   private static final int MAX_TREES_PER_CATCH_UP = 8;
+  private static final int STAND_DEPTH = 8;
   private static final int LOG_PLANKS = 4;
   private static final int PLACE_FLAGS = Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE;
 
@@ -121,6 +123,9 @@ public final class Construction {
     LifeData data = LifeData.get(v.level());
     List<Project> projects = data.projects(v.node().id());
     if (projects.isEmpty()) {
+      if (v.day() - v.state().day() > 1) {
+        return;
+      }
       Map<Long, Long> planned = PLANNED.computeIfAbsent(v.level(), ignored -> new HashMap<>());
       if (planned.getOrDefault(v.node().id(), Long.MIN_VALUE) != v.day()) {
         planned.put(v.node().id(), v.day());
@@ -129,7 +134,7 @@ public final class Construction {
       return;
     }
     Project project = projects.get(0);
-    if (project.day() < v.day()) {
+    if (project.day() < v.day() && v.day() - project.day() <= 1) {
 
       data.replace(
           project,
@@ -208,9 +213,8 @@ public final class Construction {
     if (pos == null) {
       return false;
     }
-    if (Errands.unreachable(level, pos)) {
-
-      complete(level, project);
+    BlockPos stand = stand(level, pos);
+    if (Errands.unreachable(level, stand)) {
       return false;
     }
     List<Step> steps = new ArrayList<>();
@@ -262,7 +266,7 @@ public final class Construction {
     }
     steps.add(
         Step.at(
-                pos,
+                stand,
                 3,
                 30,
                 new ItemStack(item(target.state())),
@@ -276,6 +280,31 @@ public final class Construction {
         level,
         builder,
         new Errand(Role.BUILDING, VillageLife.WORK, level.getGameTime() + 4000, steps));
+  }
+
+  private static BlockPos stand(ServerLevel level, BlockPos pos) {
+    BlockPos best = pos;
+    for (Direction direction : Direction.Plane.HORIZONTAL) {
+      BlockPos.MutableBlockPos cursor = pos.relative(direction).mutable();
+      if (!free(level, cursor)) {
+        continue;
+      }
+      for (int depth = 0; depth < STAND_DEPTH && free(level, cursor.below()); depth++) {
+        cursor.move(Direction.DOWN);
+      }
+      BlockPos floor = cursor.below();
+      if (!level.getBlockState(floor).getCollisionShape(level, floor).isEmpty()
+          && free(level, cursor.above())
+          && (best == pos || cursor.getY() < best.getY())) {
+        best = cursor.immutable();
+      }
+    }
+    return best;
+  }
+
+  private static boolean free(ServerLevel level, BlockPos pos) {
+    return level.getBlockState(pos).getCollisionShape(level, pos).isEmpty()
+        && level.getFluidState(pos).isEmpty();
   }
 
   private static void chop(
@@ -467,6 +496,7 @@ public final class Construction {
       VillageWorldManager manager,
       VillageNode node,
       VillageState state,
+      long from,
       long today) {
     if (!SettlementsConfig.enabled(SettlementsConfig.CONSTRUCTION) || node.structureBox() == null) {
       return;
@@ -475,7 +505,7 @@ public final class Construction {
     for (int round = 0; round < MAX_PROJECTS_PER_CATCH_UP; round++) {
       List<Project> projects = LifeData.get(level).projects(node.id());
       Project project =
-          projects.isEmpty() ? plan(level, manager, node, state, today) : projects.get(0);
+          projects.isEmpty() ? plan(level, manager, node, state, from) : projects.get(0);
       if (project == null || project.day() >= today) {
         return;
       }
@@ -836,7 +866,11 @@ public final class Construction {
       if (neighbor == null) {
         continue;
       }
-      List<BlockPos> route = RoutePlanner.route(level, from, neighbor.center());
+      List<BlockPos> route = RoutePlanner.cached(level, Roads.anchor(node), Roads.anchor(neighbor));
+      if (route == null) {
+        RoutePlanner.whenPlanned(level, Roads.anchor(node), Roads.anchor(neighbor), ignored -> {});
+        continue;
+      }
       BlockPos land = null;
       BlockPos bank = null;
       int run = 0;

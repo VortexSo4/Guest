@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Breeding chance per pair per day",
   "guest_settlements.configuration.campLife": "Illager camp life",
   "guest_settlements.configuration.campPens": "Pens at illager camps",
+  "guest_settlements.configuration.outpostPillagers": "Outpost pillagers (share of monster cap)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Caravan speed (blocks per day)",
   "guest_settlements.configuration.caravanCargoFood": "Caravan cargo (food points)",
   "guest_settlements.configuration.caravanDepartureChance": "Caravan departure chance per day",

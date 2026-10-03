@@ -69,7 +69,7 @@ final class MineshaftAging {
         BoundingBox box = piece.getBoundingBox();
         if (box.intersects(
             pos.getMinBlockX(), pos.getMinBlockZ(), pos.getMaxBlockX(), pos.getMaxBlockZ())) {
-          changed += agePiece(level, pos, box, box.minY() <= lowest + 1, decay);
+          changed += agePiece(level, chunk, box, box.minY() <= lowest + 1, decay);
         }
       }
     }
@@ -78,7 +78,12 @@ final class MineshaftAging {
   }
 
   private static int agePiece(
-      ServerLevel level, ChunkPos chunk, BoundingBox box, boolean lowestLevel, double decay) {
+      ServerLevel level,
+      LevelChunk levelChunk,
+      BoundingBox box,
+      boolean lowestLevel,
+      double decay) {
+    ChunkPos chunk = levelChunk.getPos();
     boolean flooded =
         lowestLevel
             && unit(level, new BlockPos(box.minX(), box.minY(), box.minZ()), 4) < FLOODED * decay;
@@ -95,19 +100,19 @@ final class MineshaftAging {
           BlockState state = level.getBlockState(pos);
           if (state.is(BlockTags.WOODEN_FENCES) || state.is(BlockTags.PLANKS)) {
             if (unit(level, pos, 1) < ROTTEN * decay) {
-              level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+              Column.write(level, levelChunk, pos.immutable(), Blocks.AIR.defaultBlockState());
               changed++;
             }
           } else if (state.isAir()) {
             if (flooded && y == box.minY()) {
-              level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+              Column.write(level, levelChunk, pos.immutable(), Blocks.WATER.defaultBlockState());
               changed++;
             } else if (unit(level, pos, 2) < COLLAPSE * decay) {
-              collapse(level, pos.immutable());
+              collapse(level, levelChunk, pos.immutable());
               changed++;
             } else if (level.getBrightness(LightLayer.SKY, pos) > 0
                 && unit(level, pos, 3) < OVERGROWN * decay) {
-              overgrow(level, pos.immutable());
+              overgrow(level, levelChunk, pos.immutable());
               changed++;
             }
           }
@@ -117,7 +122,7 @@ final class MineshaftAging {
     return changed;
   }
 
-  private static void collapse(ServerLevel level, BlockPos air) {
+  private static void collapse(ServerLevel level, LevelChunk chunk, BlockPos air) {
     if (!level.getBlockState(air.above()).is(BlockTags.BASE_STONE_OVERWORLD)) {
       return;
     }
@@ -127,16 +132,18 @@ final class MineshaftAging {
     }
 
     if (!level.getBlockState(floor.below()).is(Blocks.GRAVEL)) {
-      level.setBlockAndUpdate(floor, Blocks.GRAVEL.defaultBlockState());
+      Column.write(level, chunk, floor, Blocks.GRAVEL.defaultBlockState());
     }
   }
 
-  private static void overgrow(ServerLevel level, BlockPos air) {
+  private static void overgrow(ServerLevel level, LevelChunk chunk, BlockPos air) {
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos wall = air.relative(direction);
       if (level.isLoaded(wall)
           && level.getBlockState(wall).isFaceSturdy(level, wall, direction.getOpposite())) {
-        level.setBlockAndUpdate(
+        Column.write(
+            level,
+            chunk,
             air,
             Blocks.VINE
                 .defaultBlockState()

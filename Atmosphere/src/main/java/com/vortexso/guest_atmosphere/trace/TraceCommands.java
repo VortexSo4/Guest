@@ -5,6 +5,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.vortexso.guest_atmosphere.AtmosphereConfig;
 import com.vortexso.guest_atmosphere.GuestAtmosphere;
 import com.vortexso.guest_atmosphere.block.Coating;
+import com.vortexso.guest_atmosphere.weather.AtmosphereWeather;
 import com.vortexso.guest_core.api.GuestTime;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import java.util.Locale;
@@ -80,7 +81,16 @@ public final class TraceCommands {
     long now = GuestTime.gameTime(level);
     long span = AtmosphereConfig.CATCH_UP_MAX_DAYS.get() * GuestTime.TICKS_PER_DAY;
     History.Params params = History.Params.current();
-    History h = Column.replay(level, top, now - span, now, 0.0, now - span, params);
+    History h =
+        Column.replay(
+            level,
+            top,
+            AtmosphereWeather.climate(level, top),
+            now - span,
+            now,
+            0.0,
+            now - span,
+            params);
     CommandSourceStack source = context.getSource();
     source.sendSuccess(
         () ->

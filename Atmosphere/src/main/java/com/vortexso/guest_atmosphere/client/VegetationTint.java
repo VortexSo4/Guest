@@ -5,6 +5,8 @@ import com.vortexso.guest_atmosphere.GuestAtmosphere;
 import com.vortexso.guest_atmosphere.block.AtmosphereBlocks;
 import com.vortexso.guest_atmosphere.network.WeatherSyncPayload;
 import com.vortexso.guest_core.api.GuestHash;
+import com.vortexso.guest_core.api.GuestTime;
+import com.vortexso.guest_core.api.Season;
 import java.util.List;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
@@ -12,7 +14,11 @@ import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.chunk.RenderSectionRegion;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.ChunkPos;
@@ -20,6 +26,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.neoforged.api.distmarker.Dist;
@@ -61,7 +68,26 @@ public final class VegetationTint {
     Blocks.LEAF_LITTER
   };
 
+  private static final int AUTUMN_STEPS = 16;
+
+  private static final long SALT_TREE = 0xA54FF53A5F1D36F1L;
+
+  private static final int BUD = 0xFF9ACD4E;
+
+  private static final int WITHERED = 0xFF8C6A3C;
+
+  private static final int[] AUTUMN = {0xFFE3B53A, 0xFFDB8A2C, 0xFFC4562A, 0xFFA8321F};
+
+  private static final ThreadLocal<long[]> TREE =
+      ThreadLocal.withInitial(() -> new long[] {Long.MIN_VALUE, 0L});
+
   private static volatile float snow;
+
+  private static volatile boolean sparse;
+
+  private static volatile int season = -1;
+
+  private static volatile float autumn = -1.0F;
 
   private static volatile float dry;
 
@@ -76,6 +102,10 @@ public final class VegetationTint {
 
   public static float dryness() {
     return dry;
+  }
+
+  public static boolean sparse() {
+    return sparse;
   }
 
   @SubscribeEvent
@@ -125,9 +155,26 @@ public final class VegetationTint {
     smoothDry = approach(smoothDry, enabled ? weather.cover().dryness() : 0.0F);
     float newSnow = step(snow, smoothSnow);
     float newDry = step(dry, smoothDry);
-    if (newSnow != snow || newDry != dry) {
+    boolean seasonal =
+        AtmosphereConfig.SEASONAL_LEAVES.get() && level.dimension() == Level.OVERWORLD;
+    long time = level.getOverworldClockTime();
+    Season now = GuestTime.season(time);
+    int newSeason = seasonal ? now.ordinal() : -1;
+    boolean newSparse = seasonal && (now == Season.WINTER || now == Season.SPRING);
+    float newAutumn =
+        seasonal && now == Season.AUTUMN
+            ? (float) Math.floor(GuestTime.seasonProgress(time) * AUTUMN_STEPS) / AUTUMN_STEPS
+            : -1.0F;
+    if (newSnow != snow
+        || newDry != dry
+        || newSeason != season
+        || newSparse != sparse
+        || newAutumn != autumn) {
       snow = newSnow;
       dry = newDry;
+      season = newSeason;
+      sparse = newSparse;
+      autumn = newAutumn;
       ChunkPos center = minecraft.player.chunkPosition();
       int radius = minecraft.options.getEffectiveRenderDistance() + 1;
       minecraft.levelRenderer.setSectionRangeDirty(
@@ -151,7 +198,11 @@ public final class VegetationTint {
     return value + Mth.clamp(target - value, -0.01F, 0.01F);
   }
 
-  static int apply(int color, float drySensitivity, BlockAndTintGetter level, BlockPos pos) {
+  static int apply(
+      int color, float drySensitivity, BlockState state, BlockAndTintGetter level, BlockPos pos) {
+    if (color != -1 && state.is(BlockTags.LEAVES) && !state.is(Blocks.SPRUCE_LEAVES)) {
+      color = seasonal(color, state, level, pos);
+    }
     float s = snow;
     float d = dry * drySensitivity;
     if (color == -1 || (s <= 0.0F && d <= 0.0F)) {
@@ -173,6 +224,97 @@ public final class VegetationTint {
     return color;
   }
 
+  private static int seasonal(int color, BlockState state, BlockAndTintGetter level, BlockPos pos) {
+    int current = season;
+    if (current == Season.SPRING.ordinal()) {
+      return ARGB.srgbLerp(0.3F, color, BUD);
+    }
+    if (current == Season.WINTER.ordinal()) {
+      return ARGB.srgbLerp(0.45F, color, WITHERED);
+    }
+    float progress = autumn;
+    if (progress < 0.0F) {
+      return color;
+    }
+    long hash = GuestHash.hash(SALT_TREE, tree(level, pos));
+    float turn = smoothstep((progress - 0.05F - 0.5F * unit(hash, 0)) / 0.25F);
+    if (turn <= 0.0F) {
+      return color;
+    }
+    boolean tropical =
+        state.is(Blocks.JUNGLE_LEAVES)
+            || state.is(Blocks.ACACIA_LEAVES)
+            || state.is(Blocks.MANGROVE_LEAVES);
+    int hue;
+    if (unit(hash, 1) < (tropical ? 0.75F : 0.12F)) {
+      hue = color;
+    } else if (state.is(Blocks.BIRCH_LEAVES)) {
+      hue = unit(hash, 2) < 0.8F ? AUTUMN[0] : AUTUMN[1];
+    } else {
+      hue = AUTUMN[(int) (unit(hash, 2) * AUTUMN.length)];
+    }
+    float wither = 0.6F * smoothstep((progress - 0.75F) / 0.25F);
+    return ARGB.srgbLerp(turn, color, ARGB.srgbLerp(wither, hue, WITHERED));
+  }
+
+  private static long tree(BlockAndTintGetter level, BlockPos pos) {
+    long[] cache = TREE.get();
+    if (cache[0] == pos.asLong()) {
+      return cache[1];
+    }
+    BlockPos.MutableBlockPos cursor = pos.mutable();
+    BlockState state = level.getBlockState(cursor);
+    for (int step = 0;
+        step < LeavesBlock.DECAY_DISTANCE && state.hasProperty(LeavesBlock.DISTANCE);
+        step++) {
+      int distance = state.getValue(LeavesBlock.DISTANCE);
+      BlockState next = null;
+      for (Direction direction : Direction.values()) {
+        cursor.move(direction);
+        BlockState side = level.getBlockState(cursor);
+        if (side.is(BlockTags.LOGS)
+            || (side.hasProperty(LeavesBlock.DISTANCE)
+                && side.getValue(LeavesBlock.DISTANCE) < distance)) {
+          next = side;
+          break;
+        }
+        cursor.move(direction.getOpposite());
+      }
+      if (next == null) {
+        break;
+      }
+      state = next;
+    }
+    long tree = BlockPos.asLong(pos.getX() >> 3, 0, pos.getZ() >> 3);
+    if (state.is(BlockTags.LOGS)) {
+      if (level instanceof RenderSectionRegion) {
+        int minY = pos.getY() - SectionPos.SECTION_SIZE;
+
+        while (cursor.getY() > minY && level.getBlockState(cursor.below()).is(BlockTags.LOGS)) {
+          cursor.move(Direction.DOWN);
+        }
+      } else {
+        for (int i = 0; i < 32 && level.getBlockState(cursor.below()).is(BlockTags.LOGS); i++) {
+          cursor.move(Direction.DOWN);
+        }
+      }
+
+      tree = cursor.asLong();
+    }
+    cache[0] = pos.asLong();
+    cache[1] = tree;
+    return tree;
+  }
+
+  private static float unit(long hash, int index) {
+    return (float) GuestHash.unit(GuestHash.hash(hash, index));
+  }
+
+  private static float smoothstep(float t) {
+    float c = Mth.clamp(t, 0.0F, 1.0F);
+    return c * c * (3.0F - 2.0F * c);
+  }
+
   private record Tint(BlockTintSource inner, float drySensitivity) implements BlockTintSource {
     @Override
     public int color(BlockState state) {
@@ -181,12 +323,13 @@ public final class VegetationTint {
 
     @Override
     public int colorInWorld(BlockState state, BlockAndTintGetter level, BlockPos pos) {
-      return apply(inner.colorInWorld(state, level, pos), drySensitivity, level, pos);
+      return apply(inner.colorInWorld(state, level, pos), drySensitivity, state, level, pos);
     }
 
     @Override
     public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
-      return apply(inner.colorAsTerrainParticle(state, level, pos), drySensitivity, level, pos);
+      return apply(
+          inner.colorAsTerrainParticle(state, level, pos), drySensitivity, state, level, pos);
     }
 
     @Override

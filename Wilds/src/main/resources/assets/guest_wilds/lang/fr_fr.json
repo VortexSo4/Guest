@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "L'eau au-dessus des épaves et des ruines donne leurs reliques ; l'eau libre ne donne que du poisson. On ne pêche jamais de déchets.",
   "guest_wilds.configuration.forestRegrowth": "Repousse des forêts",
   "guest_wilds.configuration.forestRegrowth.tooltip": "Les souches des arbres abattus se couvrent d'un buisson, puis donnent une pousse de la même essence.",
+  "guest_wilds.configuration.forestSpread": "Expansion des forêts",
+  "guest_wilds.configuration.forestSpread.tooltip": "Les arbres vivants sèment des pousses dans l'herbe dégagée alentour : un arbre isolé ou une clairière brûlée devient peu à peu un bosquet en quelques semaines ou mois. S'arrête quand le bois est assez dense et ne sème jamais dans les villages ni sur les chemins.",
   "guest_wilds.command.lairs": "%s repaires connus dans un rayon de %s blocs. Cette session : %s chunks analysés, %s entrées de grotte trouvées, %s repaires fondés, %s chunks ignorés (des joueurs y vivent), %s ms par chunk analysé, %s habitants par chunk analysé.",
   "guest_wilds.command.lairs.entry": "%s : entrée en %s, à %s blocs %s :",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "uniquement des reliques",
   "guest_wilds.command.route.bad": "Les points de passage doivent avoir la forme \"x y z; x y z; ...\" ou valoir \"surface\".",
   "guest_wilds.command.regrowth": "%s souches d'arbres abattus repoussent ; la plus proche en %s (stade %s, abattu il y a %s jours).",
+  "guest_wilds.command.spread": "Expansion des forêts : ce tronçon est ensemencé jusqu'au jour %s (aujourd'hui jour %s) ; %s pousses semées pendant cette session.",
   "guest_wilds.command.lair.trace": "Trace en %s : %s (%s)",
   "guest_wilds.command.herds": "%s troupeaux et meutes sauvages dans un rayon de %s blocs :",
   "guest_wilds.command.herds.entry": "%s : %s animaux (%s dehors) en %s, à %s blocs %s"

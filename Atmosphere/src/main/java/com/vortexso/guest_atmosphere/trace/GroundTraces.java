@@ -7,12 +7,14 @@ import com.vortexso.guest_atmosphere.block.CoveredPlantBlock;
 import com.vortexso.guest_atmosphere.trace.ChunkTraces.Kind;
 import com.vortexso.guest_atmosphere.trace.ChunkTraces.Trace;
 import com.vortexso.guest_atmosphere.weather.AtmosphereWeather;
+import com.vortexso.guest_atmosphere.weather.WeatherModel.ClimateClass;
 import com.vortexso.guest_core.api.GuestTime;
 import com.vortexso.guest_core.api.Season;
 import com.vortexso.guest_core.api.world.WeatherType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeafLitterBlock;
@@ -21,6 +23,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 final class GroundTraces {
+  private static final double SUMMER_LITTER = 0.05;
+
   private GroundTraces() {}
 
   static void update(Column c) {
@@ -30,6 +34,7 @@ final class GroundTraces {
       silt(c);
     }
     dry(c);
+    regrass(c);
     ash(c);
     burntLeaves(c);
     if (AtmosphereConfig.LEAF_LITTER.get()) {
@@ -40,17 +45,16 @@ final class GroundTraces {
   private static void sand(Column c) {
     BlockState surface = c.state(c.top);
     boolean pile = isPile(surface);
-    int shelter = shelter(c);
     boolean piles = AtmosphereConfig.SAND_PILES.get();
     boolean coats = AtmosphereConfig.COATED_BLOCKS.get();
     if (c.live) {
       WeatherType type = c.type();
       if (type == WeatherType.SANDSTORM) {
         if (piles
-            && (coverable(surface) || shelter > 0 && (surface.isAir() || pile))
+            && (coverable(surface) || (surface.isAir() || pile) && shelter(c) > 0)
             && !c.state(c.ground).is(BlockTags.SAND)
             && c.chance(17, c.intensity() * c.params.sandChance())) {
-          addPile(c, surface, shelter >= 2 ? 4 : 2);
+          addPile(c, surface, shelter(c) >= 2 ? 4 : 2);
         }
         if (coats && c.chance(18, c.intensity() * c.params.coatChance())) {
           Surfaces.coatSurface(c, Coat.SANDY);
@@ -88,9 +92,9 @@ final class GroundTraces {
       Surfaces.uncoatAll(c, Coat.SANDY);
     } else if (c.chance(17, History.coverage(h.sandHits))) {
       if (piles
-          && (coverable(surface) || shelter > 0 && (surface.isAir() || pile))
+          && (coverable(surface) || (surface.isAir() || pile) && shelter(c) > 0)
           && !c.state(c.ground).is(BlockTags.SAND)) {
-        int depth = shelter >= 2 ? 4 : 2;
+        int depth = shelter(c) >= 2 ? 4 : 2;
         for (int i = pile ? surface.getValue(SnowLayerBlock.LAYERS) : 0; i < depth; i++) {
           addPile(c, c.state(c.top), depth);
         }
@@ -117,7 +121,7 @@ final class GroundTraces {
     int sides = 0;
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos side = c.top.relative(direction);
-      if (c.loaded(side) && c.level.getBlockState(side).blocksMotion()) {
+      if (c.state(side).blocksMotion()) {
         sides++;
       }
     }
@@ -153,21 +157,42 @@ final class GroundTraces {
       return;
     }
     BlockState ground = c.state(c.ground);
+    Trace trace = c.traces.get(c.ground.asLong());
+    boolean softened =
+        trace != null && trace.kind() == Kind.MUD && ground.is(AtmosphereBlocks.SILT.get());
     boolean bare =
         ground.is(Blocks.DIRT) || ground.is(Blocks.COARSE_DIRT) || ground.is(Blocks.DIRT_PATH);
-    if (!bare && !(ground.is(Blocks.GRASS_BLOCK) && (nextToWater(c) || dripLine(c)))) {
+    if (!softened && !bare && !(ground.is(Blocks.GRASS_BLOCK) && (nextToWater(c) || dripLine(c)))) {
       return;
     }
-    boolean forms =
-        c.live
-            ? realRain(c.type())
-                && c.temperature() >= c.params.snowTemperature()
-                && c.chance(22, c.params.mudChance() * c.intensity())
-            : c.history().rainedWithin(c.params.mudDryingTicks())
-                && c.chance(22, History.coverage(c.history().mudHits));
-    if (forms) {
-      c.change(c.ground, Blocks.MUD.defaultBlockState(), Kind.MUD);
+    int stage;
+    if (c.live) {
+      if (!realRain(c.type())
+          || c.temperature() < c.params.snowTemperature()
+          || !c.chance(22, c.params.mudChance() * c.intensity())) {
+        return;
+      }
+      stage = softened ? 2 : 1;
+    } else {
+      History h = c.history();
+      double coverage = History.coverage(h.mudHits);
+      if (!h.rainedWithin(c.params.mudDryingTicks()) || !c.chance(22, coverage)) {
+        return;
+      }
+      stage = c.chance(39, coverage) ? 2 : 1;
     }
+    if (softened) {
+      if (stage == 2) {
+        c.set(c.ground, Blocks.MUD.defaultBlockState());
+      }
+      return;
+    }
+    c.change(
+        c.ground,
+        stage == 2
+            ? Blocks.MUD.defaultBlockState()
+            : AtmosphereBlocks.SILT.get().defaultBlockState(),
+        Kind.MUD);
   }
 
   static boolean realRain(WeatherType type) {
@@ -178,7 +203,7 @@ final class GroundTraces {
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos side = c.ground.relative(direction);
       if (c.loaded(side)) {
-        BlockState state = c.level.getBlockState(side);
+        BlockState state = c.state(side);
         if (state.is(Blocks.WATER) || state.is(Blocks.DIRT_PATH)) {
           return true;
         }
@@ -225,7 +250,7 @@ final class GroundTraces {
     for (int dx = -2; dx <= 2; dx++) {
       for (int dz = -2; dz <= 2; dz++) {
         BlockPos pos = c.ground.offset(dx, 0, dz);
-        if ((dx != 0 || dz != 0) && c.loaded(pos) && c.level.getBlockState(pos).is(Blocks.WATER)) {
+        if ((dx != 0 || dz != 0) && c.state(pos).is(Blocks.WATER)) {
           return true;
         }
       }
@@ -255,6 +280,32 @@ final class GroundTraces {
                 && c.chance(24, History.coverage(c.history().dryHits));
     if (heat) {
       c.change(c.ground, dried, Kind.DRY);
+    }
+  }
+
+  private static void regrass(Column c) {
+    Season season = GuestTime.season(c.now);
+    if ((season != Season.SUMMER && season != Season.AUTUMN)
+        || c.climate.climateClass() == ClimateClass.DRY
+        || !c.state(c.ground).is(Blocks.DIRT)
+        || c.traces.get(c.ground.asLong()) != null) {
+      return;
+    }
+    BlockState surface = c.state(c.top);
+    if ((!surface.isAir() && CoveredPlantBlock.Plant.of(surface) == null)
+        || c.level.getBrightness(LightLayer.SKY, c.top) < 9) {
+      return;
+    }
+    double days = AtmosphereConfig.REGRASS_DAYS.get();
+    double summer =
+        (season == Season.SUMMER ? 0 : GuestTime.DAYS_PER_SEASON)
+            + GuestTime.seasonProgress(c.now) * GuestTime.DAYS_PER_SEASON;
+    boolean grows =
+        c.live
+            ? c.chance(40, c.perVisit(1.0 / days))
+            : c.chance(40, 1.0 - Math.exp(-summer / days));
+    if (grows) {
+      c.set(c.ground, Blocks.GRASS_BLOCK.defaultBlockState());
     }
   }
 
@@ -304,22 +355,30 @@ final class GroundTraces {
       return;
     }
     Season season = GuestTime.season(c.now);
+    boolean bare = season == Season.WINTER || season == Season.SPRING;
+    double stray = c.params.litterPerDay() * SUMMER_LITTER;
     int target = amount;
     if (c.live) {
       WeatherType type = c.type();
       double windy = type == WeatherType.LEAF_FALL || type == WeatherType.WIND ? 3.0 : 1.0;
       if (season == Season.AUTUMN && c.chance(27, c.perVisit(c.params.litterPerDay() * windy))) {
         target = Math.min(4, amount + 1);
-      } else if (season == Season.WINTER && amount > 0 && c.chance(28, c.perVisit(0.5 * windy))) {
+      } else if (season == Season.SUMMER && amount == 0 && c.chance(27, c.perVisit(stray))) {
+        target = 1;
+      } else if (bare && amount > 0 && c.chance(28, c.perVisit(0.5 * windy))) {
         target = amount - 1;
       }
     } else {
       History h = c.history();
-      if (season == Season.WINTER || h.winterSeen) {
+      if (bare || h.winterSeen) {
         target = 0;
       } else if (season == Season.AUTUMN) {
         double expected = h.litterDays * c.params.litterPerDay() * (0.5 + c.fixed(floor, 29));
         target = Math.max(amount, (int) Math.min(4, Math.round(expected)));
+      } else if (amount == 0
+          && c.fixed(floor, 31)
+              < stray * GuestTime.seasonProgress(c.now) * GuestTime.DAYS_PER_SEASON) {
+        target = 1;
       }
     }
     if (target == amount) {
@@ -419,7 +478,7 @@ final class GroundTraces {
   static boolean intact(BlockState state, Kind kind) {
     return switch (kind) {
       case SNOW -> state.is(Blocks.SNOW);
-      case MUD -> state.is(Blocks.MUD);
+      case MUD -> state.is(Blocks.MUD) || state.is(AtmosphereBlocks.SILT.get());
       case ICE -> state.is(Blocks.ICE);
       case SAND -> state.is(Blocks.SAND) || state.is(Blocks.RED_SAND);
       case DRY -> state.is(Blocks.COARSE_DIRT) || state.is(AtmosphereBlocks.CRACKED_MUD.get());

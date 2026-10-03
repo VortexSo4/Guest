@@ -164,6 +164,9 @@ final class GrowthTraces {
     if (damp <= 0.0 || !AtmosphereConfig.IVY.get()) {
       return;
     }
+    if (c.highestSide() <= c.ground.getY() + 1) {
+      return;
+    }
     BlockState ivy = AtmosphereBlocks.IVY.get().defaultBlockState();
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos foot = c.ground.above().relative(direction);
@@ -241,13 +244,20 @@ final class GrowthTraces {
 
     double factor() {
       if (factor < 0.0) {
-        boolean inhabited =
-            c.level
-                    .getPoiManager()
-                    .getCountInRange(
-                        type -> type.is(PoiTypes.HOME), c.ground, 32, PoiManager.Occupancy.ANY)
-                > 0;
-        factor = inhabited ? 1.0 : AtmosphereConfig.ABANDONED_GROWTH.get();
+        factor =
+            c.traces.inhabited(
+                    c.level.getGameTime(),
+                    () ->
+                        c.level
+                                .getPoiManager()
+                                .getCountInRange(
+                                    type -> type.is(PoiTypes.HOME),
+                                    c.ground,
+                                    32,
+                                    PoiManager.Occupancy.ANY)
+                            > 0)
+                ? 1.0
+                : AtmosphereConfig.ABANDONED_GROWTH.get();
       }
       return factor;
     }

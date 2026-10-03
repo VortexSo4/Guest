@@ -21,6 +21,8 @@ final class WinterTraces {
 
   private static final double ICICLE_EAVES = 0.35;
 
+  private static final double MAX_ICE_REACH = 8.0;
+
   private static final long QUARTER_DAY = GuestTime.TICKS_PER_DAY / 4;
 
   private WinterTraces() {}
@@ -61,14 +63,15 @@ final class WinterTraces {
       return;
     }
     History h = c.history();
-    int target = h.snowLayers(c.fixed(new BlockPos(c.x, 0, c.z), 3), cap(c, h.stormSnow));
+    int target =
+        h.snowLayers(c.snowDepth, c.fixed(new BlockPos(c.x, 0, c.z), 3), cap(c, h.stormSnow));
     for (int i = layers; i < target; i++) {
       if (!raise(c, target)) {
         break;
       }
     }
 
-    if (target < layers && h.snowDepth < h.initialSnow) {
+    if (target < layers && c.snowDepth < h.initialSnow) {
       lower(c, surface, target);
     }
   }
@@ -124,7 +127,7 @@ final class WinterTraces {
     }
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos side = c.top.relative(direction);
-      if (c.loaded(side) && c.level.getBlockState(side).blocksMotion()) {
+      if (c.state(side).blocksMotion()) {
         return AtmosphereConfig.DRIFT_MAX_LAYERS.get();
       }
     }
@@ -219,7 +222,7 @@ final class WinterTraces {
   private static boolean eaves(Column c, BlockPos hang) {
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos side = hang.relative(direction);
-      if (c.loaded(side) && c.level.getBlockState(side).isAir() && c.level.canSeeSky(side)) {
+      if (c.loaded(side) && c.state(side).isAir() && c.level.canSeeSky(side)) {
         return true;
       }
     }
@@ -303,30 +306,43 @@ final class WinterTraces {
     }
   }
 
+  static boolean iceable(BlockState state) {
+    return state.is(AtmosphereBlocks.THIN_ICE.get())
+        || (state.is(Blocks.WATER) && state.getFluidState().isSource());
+  }
+
   private static void thinIce(Column c) {
     BlockState ground = c.state(c.ground);
-    if (ground.is(AtmosphereBlocks.THIN_ICE.get())) {
-      boolean thaw =
-          c.live
-              ? c.temperature() >= c.params.snowTemperature() && c.chance(13, 0.5)
-              : c.temperature() >= c.params.snowTemperature() || c.history().iceHits == 0.0;
-      if (thaw) {
+    boolean thin = ground.is(AtmosphereBlocks.THIN_ICE.get());
+    if (thin && c.live) {
+      if (c.temperature() >= c.params.snowTemperature() && c.chance(13, 0.5)) {
         c.set(c.ground, Blocks.WATER.defaultBlockState());
       }
       return;
     }
-    if (!ground.is(Blocks.WATER)
-        || !ground.getFluidState().isSource()
-        || !c.state(c.top).isAir()
-        || !c.dark(c.ground)
-        || c.level.getBiome(c.ground).value().coldEnoughToSnow(c.ground, c.level.getSeaLevel())) {
+    if (!thin
+        && (!iceable(ground)
+            || !c.state(c.top).isAir()
+            || !c.dark(c.ground)
+            || c.level
+                .getBiome(c.ground)
+                .value()
+                .coldEnoughToSnow(c.ground, c.level.getSeaLevel()))) {
       return;
     }
-    boolean freezing =
-        c.live
-            ? c.temperature() < c.params.freezeTemperature() && c.chance(14, c.params.iceChance())
-            : c.chance(14, History.coverage(c.history().iceHits));
-    if (freezing && shoreOrIce(c)) {
+    if (c.live) {
+      if (c.temperature() < c.params.freezeTemperature()
+          && c.chance(14, c.params.iceChance())
+          && shoreOrIce(c)) {
+        c.set(c.ground, AtmosphereBlocks.THIN_ICE.get().defaultBlockState());
+      }
+      return;
+    }
+    double reach = Math.min(MAX_ICE_REACH, c.history().iceHits) * (0.5 + c.fixed(c.ground, 38));
+    boolean frozen = c.temperature() < c.params.snowTemperature() && c.shore <= reach;
+    if (thin && !frozen) {
+      c.set(c.ground, Blocks.WATER.defaultBlockState());
+    } else if (!thin && frozen) {
       c.set(c.ground, AtmosphereBlocks.THIN_ICE.get().defaultBlockState());
     }
   }
@@ -337,7 +353,7 @@ final class WinterTraces {
       if (!c.loaded(side)) {
         continue;
       }
-      BlockState state = c.level.getBlockState(side);
+      BlockState state = c.state(side);
       if (!state.getFluidState().isSource() || state.is(AtmosphereBlocks.THIN_ICE.get())) {
         return true;
       }

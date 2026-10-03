@@ -6,6 +6,7 @@ import com.vortexso.guest_wilds.behavior.Variants;
 import com.vortexso.guest_wilds.behavior.WildBehavior;
 import com.vortexso.guest_wilds.fish.Shoals;
 import com.vortexso.guest_wilds.flora.Regrowth;
+import com.vortexso.guest_wilds.flora.Spread;
 import com.vortexso.guest_wilds.herd.Herds;
 import com.vortexso.guest_wilds.lair.LairSpecies;
 import com.vortexso.guest_wilds.lair.Lairs;
@@ -265,6 +266,9 @@ public final class WildsEvents {
               if (WildsConfig.FOREST_REGROWTH.get()) {
                 Regrowth.get(level).onChunkLoad(level, pos);
               }
+              if (WildsConfig.FOREST_SPREAD.get()) {
+                Spread.onChunkLoad(pos);
+              }
             });
   }
 
@@ -302,6 +306,9 @@ public final class WildsEvents {
       }
       if (WildsConfig.FOREST_REGROWTH.get()) {
         Regrowth.get(level).sweep(level);
+      }
+      if (WildsConfig.FOREST_SPREAD.get()) {
+        Spread.sweep(level);
       }
     }
     if (tick % OBSERVE_TICKS == 0) {

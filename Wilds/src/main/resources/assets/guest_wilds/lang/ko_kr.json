@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "난파선과 폐허 위의 물에서는 그곳의 유물이 낚이고, 탁 트인 물에서는 물고기만 낚입니다. 쓰레기는 절대 낚이지 않습니다.",
   "guest_wilds.configuration.forestRegrowth": "숲 재생",
   "guest_wilds.configuration.forestRegrowth.tooltip": "베어낸 나무의 그루터기에 덤불이 자라고, 나중에 같은 나무의 묘목이 돋아납니다.",
+  "guest_wilds.configuration.forestSpread": "숲 확장",
+  "guest_wilds.configuration.forestSpread.tooltip": "살아 있는 나무가 근처의 트인 풀밭에 묘목을 퍼뜨려, 홀로 선 나무나 불탄 빈터가 몇 주에서 몇 달에 걸쳐 작은 숲이 됩니다. 숲이 충분히 빽빽해지면 멈추며 마을이나 길에는 절대 심지 않습니다.",
   "guest_wilds.command.lairs": "알려진 소굴 %s개 (%s블록 이내). 이번 세션: 스캔한 청크 %s개, 발견한 동굴 입구 %s개, 생긴 소굴 %s개, 건너뛴 청크 %s개 (플레이어 거주), 스캔한 청크당 %s ms, 스캔한 청크당 거주자 %s.",
   "guest_wilds.command.lairs.entry": "%s: 입구 %s, %s블록 %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "유물만",
   "guest_wilds.command.route.bad": "경유지는 \"x y z; x y z; ...\" 형식이거나 \"surface\"여야 합니다.",
   "guest_wilds.command.regrowth": "베어낸 그루터기 %s개가 재생 중입니다. 가장 가까운 곳: %s (단계 %s, %s일 전에 벰).",
+  "guest_wilds.command.spread": "숲 확장: 이 청크는 %s일째까지 씨가 뿌려졌습니다(오늘은 %s일째). 이번 세션에 심은 묘목: %s그루.",
   "guest_wilds.command.lair.trace": "%s의 흔적: %s (%s)",
   "guest_wilds.command.herds": "야생 무리 %s개 (%s블록 이내):",
   "guest_wilds.command.herds.entry": "%s: %s마리 (밖에 %s), %s, %s블록 %s"

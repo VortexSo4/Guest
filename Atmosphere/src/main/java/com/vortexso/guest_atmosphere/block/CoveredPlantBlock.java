@@ -1,7 +1,9 @@
 package com.vortexso.guest_atmosphere.block;
 
 import com.vortexso.guest_atmosphere.trace.ChunkTraces;
+import java.util.ArrayList;
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -27,6 +29,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -65,7 +68,8 @@ public class CoveredPlantBlock extends SnowLayerBlock {
     LILAC(Blocks.LILAC),
     ROSE_BUSH(Blocks.ROSE_BUSH),
     PEONY(Blocks.PEONY),
-    PITCHER_PLANT(Blocks.PITCHER_PLANT);
+    PITCHER_PLANT(Blocks.PITCHER_PLANT),
+    SWEET_BERRY_BUSH(Blocks.SWEET_BERRY_BUSH);
 
     private static final Map<Block, Plant> BY_BLOCK = new IdentityHashMap<>();
 
@@ -154,6 +158,20 @@ public class CoveredPlantBlock extends SnowLayerBlock {
     return state.getBlock() instanceof CoveredPlantBlock
         ? state.getValue(PLANT).block().defaultBlockState()
         : Blocks.AIR.defaultBlockState();
+  }
+
+  public static BlockState plantState(BlockState state) {
+    Plant plant = state.getValue(PLANT);
+    BlockState base = plant.block().defaultBlockState();
+    return plant.tall() ? base.setValue(HALF, state.getValue(HALF)) : base;
+  }
+
+  public static @Nullable BlockState coverState(BlockState state) {
+    if (upper(state) || !(state.getBlock() instanceof CoveredPlantBlock block)) {
+      return null;
+    }
+    BlockState cover = block.cover().defaultBlockState();
+    return cover.hasProperty(LAYERS) ? cover.setValue(LAYERS, state.getValue(LAYERS)) : cover;
   }
 
   private static boolean upper(BlockState state) {
@@ -263,6 +281,15 @@ public class CoveredPlantBlock extends SnowLayerBlock {
     if (level.getBrightness(LightLayer.BLOCK, pos) > 11 && !ChunkTraces.isFixed(level, pos)) {
       level.setBlockAndUpdate(pos, withLayers(state, 0));
     }
+  }
+
+  @Override
+  protected List<ItemStack> getDrops(BlockState state, LootParams.Builder params) {
+    List<ItemStack> drops = new ArrayList<>(super.getDrops(state, params));
+    if (!upper(state)) {
+      drops.addAll(plantState(state).getDrops(params));
+    }
+    return drops;
   }
 
   @Override

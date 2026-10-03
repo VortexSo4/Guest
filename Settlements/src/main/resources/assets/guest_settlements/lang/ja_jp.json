@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "1組・1日あたりの繁殖確率",
   "guest_settlements.configuration.campLife": "邪悪な村人の拠点の暮らし",
   "guest_settlements.configuration.campPens": "邪悪な村人の拠点の囲い",
+  "guest_settlements.configuration.outpostPillagers": "前哨基地のピリジャー（モンスター上限の割合）",
   "guest_settlements.configuration.caravanBlocksPerDay": "キャラバンの速度（1日あたりのブロック数）",
   "guest_settlements.configuration.caravanCargoFood": "キャラバンの積み荷（食料ポイント）",
   "guest_settlements.configuration.caravanDepartureChance": "1日あたりのキャラバン出発確率",

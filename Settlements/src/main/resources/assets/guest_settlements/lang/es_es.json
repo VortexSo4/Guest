@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Probabilidad de nacimiento por pareja al día",
   "guest_settlements.configuration.campLife": "Vida en los campamentos de maldeanos",
   "guest_settlements.configuration.campPens": "Corrales en los campamentos de maldeanos",
+  "guest_settlements.configuration.outpostPillagers": "Saqueadores en puestos avanzados (parte del límite de monstruos)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Velocidad de las caravanas (bloques al día)",
   "guest_settlements.configuration.caravanCargoFood": "Carga de las caravanas (puntos de comida)",
   "guest_settlements.configuration.caravanDepartureChance": "Probabilidad diaria de salida de una caravana",

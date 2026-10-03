@@ -12,6 +12,7 @@ import com.vortexso.guest_core.api.event.RouteTrafficEvent;
 import com.vortexso.guest_core.api.world.GuestWildlife;
 import com.vortexso.guest_wilds.fish.Shoals;
 import com.vortexso.guest_wilds.flora.Regrowth;
+import com.vortexso.guest_wilds.flora.Spread;
 import com.vortexso.guest_wilds.herd.Herds;
 import com.vortexso.guest_wilds.lair.LairSpecies;
 import com.vortexso.guest_wilds.lair.Lairs;
@@ -35,6 +36,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.clock.ServerClockManager;
 import net.minecraft.world.clock.WorldClock;
 import net.minecraft.world.clock.WorldClocks;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -94,6 +96,7 @@ public final class WildsCommands {
                         .then(
                             Commands.literal("regrowth")
                                 .executes(WildsCommands::regrowth)
+                                .then(Commands.literal("spread").executes(WildsCommands::spread))
                                 .then(
                                     Commands.literal("fell")
                                         .then(
@@ -459,7 +462,30 @@ public final class WildsCommands {
                         ? "-"
                         : format((now - nearest.felled()) / (double) GuestTime.TICKS_PER_DAY)),
             false);
+    long seeded = level.getChunkAt(pos).getData(GuestWilds.SPREAD);
+    context
+        .getSource()
+        .sendSuccess(
+            () ->
+                Component.translatable(
+                    "guest_wilds.command.spread",
+                    seeded == Spread.NEVER ? "-" : Spread.days(seeded),
+                    Spread.days(Spread.period(now)),
+                    Spread.sown()),
+            false);
     return sites.size();
+  }
+
+  private static int spread(CommandContext<CommandSourceStack> context) {
+    ServerLevel level = overworld(context);
+    ChunkPos center = ChunkPos.containing(here(context));
+    long current = Spread.period(GuestTime.gameTime(level));
+    for (int dx = -8; dx <= 8; dx++) {
+      for (int dz = -8; dz <= 8; dz++) {
+        Spread.catchUp(level, ChunkPos.pack(center.x() + dx, center.z() + dz), current);
+      }
+    }
+    return regrowth(context);
   }
 
   private static int pressure(CommandContext<CommandSourceStack> context, int radius) {

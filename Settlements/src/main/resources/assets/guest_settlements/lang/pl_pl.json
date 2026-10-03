@@ -1,6 +1,6 @@
 {
   "guest_settlements.camp.mansion": "Leśny dwór",
-  "guest_settlements.camp.outpost": "Posterunek złosadniczy",
+  "guest_settlements.camp.outpost": "Posterunek rozbójników",
   "guest_settlements.command.build.advanced": "Postawiono bloki: %s.",
   "guest_settlements.command.build.cancelled": "Porzucono budowy: %s; to, co zbudowano, zostaje.",
   "guest_settlements.command.build.none": "Wioska nie potrzebuje teraz niczego, co mogłaby zbudować (albo nie znalazła wolnego miejsca).",
@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Szansa na rozmnożenie pary dziennie",
   "guest_settlements.configuration.campLife": "Życie w obozach złosadników",
   "guest_settlements.configuration.campPens": "Zagrody w obozach złosadników",
+  "guest_settlements.configuration.outpostPillagers": "Rozbójnicy przy posterunkach (część limitu potworów)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Szybkość karawan (bloki dziennie)",
   "guest_settlements.configuration.caravanCargoFood": "Ładunek karawany (punkty żywności)",
   "guest_settlements.configuration.caravanDepartureChance": "Dzienna szansa wyruszenia karawany",

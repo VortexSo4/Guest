@@ -32,7 +32,7 @@ public final class Regrowth extends SavedData {
   private static final int CANOPY_HEIGHT = 10;
   private static final int SWEEP_CHUNKS = 2;
 
-  private static final Map<Block, Block> SAPLINGS =
+  static final Map<Block, Block> SAPLINGS =
       Map.of(
           Blocks.OAK_LOG, Blocks.OAK_SAPLING,
           Blocks.BIRCH_LOG, Blocks.BIRCH_SAPLING,

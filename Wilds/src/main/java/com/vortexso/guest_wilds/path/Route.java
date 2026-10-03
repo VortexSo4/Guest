@@ -13,9 +13,9 @@ public final class Route {
 
   private Route() {}
 
-  public record Cell(int x, int z, int y, double weight) {}
+  public record Cell(int x, int z, double weight) {}
 
-  public static List<Cell> strip(List<BlockPos> points, int width, double verge, boolean useY) {
+  public static List<Cell> strip(List<BlockPos> points, int width, double verge) {
     Map<Long, Cell> cells = new LinkedHashMap<>();
     double half = (Math.max(1, width) - 1) / 2.0;
     for (int i = 0; i + 1 < points.size(); i++) {
@@ -31,7 +31,6 @@ public final class Route {
         double t = s / (double) steps;
         double px = a.getX() + dx * t;
         double pz = a.getZ() + dz * t;
-        int y = useY ? (int) Math.round(a.getY() + (b.getY() - a.getY()) * t) : Integer.MIN_VALUE;
         for (double o = -half - 1.0; o <= half + 1.0 + 1e-9; o += STEP) {
           double weight = Math.abs(o) <= half + 1e-9 ? 1.0 : verge;
           if (weight <= 0.0) {
@@ -43,7 +42,7 @@ public final class Route {
           long key = (x & 0xFFFFFFFFL) | ((long) z << 32);
           Cell old = cells.get(key);
           if (old == null || old.weight() < weight) {
-            cells.put(key, new Cell(x, z, old == null ? y : old.y(), weight));
+            cells.put(key, new Cell(x, z, weight));
           }
         }
       }

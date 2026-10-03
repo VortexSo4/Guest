@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Nachwuchschance pro Paar und Tag",
   "guest_settlements.configuration.campLife": "Leben in Illager-Lagern",
   "guest_settlements.configuration.campPens": "Gehege bei Illager-Lagern",
+  "guest_settlements.configuration.outpostPillagers": "Plünderer am Außenposten (Anteil am Monsterlimit)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Karawanentempo (Blöcke pro Tag)",
   "guest_settlements.configuration.caravanCargoFood": "Karawanenfracht (Nahrungspunkte)",
   "guest_settlements.configuration.caravanDepartureChance": "Aufbruchchance einer Karawane pro Tag",

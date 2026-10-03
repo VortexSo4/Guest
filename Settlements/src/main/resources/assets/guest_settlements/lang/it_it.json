@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Probabilità di nascita per coppia al giorno",
   "guest_settlements.configuration.campLife": "Vita negli accampamenti degli abitori",
   "guest_settlements.configuration.campPens": "Recinti negli accampamenti degli abitori",
+  "guest_settlements.configuration.outpostPillagers": "Predoni negli avamposti (quota del limite di mostri)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Velocità delle carovane (blocchi al giorno)",
   "guest_settlements.configuration.caravanCargoFood": "Carico delle carovane (punti cibo)",
   "guest_settlements.configuration.caravanDepartureChance": "Probabilità giornaliera di partenza di una carovana",

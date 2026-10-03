@@ -18,7 +18,8 @@ final class Surfaces {
   private Surfaces() {}
 
   static void walls(Column c, int height, WallVisitor visitor) {
-    for (int k = 1; k <= height; k++) {
+    int reach = Math.min(height, c.highestSide() - c.ground.getY() - 1);
+    for (int k = 1; k <= reach; k++) {
       BlockPos air = c.ground.above(k);
       BlockState inside = c.state(air);
       if (!inside.isAir() && !inside.canBeReplaced()) {
@@ -26,10 +27,7 @@ final class Surfaces {
       }
       for (Direction direction : Direction.Plane.HORIZONTAL) {
         BlockPos wall = air.relative(direction);
-        if (!c.loaded(wall)) {
-          continue;
-        }
-        BlockState state = c.level.getBlockState(wall);
+        BlockState state = c.state(wall);
         if (!state.isAir()) {
           visitor.visit(wall, state, direction.getOpposite());
         }
@@ -58,7 +56,7 @@ final class Surfaces {
   private static boolean openSide(Column c, BlockPos pos) {
     for (Direction direction : Direction.Plane.HORIZONTAL) {
       BlockPos side = pos.relative(direction);
-      if (c.loaded(side) && c.level.getBlockState(side).isAir() && c.level.canSeeSky(side)) {
+      if (c.loaded(side) && c.state(side).isAir() && c.level.canSeeSky(side)) {
         return true;
       }
     }
@@ -84,20 +82,14 @@ final class Surfaces {
   }
 
   private static void coatAt(Column c, BlockPos pos, Coat coat) {
-    if (!c.loaded(pos)) {
-      return;
-    }
-    BlockState coated = Coating.coat(c.level.getBlockState(pos), coat);
+    BlockState coated = Coating.coat(c.state(pos), coat);
     if (coated != null) {
       c.set(pos, coated);
     }
   }
 
   private static void uncoatAt(Column c, BlockPos pos, Coat coat) {
-    if (!c.loaded(pos)) {
-      return;
-    }
-    BlockState state = c.level.getBlockState(pos);
+    BlockState state = c.state(pos);
     if (Coating.coatOf(state) == coat) {
       c.set(pos, Coating.uncoat(state));
     }

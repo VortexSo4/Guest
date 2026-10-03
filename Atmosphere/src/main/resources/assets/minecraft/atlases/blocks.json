@@ -1,0 +1,19 @@
+{
+  "sources": [
+    {
+      "type": "guest_atmosphere:sparse",
+      "textures": [
+        "minecraft:block/oak_leaves",
+        "minecraft:block/birch_leaves",
+        "minecraft:block/jungle_leaves",
+        "minecraft:block/acacia_leaves",
+        "minecraft:block/dark_oak_leaves",
+        "minecraft:block/mangrove_leaves",
+        "minecraft:block/cherry_leaves",
+        "minecraft:block/azalea_leaves",
+        "minecraft:block/flowering_azalea_leaves",
+        "minecraft:block/pale_oak_leaves"
+      ]
+    }
+  ]
+}

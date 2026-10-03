@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "Chance de naissance par couple et par jour",
   "guest_settlements.configuration.campLife": "Vie des camps d'illageois",
   "guest_settlements.configuration.campPens": "Enclos des camps d'illageois",
+  "guest_settlements.configuration.outpostPillagers": "Pillards aux avant-postes (part de la limite de monstres)",
   "guest_settlements.configuration.caravanBlocksPerDay": "Vitesse des caravanes (blocs par jour)",
   "guest_settlements.configuration.caravanCargoFood": "Cargaison des caravanes (points de nourriture)",
   "guest_settlements.configuration.caravanDepartureChance": "Chance de départ d'une caravane par jour",

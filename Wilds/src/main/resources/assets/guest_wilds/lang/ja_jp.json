@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "難破船や遺跡の上の水域ではその遺物が釣れ、開けた水域では魚だけが釣れます。ガラクタは一切釣れません。",
   "guest_wilds.configuration.forestRegrowth": "森の再生",
   "guest_wilds.configuration.forestRegrowth.tooltip": "伐採された木の切り株はまず茂みに覆われ、やがて同じ木の苗木が芽吹きます。",
+  "guest_wilds.configuration.forestSpread": "森の拡大",
+  "guest_wilds.configuration.forestSpread.tooltip": "生きた木が近くの開けた草地に苗木を落とすため、一本だけの木や焼け跡が数週間から数か月で小さな林になります。森が十分に茂ると止まり、村や道には決して植えません。",
   "guest_wilds.command.lairs": "既知の巣窟 %s個（%sブロック以内）。このセッション：スキャンしたチャンク %s、見つかった洞窟入口 %s、作られた巣窟 %s、スキップしたチャンク %s（プレイヤーが住んでいる）、スキャンしたチャンクあたり %s ms、スキャンしたチャンクあたりの住人 %s。",
   "guest_wilds.command.lairs.entry": "%s：入口 %s、%sブロック（%s）：",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "遺物のみ",
   "guest_wilds.command.route.bad": "経由地点は \"x y z; x y z; ...\" の形式か、\"surface\" にしてください。",
   "guest_wilds.command.regrowth": "%s個の切り株が再生中です。最も近いもの：%s（段階 %s、%s日前に伐採）。",
+  "guest_wilds.command.spread": "森の拡大：このチャンクは%s日目まで種まき済み（今日は%s日目）。このセッションで植えた苗木：%s本。",
   "guest_wilds.command.lair.trace": "%s の痕跡：%s（%s）",
   "guest_wilds.command.herds": "野生の群れ %s個（%sブロック以内）：",
   "guest_wilds.command.herds.entry": "%s：%s頭（外に %s）、%s、%sブロック（%s）"

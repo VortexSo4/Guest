@@ -223,7 +223,7 @@ public final class VillageWorldManager {
       VillageMemory.record(
           level, node.center(), VillageMemory.VILLAGE_FALLEN, null, null, state.infected());
     }
-    Construction.catchUp(level, this, node, state, today);
+    Construction.catchUp(level, this, node, state, old.day(), today);
     materialize(node, state, homes);
   }
 
@@ -285,6 +285,9 @@ public final class VillageWorldManager {
               today,
               false);
       postTraffic(node, before, state, false);
+      if (today - before.day() > 1) {
+        Construction.catchUp(level, this, node, state, before.day(), today);
+      }
     }
     state = state.withObservation(population, beds, node.farmland());
     if (state.fallen() && population.population() > 0) {

@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "沉船和废墟上方的水域可钓到其中的遗物；开阔水域只能钓到鱼。永远不会钓到垃圾。",
   "guest_wilds.configuration.forestRegrowth": "森林再生",
   "guest_wilds.configuration.forestRegrowth.tooltip": "被砍伐树木的树桩会先长出灌木丛，之后再长出同种木材的树苗。",
+  "guest_wilds.configuration.forestSpread": "森林扩张",
+  "guest_wilds.configuration.forestSpread.tooltip": "活着的树会向附近开阔的草地播撒树苗，因此一棵孤树或一片烧过的空地会在数周到数月内慢慢长成小树林。树林足够茂密后停止扩张，也绝不会在村庄或小路上播种。",
   "guest_wilds.command.lairs": "已知巢穴%s个（%s格范围内）。本次会话：已扫描%s个区块，发现%s个洞穴入口，建立%s个巢穴，跳过%s个区块（有玩家居住），每个扫描区块耗时%s毫秒，每个扫描区块%s个居民。",
   "guest_wilds.command.lairs.entry": "%s：入口位于%s，距离%s格（%s）：",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "仅遗物",
   "guest_wilds.command.route.bad": "路径点格式须为 \"x y z; x y z; ...\"，或为 \"surface\"。",
   "guest_wilds.command.regrowth": "%s个被砍伐的树桩正在再生；最近的位于%s（阶段%s，%s天前砍伐）。",
+  "guest_wilds.command.spread": "森林扩张：此区块已播种至第%s天（今天是第%s天）；本次会话共种下%s棵树苗。",
   "guest_wilds.command.lair.trace": "%s处的痕迹：%s（%s）",
   "guest_wilds.command.herds": "野生兽群和狼群%s个（%s格范围内）：",
   "guest_wilds.command.herds.entry": "%s：%s只动物（%s只在外），位于%s，距离%s格（%s）"

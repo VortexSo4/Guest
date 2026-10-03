@@ -22,6 +22,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -35,6 +36,8 @@ public final class PathWear extends SavedData {
   private static final double PRUNE_BELOW = 0.25;
   private static final int SWEEP_CHUNKS = 4;
   private static final long STONE_SALT = 0x726f6164L;
+  private static final long TRAMPLE_SALT = 0x74726d70L;
+  private static final double TRAMPLE_CHANCE = 0.15;
   private static final int[] SEARCH = {0, -1, 1, -2, 2, -3, 3, -4};
 
   private record SavedColumn(
@@ -110,7 +113,7 @@ public final class PathWear extends SavedData {
     }
     BlockPos ground = walker.getOnPos();
     BlockState groundState = level.getBlockState(ground);
-    if (groundState.is(Blocks.SNOW)) {
+    if (groundState.getBlock() instanceof SnowLayerBlock) {
       ground = ground.below();
       groundState = level.getBlockState(ground);
     }
@@ -119,10 +122,35 @@ public final class PathWear extends SavedData {
     }
     double size = walker.getBbWidth() / PLAYER_WIDTH;
     double weight = Math.clamp(size * size, 0.1, 3.0);
-    get(level).add(level, ground.getX(), ground.getY(), ground.getZ(), moved * weight);
+    WearMap.Column column =
+        get(level).add(level, ground.getX(), ground.getY(), ground.getZ(), moved * weight);
+    if (column.stage >= 1) {
+      trample(level, ground.above(), walker, moved * weight);
+    }
   }
 
-  public void add(ServerLevel level, int x, int y, int z, double amount) {
+  private static void trample(ServerLevel level, BlockPos pos, LivingEntity walker, double amount) {
+    BlockState cover = level.getBlockState(pos);
+    if (!(cover.getBlock() instanceof SnowLayerBlock)
+        || GuestHash.unit(
+                GuestHash.hash(
+                    level.getSeed() ^ TRAMPLE_SALT,
+                    pos.asLong(),
+                    level.getGameTime(),
+                    walker.getId()))
+            >= TRAMPLE_CHANCE * amount) {
+      return;
+    }
+    int layers = cover.getValue(SnowLayerBlock.LAYERS);
+    level.setBlock(
+        pos,
+        layers > 1
+            ? cover.setValue(SnowLayerBlock.LAYERS, layers - 1)
+            : Blocks.AIR.defaultBlockState(),
+        GuestWilds.updateFlags(level, pos));
+  }
+
+  public WearMap.Column add(ServerLevel level, int x, int y, int z, double amount) {
     long now = GuestTime.gameTime(level);
     WearMap.Column column = map.add(x, z, amount * WildsConfig.WEAR_MULTIPLIER.get(), now);
     if (column.stage == 0) {
@@ -130,6 +158,7 @@ public final class PathWear extends SavedData {
     }
     reconcile(level, column, now);
     setDirty();
+    return column;
   }
 
   public void addRoute(ServerLevel level, BlockPos from, BlockPos to, double amount, long time) {
@@ -156,12 +185,8 @@ public final class PathWear extends SavedData {
                 level.getSeed(), from, to, P.routeMeanderBlocks(), P.routeMeanderWavelength());
     long now = GuestTime.gameTime(level);
     double scaled = amount * WildsConfig.WEAR_MULTIPLIER.get();
-    for (Route.Cell cell : Route.strip(line, width, P.roadVergeShare(), planned)) {
+    for (Route.Cell cell : Route.strip(line, width, P.roadVergeShare())) {
       WearMap.Column column = map.add(cell.x(), cell.z(), scaled * cell.weight(), time);
-      if (planned && column.stage == 0) {
-
-        column.y = cell.y();
-      }
       column.road |= road && cell.weight() >= 1.0;
       reconcile(level, column, now);
     }
@@ -251,11 +276,16 @@ public final class PathWear extends SavedData {
   }
 
   private static @Nullable BlockPos groundOf(ServerLevel level, WearMap.Column column) {
-    int y0 =
-        column.y != WearMap.NO_Y
-            ? column.y
-            : level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column.x, column.z) - 1;
+    int surface =
+        level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, column.x, column.z) - 1;
+    BlockPos found = groundNear(level, column, column.y != WearMap.NO_Y ? column.y : surface);
+    if (found == null && column.stage == 0 && column.y != WearMap.NO_Y && column.y != surface) {
+      found = groundNear(level, column, surface);
+    }
+    return found;
+  }
 
+  private static @Nullable BlockPos groundNear(ServerLevel level, WearMap.Column column, int y0) {
     for (int dy : SEARCH) {
       BlockPos pos = new BlockPos(column.x, y0 + dy, column.z);
       BlockState state = level.getBlockState(pos);
@@ -271,7 +301,7 @@ public final class PathWear extends SavedData {
   }
 
   private static boolean open(BlockState state) {
-    return state.isAir() || isPlant(state) || state.is(Blocks.SNOW);
+    return state.isAir() || isPlant(state) || state.getBlock() instanceof SnowLayerBlock;
   }
 
   private static void raise(ServerLevel level, WearMap.Column column, BlockPos ground) {
@@ -284,7 +314,7 @@ public final class PathWear extends SavedData {
           column.plant = top;
           level.setBlock(
               above, Blocks.AIR.defaultBlockState(), GuestWilds.updateFlags(level, above));
-        } else if (top.is(Blocks.SNOW)) {
+        } else if (top.getBlock() instanceof SnowLayerBlock) {
 
           level.setBlock(
               above, Blocks.AIR.defaultBlockState(), GuestWilds.updateFlags(level, above));

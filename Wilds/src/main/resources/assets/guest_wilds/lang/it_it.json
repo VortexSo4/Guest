@@ -63,6 +63,8 @@
   "guest_wilds.configuration.fishingByPlace.tooltip": "L'acqua sopra relitti e rovine dà le loro reliquie; l'acqua aperta dà solo pesci. Non si pescano mai cianfrusaglie.",
   "guest_wilds.configuration.forestRegrowth": "Ricrescita del bosco",
   "guest_wilds.configuration.forestRegrowth.tooltip": "I ceppi degli alberi abbattuti si ricoprono di un arbusto e poi germoglia un arboscello dello stesso legno.",
+  "guest_wilds.configuration.forestSpread": "Espansione del bosco",
+  "guest_wilds.configuration.forestSpread.tooltip": "Gli alberi vivi seminano arboscelli nell'erba aperta vicina, così un albero isolato o una radura bruciata diventa lentamente un boschetto nel giro di settimane e mesi. Si ferma quando il bosco è abbastanza fitto e non semina mai nei villaggi o sui sentieri.",
   "guest_wilds.command.lairs": "%s covi conosciuti entro %s blocchi. Questa sessione: %s chunk esaminati, %s ingressi di grotta trovati, %s covi fondati, %s chunk saltati (ci vivono giocatori), %s ms per chunk esaminato, %s abitanti per chunk esaminato.",
   "guest_wilds.command.lairs.entry": "%s: ingresso a %s, %s blocchi %s:",
   "guest_wilds.command.lairs.species": "%s %s",
@@ -81,6 +83,7 @@
   "guest_wilds.place.relics": "solo reliquie",
   "guest_wilds.command.route.bad": "Le tappe devono avere la forma \"x y z; x y z; ...\" oppure essere \"surface\".",
   "guest_wilds.command.regrowth": "%s ceppi di alberi abbattuti stanno ricrescendo; il più vicino a %s (stadio %s, abbattuto %s giorni fa).",
+  "guest_wilds.command.spread": "Espansione del bosco: questo chunk è seminato fino al giorno %s (oggi è il giorno %s); %s arboscelli seminati in questa sessione.",
   "guest_wilds.command.lair.trace": "Traccia a %s: %s (%s)",
   "guest_wilds.command.herds": "%s branchi selvatici e mute entro %s blocchi:",
   "guest_wilds.command.herds.entry": "%s: %s animali (%s fuori) a %s, %s blocchi %s"

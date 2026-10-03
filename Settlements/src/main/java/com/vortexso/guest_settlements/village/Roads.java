@@ -22,10 +22,6 @@ public final class Roads {
     return BlockPos.of(node.id());
   }
 
-  public static List<BlockPos> route(ServerLevel level, VillageNode from, VillageNode to) {
-    return RoutePlanner.route(level, anchor(from), anchor(to));
-  }
-
   public static List<BlockPos> betweenVillages(
       List<BlockPos> route, VillageNode from, VillageNode to) {
     List<BlockPos> trimmed = clipStart(route, extent(from));

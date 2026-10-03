@@ -79,7 +79,7 @@
   "biome.guest_architects.silent_deep": "寂静深域",
   "subtitles.guest_architects.architect.unmake": "物品：消解",
   "guest_architects.configuration.silence_radius": "静默半径",
-  "guest_architects.configuration.silence_radius.tooltip": "建筑师周围的格数范围，在此范围内玩家的振动和气味不会被幽匿方块和监守者察觉（0为禁用）。",
+  "guest_architects.configuration.silence_radius.tooltip": "建筑师周围的格数范围，在此范围内玩家的振动和气味不会被幽匿块和监守者察觉（0为禁用）。",
   "guest_architects.configuration.nether_removal_chance": "驱逐至下界几率",
   "guest_architects.configuration.nether_removal_chance.tooltip": "驱逐传送门通往下界而非地表的几率。",
   "guest_architects.configuration.cure_infected": "治愈感染生物",

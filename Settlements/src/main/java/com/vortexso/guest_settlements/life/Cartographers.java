@@ -9,6 +9,7 @@ import com.vortexso.guest_settlements.life.Errands.Step;
 import com.vortexso.guest_settlements.life.LifeData.Traveler;
 import com.vortexso.guest_settlements.life.VillageLife.Role;
 import com.vortexso.guest_settlements.village.RoadEdge;
+import com.vortexso.guest_settlements.village.Roads;
 import com.vortexso.guest_settlements.village.RoutePlanner;
 import com.vortexso.guest_settlements.village.VillageNode;
 import com.vortexso.guest_settlements.village.VillagePopulation;
@@ -197,7 +198,11 @@ public final class Cartographers {
               : road.secondVillageId() == node.id() ? road.firstVillageId() : 0L;
       VillageNode neighbor = other == 0L ? null : manager.node(other);
       if (neighbor != null) {
-        route = RoutePlanner.route(level, from, neighbor.center());
+        route = RoutePlanner.cached(level, Roads.anchor(node), Roads.anchor(neighbor));
+        if (route == null) {
+          RoutePlanner.whenPlanned(
+              level, Roads.anchor(node), Roads.anchor(neighbor), ignored -> {});
+        }
         break;
       }
     }

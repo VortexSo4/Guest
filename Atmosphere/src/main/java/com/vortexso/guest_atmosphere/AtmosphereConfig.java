@@ -53,7 +53,7 @@ public final class AtmosphereConfig {
   public static final ModConfigSpec.DoubleValue SCORCH_LIFETIME_DAYS;
   public static final ModConfigSpec.IntValue MAX_TRACES_PER_CHUNK;
   public static final ModConfigSpec.IntValue CATCH_UP_MAX_DAYS;
-  public static final ModConfigSpec.IntValue CATCH_UP_CHUNKS_PER_TICK;
+  public static final ModConfigSpec.IntValue CATCH_UP_MILLIS_PER_TICK;
 
   public static final ModConfigSpec.DoubleValue SNOW_MELT_OFFSET;
   public static final ModConfigSpec.DoubleValue SNOW_MELT_RATE;
@@ -75,6 +75,7 @@ public final class AtmosphereConfig {
   public static final ModConfigSpec.BooleanValue SILT;
   public static final ModConfigSpec.DoubleValue SILT_CHANCE;
   public static final ModConfigSpec.DoubleValue SILT_GRASS_DAYS;
+  public static final ModConfigSpec.DoubleValue REGRASS_DAYS;
   public static final ModConfigSpec.BooleanValue LEAF_LITTER;
   public static final ModConfigSpec.DoubleValue LEAF_LITTER_PER_DAY;
   public static final ModConfigSpec.BooleanValue GROWTH;
@@ -106,6 +107,7 @@ public final class AtmosphereConfig {
   public static final ModConfigSpec.BooleanValue GROUND_MIST;
   public static final ModConfigSpec.IntValue GROUND_MIST_DISTANCE;
   public static final ModConfigSpec.BooleanValue VEGETATION_TINT;
+  public static final ModConfigSpec.BooleanValue SEASONAL_LEAVES;
   public static final ModConfigSpec.DoubleValue WIND_DRIFT;
 
   private static volatile WeatherParameters weather = WeatherParameters.DEFAULT;
@@ -228,7 +230,10 @@ public final class AtmosphereConfig {
     CATCH_UP_MAX_DAYS =
         b.comment("How much missed weather history a chunk replays when it is seen again.")
             .defineInRange("catchUpMaxDays", 16, 1, 128);
-    CATCH_UP_CHUNKS_PER_TICK = b.defineInRange("catchUpChunksPerTick", 2, 1, 64);
+    CATCH_UP_MILLIS_PER_TICK =
+        b.comment(
+                "Milliseconds per tick spent catching up chunks that were seen before. Chunks that just came into view are caught up before they are sent.")
+            .defineInRange("catchUpMillisPerTick", 8, 1, 40);
 
     b.push("winter");
     SNOW_MELT_OFFSET =
@@ -246,7 +251,8 @@ public final class AtmosphereConfig {
         b.comment("Snow and drifting sand cover grass and flowers without destroying them.")
             .define("coveredPlants", true);
     FOOTPRINTS =
-        b.comment("Walking through deep snow, sand or ash packs it down into visible trails.")
+        b.comment(
+                "Walking through snow, sand or ash packs it down; well-trodden routes wear through to the ground.")
             .define("footprints", true);
     FOOTPRINT_CHANCE =
         b.comment("Chance per tick of walking on a layer that it sinks by one.")
@@ -287,12 +293,18 @@ public final class AtmosphereConfig {
     SILT_GRASS_DAYS =
         b.comment("Days without heavy rain before silt turns to grass.")
             .defineInRange("siltGrassDays", 2.0, 0.1, 16.0);
+    REGRASS_DAYS =
+        b.comment(
+                "Bare dirt left by a snowy winter keeps through spring and grows grass back over this many summer days.")
+            .defineInRange("regrassDays", 4.0, 0.5, 64.0);
     LEAF_LITTER =
-        b.comment("Autumn drops leaf litter under broadleaf trees; winter clears it.")
+        b.comment(
+                "Autumn drops leaf litter under broadleaf trees; it rots away over winter and spring.")
             .define("leafLitter", true);
     LEAF_LITTER_PER_DAY =
-        b.comment("Leaf litter segments per autumn day (three times as many in wind).")
-            .defineInRange("leafLitterPerDay", 0.12, 0.0, 4.0);
+        b.comment(
+                "Leaf litter segments per autumn day (three times as many in wind and leaf fall).")
+            .defineInRange("leafLitterPerDay", 0.25, 0.0, 4.0);
     b.pop();
 
     b.push("growth");
@@ -373,6 +385,10 @@ public final class AtmosphereConfig {
     VEGETATION_TINT =
         c.comment("Leaves and grass whiten while it snows and yellow in droughts.")
             .define("vegetationTint", true);
+    SEASONAL_LEAVES =
+        c.comment(
+                "Broadleaf trees turn yellow and red one by one in autumn and thin out in winter and spring.")
+            .define("seasonalLeaves", true);
     WIND_DRIFT =
         c.comment("How strongly wind pushes falling snow sideways (0 = vanilla).")
             .defineInRange("windDrift", 1.0, 0.0, 2.0);

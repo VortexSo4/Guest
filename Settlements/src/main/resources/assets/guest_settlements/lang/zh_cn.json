@@ -44,6 +44,7 @@
   "guest_settlements.configuration.breedChancePerPairPerDay": "每对每天的繁殖几率",
   "guest_settlements.configuration.campLife": "灾厄村民营地生活",
   "guest_settlements.configuration.campPens": "灾厄村民营地的圈栏",
+  "guest_settlements.configuration.outpostPillagers": "前哨站掠夺者（怪物上限占比）",
   "guest_settlements.configuration.caravanBlocksPerDay": "商队速度（每天格数）",
   "guest_settlements.configuration.caravanCargoFood": "商队货物（食物点数）",
   "guest_settlements.configuration.caravanDepartureChance": "商队每日出发几率",

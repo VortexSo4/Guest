@@ -10,6 +10,7 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.BooleanSupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.StringRepresentable;
@@ -19,6 +20,8 @@ import net.minecraft.world.level.chunk.LevelChunk;
 
 public final class ChunkTraces {
   public static final long NEVER = Long.MIN_VALUE;
+
+  private static final long INHABITED_RECHECK = 1_200L;
 
   public static final MapCodec<ChunkTraces> CODEC =
       RecordCodecBuilder.mapCodec(
@@ -49,6 +52,10 @@ public final class ChunkTraces {
 
   private final LongOpenHashSet fixed = new LongOpenHashSet();
 
+  private boolean inhabited;
+
+  private long inhabitedUntil;
+
   public ChunkTraces() {
     this(NEVER, List.of(), NEVER, List.of());
   }
@@ -68,8 +75,20 @@ public final class ChunkTraces {
   }
 
   public static boolean isFixed(Level level, BlockPos pos) {
-    ChunkTraces traces = level.getChunkAt(pos).getExistingDataOrNull(GuestAtmosphere.CHUNK_TRACES);
+    LevelChunk chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
+    if (chunk == null) {
+      return false;
+    }
+    ChunkTraces traces = chunk.getExistingDataOrNull(GuestAtmosphere.CHUNK_TRACES);
     return traces != null && traces.fixed.contains(pos.asLong());
+  }
+
+  boolean inhabited(long gameTime, BooleanSupplier check) {
+    if (gameTime < inhabitedUntil - INHABITED_RECHECK || gameTime >= inhabitedUntil) {
+      inhabited = check.getAsBoolean();
+      inhabitedUntil = gameTime + INHABITED_RECHECK;
+    }
+    return inhabited;
   }
 
   public static void setFixed(Level level, BlockPos pos, boolean value) {

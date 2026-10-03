@@ -36,7 +36,7 @@
   "guest_architects.configuration.interference_decay_per_day": "Ingerencja zapominana dziennie",
   "guest_architects.configuration.interference_decay_per_day.tooltip": "Punkty ingerencji zapominane każdego dnia; szybciej w przypadku graczy, którzy pomogli.",
   "guest_architects.configuration.piglin_zombification_seconds": "Czas zzombifikowania piglinów (s)",
-  "guest_architects.configuration.piglin_zombification_seconds.tooltip": "Liczba sekund w Nadziemiu, po której pigliny i hogliny się przemieniają (domyślnie: 15).",
+  "guest_architects.configuration.piglin_zombification_seconds.tooltip": "Liczba sekund w Nadziemiu, po której pigliny i hogliny się przemieniają (w podstawowej grze: 15).",
   "guest_architects.configuration.architect_equipment_zombie_chance": "Zombie w zbroi Architektów",
   "guest_architects.configuration.architect_equipment_zombie_chance.tooltip": "Szansa, że naturalnie pojawiający się zombie ma na sobie starą zbroję Architektów.",
   "guest_architects.role.ritual": "Strażnik rytuału",
