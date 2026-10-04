@@ -1,0 +1,58 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+def modules = gradle.guestModules
+modules.each { evaluationDependsOn(":${it}:neoforge") }
+
+def namespaces = modules.collect { project(":${it}:neoforge").property('mod_id') }.join(',')
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+sourceSets.main.java.srcDir rootProject.file('Runs/bench/src/main/java')
+
+dependencies {
+    compileOnly project(':Core:neoforge')
+}
+
+neoForge {
+    version = neo_version
+
+    runs {
+        client {
+            client()
+            if (project.hasProperty('quickPlay')) {
+                programArguments.addAll('--quickPlaySingleplayer', project.property('quickPlay').toString())
+            }
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+        }
+
+        configureEach {
+            gameDirectory = rootProject.file('run/neoforge')
+            systemProperty 'neoforge.enabledGameTestNamespaces', namespaces
+            if (project.hasProperty('guestDevConsole')) {
+                systemProperty 'guest.devConsole', project.property('guestDevConsole').toString()
+            }
+            if (project.hasProperty('guestProfile')) {
+                jvmArgument "-XX:StartFlightRecording=filename=${project.property('guestProfile')},settings=${project.findProperty('guestProfileSettings') ?: 'profile'}"
+            }
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        guest_bench {
+            sourceSet(sourceSets.main)
+        }
+        modules.each { module ->
+            def loader = project(":${module}:neoforge")
+            "${loader.property('mod_id')}" {
+                sourceSet(loader.sourceSets.main)
+            }
+        }
+    }
+}

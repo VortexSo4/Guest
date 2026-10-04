@@ -1,0 +1,9 @@
+plugins {
+    id 'net.neoforged.moddev'
+}
+
+apply from: rootProject.file('gradle/guest/neoforge.gradle')
+
+dependencies {
+    compileOnly project(':Core:neoforge')
+}

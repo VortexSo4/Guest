@@ -1,0 +1,47 @@
+plugins {
+    id 'net.fabricmc.fabric-loom'
+}
+
+def modules = gradle.guestModules
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+sourceSets.main.java.srcDir rootProject.file('Runs/bench/src/main/java')
+
+repositories {
+    maven {
+        name = 'Fuzs'
+        url = 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/'
+        content { includeGroupAndSubgroups('fuzs') }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${config_port_version}"
+    compileOnly project(':Core:fabric')
+    modules.each { runtimeOnly project(":${it}:fabric") }
+}
+
+loom {
+    runs {
+        configureEach {
+            runDir '../../run/fabric'
+            if (project.hasProperty('guestDevConsole')) {
+                vmArg "-Dguest.devConsole=${project.property('guestDevConsole')}"
+            }
+            if (project.hasProperty('guestProfile')) {
+                vmArg "-XX:StartFlightRecording=filename=${project.property('guestProfile')},settings=${project.findProperty('guestProfileSettings') ?: 'profile'}"
+            }
+        }
+        client {
+            if (project.hasProperty('quickPlay')) {
+                programArgs '--quickPlaySingleplayer', project.property('quickPlay').toString()
+            }
+        }
+        server {
+            programArg '--nogui'
+        }
+    }
+}

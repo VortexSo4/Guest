@@ -1,0 +1,48 @@
+apply plugin: 'java-library'
+
+version = mod_version
+group = mod_group_id
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    commonResources {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+def commonPath = "${project.parent.path}:common"
+
+dependencies {
+    commonJava project(path: commonPath, configuration: 'commonJava')
+    commonResources project(path: commonPath, configuration: 'commonResources')
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn configurations.commonJava
+    source configurations.commonJava
+}
+
+tasks.named('processResources', ProcessResources) {
+    dependsOn configurations.commonResources
+    from configurations.commonResources
+}
+
+def loaderName = project.name
+def modsOutputDir = rootProject.layout.buildDirectory.dir("mods/${loaderName}")
+def collectJar = tasks.register('collectJar', Copy) {
+    from tasks.named('jar')
+    into modsOutputDir
+}
+tasks.named('build') {
+    finalizedBy collectJar
+}

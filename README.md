@@ -42,12 +42,12 @@ Some ancient cities are still inhabited. Find them and figure out what they are 
 
 ## Requirements
 
-- Minecraft 26.1
-- NeoForge
+- Minecraft 26.1.2
+- NeoForge, or Fabric with Fabric API and Forge Config API Port
 
 ## Installation
 
-Put the jar into your `mods` folder.
+Put the jars for your loader (`-neoforge` or `-fabric`) into your `mods` folder: Guest Core and any of the addons.
 
 ## Links
 

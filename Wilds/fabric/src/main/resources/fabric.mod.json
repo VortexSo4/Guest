@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Living wilds for Guest: wear turns much-used routes into paths that regrow when abandoned; undead, spiders and creepers live in cave lairs that grow, compete and migrate; wild herds graze and move between pastures; fish shoals deplete and regrow; creatures react to weather and season with vanilla forms; endermen gather at places of power.",
+  "authors": [
+    "Vortex_So"
+  ],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.vortexso.guest_wilds.fabric.GuestWildsFabric"
+    ],
+    "client": [
+      "com.vortexso.guest_wilds.fabric.GuestWildsFabricClient"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version_range}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "forgeconfigapiport": "*",
+    "guest_core": "*"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Regional, seasonal weather for the Guest world: deterministic weather fronts per region and biome, driving vanilla rain and snow, with visibility, wind sounds, storm slowdown and traces left in the world.",
+  "authors": [
+    "Vortex_So"
+  ],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.vortexso.guest_atmosphere.fabric.GuestAtmosphereFabric"
+    ],
+    "client": [
+      "com.vortexso.guest_atmosphere.fabric.GuestAtmosphereFabricClient"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version_range}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "forgeconfigapiport": "*",
+    "guest_core": ">=1.0.0"
+  }
+}

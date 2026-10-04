@@ -1,0 +1,9 @@
+plugins {
+    id 'net.fabricmc.fabric-loom'
+}
+
+apply from: rootProject.file('gradle/guest/fabric.gradle')
+
+dependencies {
+    compileOnly project(':Core:fabric')
+}

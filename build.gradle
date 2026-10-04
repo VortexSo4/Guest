@@ -2,7 +2,8 @@ import java.util.regex.Pattern
 
 plugins {
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.147'
+    id 'net.neoforged.moddev' version '2.0.147' apply false
+    id 'net.fabricmc.fabric-loom' version '1.18.2' apply false
     id 'me.champeau.jmh' version '0.7.3' apply false
     id 'com.diffplug.spotless' version '7.0.2' apply false
 }
@@ -12,6 +13,7 @@ tasks.named('wrapper', Wrapper).configure {
 }
 
 allprojects {
+    apply plugin: 'idea'
     idea {
         module {
             downloadSources = true
@@ -22,7 +24,6 @@ allprojects {
 
 subprojects {
     plugins.withId('java') {
-        apply plugin: 'me.champeau.jmh'
         apply plugin: 'com.diffplug.spotless'
 
         spotless {
@@ -37,95 +38,35 @@ subprojects {
                 endWithNewline()
             }
         }
-
-        jmh {
-            warmupIterations = 3
-            warmup = '1s'
-
-            iterations = 5
-            timeOnIteration = '1s'
-
-            fork = 1
-            threads = 1
-
-            timeUnit = 'ns'
-
-            zip64 = true
-
-            if (rootProject.hasProperty('benchmark')) {
-                String requested =
-                        rootProject.property('benchmark').toString()
-
-                includes = [
-                        '^' + Pattern.quote(requested) + '(\\..*)?$'
-                ]
-            }
-        }
-    }
-}
-
-evaluationDependsOn(':Core')
-evaluationDependsOn(':Settlements')
-evaluationDependsOn(':Architects')
-evaluationDependsOn(':Wilds')
-evaluationDependsOn(':Hands')
-evaluationDependsOn(':Atmosphere')
-
-neoForge {
-    version = project.neo_version
-
-    runs {
-        client {
-            client()
-            // Dev testing: -PquickPlay=<world folder> joins that singleplayer world on launch.
-            if (project.hasProperty('quickPlay')) {
-                programArguments.addAll('--quickPlaySingleplayer', project.property('quickPlay').toString())
-            }
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
-        }
-
-        server {
-            server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', 'guest_core,guest_settlements,guest_architects,guest_wilds,guest_hands,guest_atmosphere'
-        }
-
-        configureEach {
-            gameDirectory = rootProject.file('run')
-
-            // Dev testing: -PguestDevConsole=<file> runs commands appended to that file (see Core/DEBUG.md).
-            if (project.hasProperty('guestDevConsole')) {
-                systemProperty 'guest.devConsole', project.property('guestDevConsole').toString()
-            }
-
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            logLevel = org.slf4j.event.Level.DEBUG
-        }
     }
 
-    mods {
-        guest_core {
-            sourceSet project(':Core').sourceSets.main
-        }
+    if (name == 'common') {
+        plugins.withId('java') {
+            apply plugin: 'me.champeau.jmh'
 
-        guest_settlements {
-            sourceSet project(':Settlements').sourceSets.main
-        }
+            jmh {
+                warmupIterations = 3
+                warmup = '1s'
 
-        guest_architects {
-            sourceSet project(':Architects').sourceSets.main
-        }
+                iterations = 5
+                timeOnIteration = '1s'
 
-        guest_wilds {
-            sourceSet project(':Wilds').sourceSets.main
-        }
+                fork = 1
+                threads = 1
 
-        guest_hands {
-            sourceSet project(':Hands').sourceSets.main
-        }
+                timeUnit = 'ns'
 
-        guest_atmosphere {
-            sourceSet project(':Atmosphere').sourceSets.main
+                zip64 = true
+
+                if (rootProject.hasProperty('benchmark')) {
+                    String requested =
+                            rootProject.property('benchmark').toString()
+
+                    includes = [
+                            '^' + Pattern.quote(requested) + '(\\..*)?$'
+                    ]
+                }
+            }
         }
     }
 }
@@ -136,33 +77,10 @@ tasks.register('benchmark') {
 
     dependsOn(
             subprojects.collectMany { project ->
-                if (!project.plugins.hasPlugin('me.champeau.jmh')) {
+                if (project.name != 'common' || !project.file('src/jmh/java').exists()) {
                     return []
                 }
-
-                File benchmarkSource =
-                        project.file('src/jmh/java')
-
-                if (!benchmarkSource.exists()) {
-                    return []
-                }
-
-                return [project.tasks.named('jmh')]
+                return [project.path + ':jmh']
             }
     )
-}
-
-def modsOutputDir = rootProject.layout.buildDirectory.dir('mods')
-
-subprojects {
-    plugins.withId('java') {
-        def collectJar = tasks.register('collectJar', Copy) {
-            from tasks.named('jar')
-            into modsOutputDir
-        }
-
-        tasks.named('build') {
-            finalizedBy collectJar
-        }
-    }
 }

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Guest Hands: familiar actions made physical. Grapple walls with a vanilla pickaxe, craft on the crafting table's top, see what furnaces, brewing stands, anvils and enchanting tables hold, and sleep through the night instead of skipping it.",
+  "authors": ["Vortex_So"],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.vortexso.guest_hands.fabric.GuestHandsFabric"],
+    "client": ["com.vortexso.guest_hands.fabric.GuestHandsFabricClient"]
+  },
+  "mixins": ["${mod_id}.mixins.json", "${mod_id}.fabric.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version_range}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "forgeconfigapiport": "*",
+    "guest_core": "*"
+  }
+}

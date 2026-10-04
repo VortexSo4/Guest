@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "Villages that live without you: villagers at work, construction, roads, caravans, emigration, rites, memory and illager society.",
+  "authors": [
+    "Vortex_So"
+  ],
+  "license": "${mod_license}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.vortexso.guest_settlements.fabric.GuestSettlementsFabric"
+    ],
+    "client": [
+      "com.vortexso.guest_settlements.fabric.GuestSettlementsFabricClient"
+    ]
+  },
+  "mixins": [
+    "${mod_id}.mixins.json",
+    "${mod_id}.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${minecraft_version_range}",
+    "java": ">=25",
+    "fabric-api": "*",
+    "forgeconfigapiport": "*",
+    "guest_core": "*"
+  }
+}

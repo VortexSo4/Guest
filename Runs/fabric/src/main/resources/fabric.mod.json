@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "guest_bench",
+  "version": "1.0.0",
+  "name": "Guest Bench",
+  "description": "Development-only profiling bots for Guest.",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.vortexso.guest_bench.fabric.GuestBenchFabric"
+    ]
+  },
+  "depends": {
+    "guest_core": "*"
+  }
+}

@@ -1,0 +1,35 @@
+apply from: rootProject.file('gradle/guest/loader.gradle')
+
+base {
+    archivesName = "${mod_id}-fabric"
+}
+
+repositories {
+    maven {
+        name = 'Fuzs'
+        url = 'https://raw.githubusercontent.com/Fuzss/modresources/main/maven/'
+        content { includeGroupAndSubgroups('fuzs') }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+    implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${config_port_version}"
+}
+
+tasks.named('processResources', ProcessResources) {
+    def replaceProperties = [
+            minecraft_version_range: fabric_minecraft_version_range,
+            fabric_loader_version  : fabric_loader_version,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+    ]
+    inputs.properties replaceProperties
+    filesMatching('fabric.mod.json') {
+        expand replaceProperties
+    }
+}

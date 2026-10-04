@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.vortexso.guest_settlements.fabric.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "BlockItemMixin",
+    "FarmlandBlockMixin",
+    "MobMixin",
+    "ServerLevelMixin",
+    "SpawnPlacementsMixin",
+    "ToolUseMixin"
+  ],
+  "client": [],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
