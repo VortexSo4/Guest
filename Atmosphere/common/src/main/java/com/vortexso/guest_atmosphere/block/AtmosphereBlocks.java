@@ -211,17 +211,6 @@ public final class AtmosphereBlocks {
           p -> charred(p).forceSolidOn(),
           BUILDING);
 
-  public static final Supplier<Block> CRACKED_BRICKS =
-      register(
-          "cracked_bricks",
-          Block::new,
-          p ->
-              p.mapColor(MapColor.COLOR_RED)
-                  .instrument(NoteBlockInstrument.BASEDRUM)
-                  .requiresCorrectToolForDrops()
-                  .strength(2.0F, 6.0F),
-          BUILDING);
-
   public static final Supplier<FixationWandItem> FIXATION_WAND =
       Registrar.item(ITEMS, "fixation_wand", FixationWandItem::new, p -> p.stacksTo(1));
 

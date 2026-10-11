@@ -58,9 +58,6 @@ final class GrowthTraces {
   }
 
   static @Nullable Block uncracked(Block block) {
-    if (block == AtmosphereBlocks.CRACKED_BRICKS.get()) {
-      return Blocks.BRICKS;
-    }
     for (Map.Entry<Block, Block> entry : CRACKED.entrySet()) {
       if (entry.getValue() == block) {
         return entry.getKey();
@@ -117,10 +114,7 @@ final class GrowthTraces {
       c.set(pos, mossy.withPropertiesOf(state));
       return;
     }
-    Block cracked =
-        state.is(Blocks.BRICKS)
-            ? AtmosphereBlocks.CRACKED_BRICKS.get()
-            : CRACKED.get(state.getBlock());
+    Block cracked = CRACKED.get(state.getBlock());
     if (cracked != null
         && freezeThaw > 0.0
         && AtmosphereConfig.CRACKING.get()
