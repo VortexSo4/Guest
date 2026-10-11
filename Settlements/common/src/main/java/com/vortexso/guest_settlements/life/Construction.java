@@ -39,9 +39,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.npc.villager.VillagerProfession;
 import net.minecraft.world.entity.npc.villager.VillagerType;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,6 +57,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Half;
+import net.minecraft.world.level.block.state.properties.StairsShape;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
@@ -66,11 +70,10 @@ public final class Construction {
     HOUSE,
     FARM,
     BRIDGE,
-    STALL,
-    FENCE
+    STALL
   }
 
-  record Placement(BlockPos pos, BlockState state, boolean surface) {}
+  record Placement(BlockPos pos, BlockState state) {}
 
   private record Key(
       String kind, Optional<Identifier> template, BlockPos origin, int direction, int size) {
@@ -97,7 +100,6 @@ public final class Construction {
   private static final int SITE_MAX = 28;
   private static final int BRIDGE_REACH = 64;
   private static final int BRIDGE_MAX = 24;
-  private static final int FENCE_LENGTH = 12;
   private static final int MAX_PROJECTS_PER_CATCH_UP = 4;
   private static final int MAX_TREES_PER_CATCH_UP = 8;
   private static final int STAND_DEPTH = 8;
@@ -373,10 +375,6 @@ public final class Construction {
 
   private static boolean satisfied(ServerLevel level, Placement placement, BlockPos pos) {
     BlockState current = level.getBlockState(pos);
-    if (placement.surface()) {
-
-      return current.getBlock() instanceof FenceBlock || !natural(level.getBlockState(pos.below()));
-    }
     if (placement.state().isAir()) {
       return current.isAir();
     }
@@ -457,18 +455,7 @@ public final class Construction {
 
   private static @Nullable BlockPos resolve(ServerLevel level, Placement placement) {
     BlockPos pos = placement.pos();
-    if (!level.hasChunkAt(pos)) {
-      return null;
-    }
-    if (!placement.surface()) {
-      return pos;
-    }
-    BlockPos top = Places.top(level, pos.getX(), pos.getZ());
-    if (top == null) {
-      return null;
-    }
-
-    return level.getBlockState(top).getBlock() instanceof FenceBlock ? top : top.above();
+    return level.hasChunkAt(pos) ? pos : null;
   }
 
   private static Material material(BlockState state) {
@@ -581,14 +568,9 @@ public final class Construction {
       project = bridge(level, manager, node, day);
     }
     if (project == null
-        && state.foodReserve() >= state.population() * parameters.storagePerVillager() / 2.0) {
-      if (tradeHeavy(manager, node, day)) {
-        project = stall(level, node, salt, day);
-      }
-      if (project == null
-          && manager.pressure(node) >= SettlementsConfig.value(SettlementsConfig.FENCE_PRESSURE)) {
-        project = fence(level, node, salt, day);
-      }
+        && state.foodReserve() >= state.population() * parameters.storagePerVillager() / 2.0
+        && tradeHeavy(manager, node, day)) {
+      project = stall(level, node, salt, day);
     }
     if (project != null) {
       LifeData.get(level).replace(project, project);
@@ -790,64 +772,6 @@ public final class Construction {
     return null;
   }
 
-  private static @Nullable Project fence(ServerLevel level, VillageNode node, long salt, long day) {
-    BoundingBox box = node.structureBox();
-    Direction side = Direction.from2DDataValue((int) Math.floorMod(salt, 4L));
-    Direction along = side.getClockWise();
-    BlockPos mid =
-        new BlockPos(
-            side.getAxis() == Direction.Axis.X
-                ? (side.getStepX() > 0 ? box.maxX() + 3 : box.minX() - 3)
-                : box.getCenter().getX(),
-            box.getCenter().getY(),
-            side.getAxis() == Direction.Axis.Z
-                ? (side.getStepZ() > 0 ? box.maxZ() + 3 : box.minZ() - 3)
-                : box.getCenter().getZ());
-    int offset =
-        (int)
-            Math.floorMod(
-                salt >>> 8,
-                (long)
-                    Math.max(
-                        1,
-                        (side.getAxis() == Direction.Axis.X ? box.getZSpan() : box.getXSpan())
-                            - FENCE_LENGTH));
-    BlockPos start =
-        mid.relative(
-            along,
-            offset - (side.getAxis() == Direction.Axis.X ? box.getZSpan() : box.getXSpan()) / 2);
-    int usable = 0;
-    int fenced = 0;
-    for (int i = 0; i < FENCE_LENGTH; i++) {
-      BlockPos top =
-          Places.top(
-              level, start.getX() + along.getStepX() * i, start.getZ() + along.getStepZ() * i);
-      if (top == null) {
-        return null;
-      }
-      if (level.getBlockState(top).getBlock() instanceof FenceBlock) {
-        fenced++;
-      } else if (natural(level.getBlockState(top))) {
-        usable++;
-      }
-    }
-
-    if (fenced > FENCE_LENGTH / 2 || usable < FENCE_LENGTH / 2) {
-      return null;
-    }
-    return new Project(
-        node.id(),
-        Kind.FENCE.name(),
-        Optional.empty(),
-        start,
-        along.get2DDataValue(),
-        FENCE_LENGTH,
-        0,
-        day,
-        0,
-        0);
-  }
-
   private static @Nullable Project bridge(
       ServerLevel level, VillageWorldManager manager, VillageNode node, long day) {
     BlockPos from = node.bell() != null ? node.bell() : node.center();
@@ -988,7 +912,6 @@ public final class Construction {
               .orElse(List.of());
       case BRIDGE -> bridgeBlueprint(level, project);
       case STALL -> stallBlueprint(project);
-      case FENCE -> fenceBlueprint(level, project);
     };
   }
 
@@ -1027,9 +950,9 @@ public final class Construction {
       BlockPos pos =
           StructureTemplate.transform(local, Mirror.NONE, rotation, BlockPos.ZERO).offset(origin);
       state = state.rotate(rotation);
-      body.add(new Placement(pos, state, false));
+      body.add(new Placement(pos, state));
       if (local.getY() == 0 && !state.isAir()) {
-        footing.add(new Placement(pos.below(), Blocks.COBBLESTONE.defaultBlockState(), false));
+        footing.add(new Placement(pos.below(), Blocks.COBBLESTONE.defaultBlockState()));
       }
     }
     body.sort(
@@ -1079,7 +1002,7 @@ public final class Construction {
     for (int i = 0; i < project.size(); i++) {
       BlockPos row = project.origin().relative(along, i);
       for (int w = -2; w <= 2; w++) {
-        plan.add(new Placement(row.relative(side, w), deck, false));
+        plan.add(new Placement(row.relative(side, w), deck));
       }
       for (int w = -2; w <= 2; w += 4) {
         plan.add(
@@ -1088,8 +1011,7 @@ public final class Construction {
                 rail.setValue(FenceBlock.NORTH, along.getAxis() == Direction.Axis.Z)
                     .setValue(FenceBlock.SOUTH, along.getAxis() == Direction.Axis.Z)
                     .setValue(FenceBlock.EAST, along.getAxis() == Direction.Axis.X)
-                    .setValue(FenceBlock.WEST, along.getAxis() == Direction.Axis.X),
-                false));
+                    .setValue(FenceBlock.WEST, along.getAxis() == Direction.Axis.X)));
       }
     }
     return List.copyOf(plan);
@@ -1097,46 +1019,73 @@ public final class Construction {
 
   private static List<Placement> stallBlueprint(Project project) {
     BlockPos o = project.origin();
-    BlockState post = Blocks.OAK_FENCE.defaultBlockState();
+    RandomSource random = RandomSource.create();
+
+    BlockState fence = Blocks.OAK_FENCE.defaultBlockState();
+
+    DyeColor woolColor = DyeColor.byId(random.nextInt(DyeColor.values().length));
     BlockState awning =
         net.minecraft.core.registries.BuiltInRegistries.BLOCK
-            .getOptional(
-                Identifier.withDefaultNamespace(
-                    net.minecraft.world.item.DyeColor.byId(project.direction()).getName()
-                        + "_wool"))
+            .getOptional(Identifier.withDefaultNamespace(woolColor.getName() + "_wool"))
             .orElse(Blocks.WHITE_WOOL)
             .defaultBlockState();
+
+    BlockState flower =
+        List.of(
+                Blocks.POTTED_DANDELION,
+                Blocks.POTTED_POPPY,
+                Blocks.POTTED_BLUE_ORCHID,
+                Blocks.POTTED_ALLIUM,
+                Blocks.POTTED_AZURE_BLUET,
+                Blocks.POTTED_RED_TULIP,
+                Blocks.POTTED_ORANGE_TULIP,
+                Blocks.POTTED_WHITE_TULIP,
+                Blocks.POTTED_PINK_TULIP,
+                Blocks.POTTED_OXEYE_DAISY,
+                Blocks.POTTED_CORNFLOWER,
+                Blocks.POTTED_LILY_OF_THE_VALLEY,
+                Blocks.POTTED_WITHER_ROSE)
+            .get(random.nextInt(13))
+            .defaultBlockState();
+
+    BlockState stairsEast =
+        Blocks.OAK_STAIRS
+            .defaultBlockState()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST)
+            .setValue(BlockStateProperties.HALF, Half.BOTTOM)
+            .setValue(BlockStateProperties.WATERLOGGED, false)
+            .setValue(BlockStateProperties.STAIRS_SHAPE, StairsShape.STRAIGHT);
+
+    BlockState stairsWest =
+        Blocks.OAK_STAIRS
+            .defaultBlockState()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST)
+            .setValue(BlockStateProperties.HALF, Half.BOTTOM)
+            .setValue(BlockStateProperties.WATERLOGGED, false)
+            .setValue(BlockStateProperties.STAIRS_SHAPE, StairsShape.STRAIGHT);
+
+    BlockState bookshelf =
+        Blocks.CHISELED_BOOKSHELF
+            .defaultBlockState()
+            .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST);
+
     List<Placement> plan = new ArrayList<>();
-    plan.add(
-        new Placement(
-            o.offset(1, 0, 1),
-            Blocks.BARREL.defaultBlockState().setValue(BlockStateProperties.FACING, Direction.UP),
-            false));
+
     for (int y = 0; y < 2; y++) {
       for (int[] corner : new int[][] {{0, 0}, {2, 0}, {0, 2}, {2, 2}}) {
-        plan.add(new Placement(o.offset(corner[0], y, corner[1]), post, false));
+        plan.add(new Placement(o.offset(corner[0], y, corner[1]), fence));
       }
     }
-    for (int x = 0; x < 3; x++) {
-      for (int z = 0; z < 3; z++) {
-        plan.add(new Placement(o.offset(x, 2, z), awning, false));
-      }
-    }
-    return List.copyOf(plan);
-  }
 
-  private static List<Placement> fenceBlueprint(ServerLevel level, Project project) {
-    Direction along = Direction.from2DDataValue(project.direction());
-    BlockState post =
-        fence(level, project.origin())
-            .setValue(FenceBlock.NORTH, along.getAxis() == Direction.Axis.Z)
-            .setValue(FenceBlock.SOUTH, along.getAxis() == Direction.Axis.Z)
-            .setValue(FenceBlock.EAST, along.getAxis() == Direction.Axis.X)
-            .setValue(FenceBlock.WEST, along.getAxis() == Direction.Axis.X);
-    List<Placement> plan = new ArrayList<>();
-    for (int i = 0; i < project.size(); i++) {
-      plan.add(new Placement(project.origin().relative(along, i), post, true));
+    plan.add(new Placement(o.offset(1, 0, 1), bookshelf));
+    plan.add(new Placement(o.offset(1, 1, 1), flower));
+
+    for (int z = 0; z < 3; z++) {
+      plan.add(new Placement(o.offset(1, 2, z), awning));
+      plan.add(new Placement(o.offset(0, 2, z), stairsEast));
+      plan.add(new Placement(o.offset(2, 2, z), stairsWest));
     }
+
     return List.copyOf(plan);
   }
 
@@ -1187,7 +1136,6 @@ public final class Construction {
               case HOUSE, FARM -> templateSite(level, node, force, salt, day);
               case BRIDGE -> bridge(level, manager, node, day);
               case STALL -> stall(level, node, salt, day);
-              case FENCE -> fence(level, node, salt, day);
             };
     if (project != null && force != null) {
       LifeData.get(level).replace(project, project);

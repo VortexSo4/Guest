@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "guest_atmosphere:cracked_bricks",
-    "guest_atmosphere:fulgurite",
     "guest_atmosphere:icicle",
     "guest_atmosphere:sandy_masonry",
     "guest_atmosphere:sandy_masonry_slab",
@@ -12,7 +11,6 @@
     "guest_atmosphere:snowy_masonry_slab",
     "guest_atmosphere:snowy_masonry_stairs",
     "guest_atmosphere:snowy_masonry_wall",
-    "guest_atmosphere:thin_ice",
-    "guest_atmosphere:vitrified_sand"
+    "guest_atmosphere:thin_ice"
   ]
 }

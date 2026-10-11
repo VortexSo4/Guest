@@ -9,7 +9,7 @@ displayName="${mod_name}"
 authors="Vortex_So"
 
 description='''
-Regional, seasonal weather for the Guest world: deterministic weather fronts per region and biome (fog, wind, leaf fall, heat, drizzle to thunderstorms, snowfall, blizzards, snowstorms, sandstorms, winter auroras), driving vanilla rain and snow, with visibility, wind sounds, storm slowdown and traces left in the world: snow cover over plants, snow and sand in cracks, icicles, frost, thin ice, frozen ground, mud and silt, moss, lichen and ivy, charred trees, ash and soot, fulgurites, autumn leaves and ageing mineshafts.
+Regional, seasonal weather for the Guest world: deterministic weather fronts per region and biome, driving vanilla rain and snow, with visibility, wind sounds, storm slowdown and traces left in the world
 '''
 
 [[mixins]]

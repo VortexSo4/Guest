@@ -21,7 +21,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
@@ -39,7 +38,7 @@ public final class FireTraces {
 
   private static final int STRIKE_REACH = 2;
 
-  private static final int TREE_RADIUS = 10;
+  private static final int TREE_RADIUS = 30;
 
   private FireTraces() {}
 
@@ -53,14 +52,10 @@ public final class FireTraces {
     BlockPos strike = bolt.blockPosition();
     BlockPos trunk = AtmosphereConfig.LIGHTNING_BURNS_TREES.get() ? findTrunk(level, strike) : null;
     if (AtmosphereConfig.SCORCH_ENABLED.get()) {
-
       scorch(level, trunk != null ? foot(level, trunk) : strike, now);
     }
     if (trunk != null) {
       burnTree(level, trunk, now);
-    }
-    if (AtmosphereConfig.FULGURITE.get()) {
-      vitrify(level, strike);
     }
     return true;
   }
@@ -295,45 +290,6 @@ public final class FireTraces {
     return BuiltInRegistries.BLOCK
         .getOptional(Identifier.fromNamespaceAndPath(id.getNamespace(), path))
         .orElse(Blocks.OAK_SAPLING);
-  }
-
-  private static void vitrify(ServerLevel level, BlockPos strike) {
-    BlockPos hit = strike.below();
-    if (!level.isLoaded(hit) || !level.getBlockState(hit).is(BlockTags.SAND)) {
-      return;
-    }
-    fuse(level, strike, hit, 0);
-    if (level.getBlockState(strike).isAir() && unit(level, strike, 12) < 0.5) {
-      level.setBlockAndUpdate(
-          strike,
-          AtmosphereBlocks.FULGURITE
-              .get()
-              .defaultBlockState()
-              .setValue(AmethystClusterBlock.FACING, Direction.UP));
-    }
-  }
-
-  private static void fuse(ServerLevel level, BlockPos strike, BlockPos pos, int depth) {
-    if (ChunkTraces.isFixed(level, pos)) {
-      return;
-    }
-    level.setBlockAndUpdate(pos, AtmosphereBlocks.VITRIFIED_SAND.get().defaultBlockState());
-    if (depth >= 5) {
-      return;
-    }
-    double odds = Math.pow(0.7, depth + 1);
-    for (Direction direction :
-        new Direction[] {
-          Direction.DOWN, Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST
-        }) {
-      BlockPos next = pos.relative(direction);
-      double chance = direction == Direction.DOWN ? (depth == 0 ? 1.0 : odds) : 0.3 * odds;
-      if (level.isLoaded(next)
-          && level.getBlockState(next).is(BlockTags.SAND)
-          && unit(level, next, 13 + depth) < chance) {
-        fuse(level, strike, next, depth + 1);
-      }
-    }
   }
 
   public static boolean charInsteadOfBurning(Level level, BlockPos pos) {

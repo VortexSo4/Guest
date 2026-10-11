@@ -6,7 +6,7 @@ license="All Rights Reserved"
 modId="guest_bench"
 version="1.0.0"
 displayName="Guest Bench"
-description='''Development-only profiling bots for Guest.'''
+description='''Development-only profiling bots for Guest'''
 
 [[dependencies.guest_bench]]
 modId="guest_core"

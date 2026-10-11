@@ -9,7 +9,7 @@ displayName="${mod_name}"
 authors="Vortex_So"
 
 description='''
-Guest Hands: familiar actions made physical. Grapple walls with a vanilla pickaxe, craft on the crafting table's top, see what furnaces, brewing stands, anvils and enchanting tables hold, and sleep through the night instead of skipping it.
+Familiar actions made physical. Grapple walls with a vanilla pickaxe, craft on the crafting table's top, see what furnaces, brewing stands, anvils and enchanting tables hold, and sleep through the night instead of skipping it
 '''
 
 [[mixins]]

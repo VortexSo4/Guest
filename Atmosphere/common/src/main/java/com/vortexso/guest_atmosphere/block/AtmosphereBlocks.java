@@ -24,7 +24,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.BlockItemStateProperties;
-import net.minecraft.world.level.block.AmethystClusterBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceBlock;
@@ -212,32 +211,6 @@ public final class AtmosphereBlocks {
           p -> charred(p).forceSolidOn(),
           BUILDING);
 
-  public static final Supplier<TransparentBlock> VITRIFIED_SAND =
-      register(
-          "vitrified_sand",
-          p -> new TransparentBlock(p) {},
-          p ->
-              p.mapColor(MapColor.SAND)
-                  .strength(0.6F)
-                  .sound(SoundType.GLASS)
-                  .noOcclusion()
-                  .isValidSpawn((state, level, pos, type) -> false)
-                  .isRedstoneConductor((state, level, pos) -> false)
-                  .isSuffocating((state, level, pos) -> false)
-                  .isViewBlocking((state, level, pos) -> false),
-          NATURAL);
-  public static final Supplier<AmethystClusterBlock> FULGURITE =
-      register(
-          "fulgurite",
-          p -> new AmethystClusterBlock(7.0F, 10.0F, p),
-          p ->
-              p.mapColor(MapColor.SAND)
-                  .forceSolidOn()
-                  .noOcclusion()
-                  .sound(SoundType.GLASS)
-                  .strength(0.8F)
-                  .pushReaction(PushReaction.DESTROY),
-          NATURAL);
   public static final Supplier<Block> CRACKED_BRICKS =
       register(
           "cracked_bricks",

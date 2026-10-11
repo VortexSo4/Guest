@@ -9,7 +9,7 @@ displayName="${mod_name}"
 authors="Vortex_So"
 
 description='''
-Living ancient cities: silent Architects who tend the sculk ritual, calm the Warden with a melody and slowly decline, plus the infected variants of their descendants.
+Living ancient cities with their original creators still living
 '''
 
 [[mixins]]

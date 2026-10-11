@@ -88,7 +88,6 @@ public final class AtmosphereConfig {
   public static final ModConfigSpec.BooleanValue LIGHTNING_BURNS_TREES;
   public static final ModConfigSpec.IntValue TREE_BURN_MAX_BLOCKS;
   public static final ModConfigSpec.DoubleValue REGROWTH_DAYS;
-  public static final ModConfigSpec.BooleanValue FULGURITE;
   public static final ModConfigSpec.BooleanValue FIRE_CHARS_WOOD;
   public static final ModConfigSpec.DoubleValue FIRE_CHAR_CHANCE;
   public static final ModConfigSpec.BooleanValue FIRE_ASH;
@@ -337,9 +336,6 @@ public final class AtmosphereConfig {
     REGROWTH_DAYS =
         b.comment("Days after a tree burnt until saplings and bushes come up around it.")
             .defineInRange("regrowthDays", 5.0, 0.5, 64.0);
-    FULGURITE =
-        b.comment("Lightning into sand leaves vitrified sand and fulgurites.")
-            .define("fulgurite", true);
     FIRE_CHARS_WOOD =
         b.comment("Burning wood may be left as charred wood instead of vanishing.")
             .define("fireCharsWood", true);
